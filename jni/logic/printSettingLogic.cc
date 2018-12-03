@@ -118,3 +118,42 @@ static bool onprintSettingActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
+static bool onButtonClick_Button1(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button1 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button2(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button2 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button4(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button4 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button7(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button7 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button8(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button8 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button9(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button9 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button10(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button10 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button3(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button3 !!!\n");
+    return false;
+}

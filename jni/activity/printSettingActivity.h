@@ -26,6 +26,14 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTSETTING_Button3    20003
+#define ID_PRINTSETTING_Button10    20010
+#define ID_PRINTSETTING_Button9    20009
+#define ID_PRINTSETTING_Button8    20008
+#define ID_PRINTSETTING_Button7    20007
+#define ID_PRINTSETTING_Button4    20004
+#define ID_PRINTSETTING_Button2    20002
+#define ID_PRINTSETTING_Button1    20001
 /*TAG:Macro宏ID END*/
 
 class printSettingActivity : public Activity, 

@@ -4,6 +4,14 @@
 #include "printSettingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mButton3Ptr;
+static ZKButton* mButton10Ptr;
+static ZKButton* mButton9Ptr;
+static ZKButton* mButton8Ptr;
+static ZKButton* mButton7Ptr;
+static ZKButton* mButton4Ptr;
+static ZKButton* mButton2Ptr;
+static ZKButton* mButton1Ptr;
 static printSettingActivity* mActivityPtr;
 
 /*register activity*/
@@ -41,6 +49,14 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTSETTING_Button3, onButtonClick_Button3,
+    ID_PRINTSETTING_Button10, onButtonClick_Button10,
+    ID_PRINTSETTING_Button9, onButtonClick_Button9,
+    ID_PRINTSETTING_Button8, onButtonClick_Button8,
+    ID_PRINTSETTING_Button7, onButtonClick_Button7,
+    ID_PRINTSETTING_Button4, onButtonClick_Button4,
+    ID_PRINTSETTING_Button2, onButtonClick_Button2,
+    ID_PRINTSETTING_Button1, onButtonClick_Button1,
 };
 /***************/
 
@@ -121,6 +137,14 @@ const char* printSettingActivity::getAppName() const{
 //TAG:onCreate
 void printSettingActivity::onCreate() {
 	Activity::onCreate();
+    mButton3Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button3);
+    mButton10Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button10);
+    mButton9Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button9);
+    mButton8Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button8);
+    mButton7Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button7);
+    mButton4Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button4);
+    mButton2Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button2);
+    mButton1Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button1);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 

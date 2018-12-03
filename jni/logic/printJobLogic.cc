@@ -118,3 +118,12 @@ static bool onprintJobActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
+
+//返回按钮
+static bool onButtonClick_sys_back(ZKButton *pButton) {
+	EASYUICONTEXT->openActivity("mainActivity");
+	LOGD(" ButtonClick sys_back !!!\n");
+	return false;
+}
+
+
