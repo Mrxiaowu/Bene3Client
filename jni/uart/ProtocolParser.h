@@ -1,9 +1,4 @@
-/*
- * ProtocolParser.h
- *
- *  Created on: Sep 7, 2017
- *      Author: guoxs
- */
+//Bene3
 #ifndef _UART_PROTOCOL_PARSER_H_
 #define _UART_PROTOCOL_PARSER_H_
 

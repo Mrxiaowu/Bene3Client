@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTABLES_sys_back   100
 /*TAG:Macro宏ID END*/
 
 class printablesActivity : public Activity, 

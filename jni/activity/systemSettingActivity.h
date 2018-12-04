@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_SYSTEMSETTING_sys_back   100
 /*TAG:Macro宏ID END*/
 
 class systemSettingActivity : public Activity, 

@@ -105,16 +105,14 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
 static bool onsystemSettingActivityTouchEvent(const MotionEvent &ev) {
 
+	return false;
+}
+
+//返回按钮
+static bool onButtonClick_sys_back(ZKButton *pButton) {
+	EASYUICONTEXT->openActivity("mainActivity");
+	LOGD(" ButtonClick sys_back !!!\n");
 	return false;
 }

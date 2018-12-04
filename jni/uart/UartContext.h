@@ -1,9 +1,4 @@
-/*
- * UartContext.h
- *
- *  Created on: Sep 5, 2017
- *      Author: guoxs
- */
+//Bene3
 
 #ifndef _UART_UARTCONTEXT_H_
 #define _UART_UARTCONTEXT_H_

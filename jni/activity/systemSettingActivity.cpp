@@ -4,6 +4,7 @@
 #include "systemSettingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* msys_backPtr;
 static systemSettingActivity* mActivityPtr;
 
 /*register activity*/
@@ -41,6 +42,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_SYSTEMSETTING_sys_back, onButtonClick_sys_back,
 };
 /***************/
 
@@ -121,6 +123,7 @@ const char* systemSettingActivity::getAppName() const{
 //TAG:onCreate
 void systemSettingActivity::onCreate() {
 	Activity::onCreate();
+    msys_backPtr = (ZKButton*)findControlByID(ID_SYSTEMSETTING_sys_back);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 

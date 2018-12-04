@@ -1,9 +1,4 @@
-/*
- * UartContext.cpp
- *
- *  Created on: Sep 5, 2017
- *      Author: guoxs
- */
+//Bene3
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
