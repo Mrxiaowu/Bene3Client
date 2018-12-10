@@ -3,6 +3,9 @@
 #define _UART_PROTOCOL_PARSER_H_
 
 #include "ProtocolData.h"
+#include "uart/ProtocolParser.h"
+#include "uart/ProtocolSender.h"
+#include "include/entry/EasyUIContext.h"
 
 typedef void (*OnProtocolDataUpdateFun)(const SProtocolData &data);
 

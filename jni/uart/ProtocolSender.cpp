@@ -55,14 +55,6 @@ bool sendProtocol( const BYTE *pData, BYTE len) {
 	dataBuf[frameLen++] = getCheckSum(pData, len);
 #endif
 
-// 打印发送的每一帧数据，需要时在CommDef.h文件中打开DEBUG_PRO_DATA宏
-//#ifdef DEBUG_PRO_DATA
-//	for (int i = 0; i < frameLen; ++i) {
-//		LOGD("%x ", dataBuf[i]);
-//	}
-//	LOGD("\n");
-//#endif
-
 	return UARTCONTEXT->send(dataBuf, frameLen);
 }
 

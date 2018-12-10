@@ -1,18 +1,22 @@
-#include "systemSettingActivity.h"
+/***********************************************
+/gen auto by zuitools
+***********************************************/
+#include "logoActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* msys_backPtr;
-static systemSettingActivity* mActivityPtr;
+static ZKButton* mButton1Ptr;
+static ZKButton* mlogoPtr;
+static logoActivity* mActivityPtr;
 
 /*register activity*/
-REGISTER_ACTIVITY(systemSettingActivity);
+REGISTER_ACTIVITY(logoActivity);
 
 typedef struct {
 	int id; // 定时器ID ， 不能重复
 	int time; // 定时器  时间间隔  单位 毫秒
 }S_ACTIVITY_TIMEER;
 
-#include "logic/systemSettingLogic.cc"
+#include "logic/logoLogic.cc"
 
 /***********/
 typedef struct {
@@ -39,7 +43,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_SYSTEMSETTING_sys_back, onButtonClick_sys_back,
+    ID_LOGO_Button1, onButtonClick_Button1,
+    ID_LOGO_logo, onButtonClick_logo,
 };
 /***************/
 
@@ -99,13 +104,13 @@ static S_VideoViewCallback SVideoViewCallbackTab[] = {
 };
 
 
-systemSettingActivity::systemSettingActivity() {
+logoActivity::logoActivity() {
 	//todo add init code here
 	mVideoLoopIndex = 0;
 	mVideoLoopErrorCount = 0;
 }
 
-systemSettingActivity::~systemSettingActivity() {
+logoActivity::~logoActivity() {
 	//todo add init file here
     // 退出应用时需要反注册
     EASYUICONTEXT->unregisterGlobalTouchListener(this);
@@ -113,21 +118,22 @@ systemSettingActivity::~systemSettingActivity() {
     unregisterProtocolDataUpdateListener(onProtocolDataUpdate);
 }
 
-const char* systemSettingActivity::getAppName() const{
-	return "systemSetting.ftu";
+const char* logoActivity::getAppName() const{
+	return "logo.ftu";
 }
 
 //TAG:onCreate
-void systemSettingActivity::onCreate() {
+void logoActivity::onCreate() {
 	Activity::onCreate();
-    msys_backPtr = (ZKButton*)findControlByID(ID_SYSTEMSETTING_sys_back);
+    mButton1Ptr = (ZKButton*)findControlByID(ID_LOGO_Button1);
+    mlogoPtr = (ZKButton*)findControlByID(ID_LOGO_logo);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 
     rigesterActivityTimer();
 }
 
-void systemSettingActivity::onClick(ZKBase *pBase) {
+void logoActivity::onClick(ZKBase *pBase) {
 	//TODO: add widget onClik code 
     int buttonTablen = sizeof(sButtonCallbackTab) / sizeof(S_ButtonCallback);
     for (int i = 0; i < buttonTablen; ++i) {
@@ -151,30 +157,30 @@ void systemSettingActivity::onClick(ZKBase *pBase) {
 	Activity::onClick(pBase);
 }
 
-void systemSettingActivity::onResume() {
+void logoActivity::onResume() {
 	Activity::onResume();
 	EASYUICONTEXT->registerGlobalTouchListener(this);
 	startVideoLoopPlayback();
 	onUI_show();
 }
 
-void systemSettingActivity::onPause() {
+void logoActivity::onPause() {
 	Activity::onPause();
 	EASYUICONTEXT->unregisterGlobalTouchListener(this);
 	stopVideoLoopPlayback();
 	onUI_hide();
 }
 
-void systemSettingActivity::onIntent(const Intent *intentPtr) {
+void logoActivity::onIntent(const Intent *intentPtr) {
 	Activity::onIntent(intentPtr);
 	onUI_intent(intentPtr);
 }
 
-bool systemSettingActivity::onTimer(int id) {
+bool logoActivity::onTimer(int id) {
 	return onUI_Timer(id);
 }
 
-void systemSettingActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
+void logoActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
 
     int seekBarTablen = sizeof(SZKSeekBarCallbackTab) / sizeof(S_ZKSeekBarCallback);
     for (int i = 0; i < seekBarTablen; ++i) {
@@ -185,7 +191,7 @@ void systemSettingActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress)
     }
 }
 
-int systemSettingActivity::getListItemCount(const ZKListView *pListView) const{
+int logoActivity::getListItemCount(const ZKListView *pListView) const{
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -196,7 +202,7 @@ int systemSettingActivity::getListItemCount(const ZKListView *pListView) const{
     return 0;
 }
 
-void systemSettingActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index){
+void logoActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index){
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -206,7 +212,7 @@ void systemSettingActivity::obtainListItemData(ZKListView *pListView,ZKListView:
     }
 }
 
-void systemSettingActivity::onItemClick(ZKListView *pListView, int index, int id){
+void logoActivity::onItemClick(ZKListView *pListView, int index, int id){
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -216,7 +222,7 @@ void systemSettingActivity::onItemClick(ZKListView *pListView, int index, int id
     }
 }
 
-void systemSettingActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) {
+void logoActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) {
     int tablen = sizeof(SSlideWindowItemClickCallbackTab) / sizeof(S_SlideWindowItemClickCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SSlideWindowItemClickCallbackTab[i].id == pSlideWindow->getID()) {
@@ -226,11 +232,11 @@ void systemSettingActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int in
     }
 }
 
-bool systemSettingActivity::onTouchEvent(const MotionEvent &ev) {
-    return onsystemSettingActivityTouchEvent(ev);
+bool logoActivity::onTouchEvent(const MotionEvent &ev) {
+    return onlogoActivityTouchEvent(ev);
 }
 
-void systemSettingActivity::onTextChanged(ZKTextView *pTextView, const std::string &text) {
+void logoActivity::onTextChanged(ZKTextView *pTextView, const std::string &text) {
     int tablen = sizeof(SEditTextInputCallbackTab) / sizeof(S_EditTextInputCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SEditTextInputCallbackTab[i].id == pTextView->getID()) {
@@ -240,7 +246,7 @@ void systemSettingActivity::onTextChanged(ZKTextView *pTextView, const std::stri
     }
 }
 
-void systemSettingActivity::rigesterActivityTimer() {
+void logoActivity::rigesterActivityTimer() {
     int tablen = sizeof(REGISTER_ACTIVITY_TIMER_TAB) / sizeof(S_ACTIVITY_TIMEER);
     for (int i = 0; i < tablen; ++i) {
         S_ACTIVITY_TIMEER temp = REGISTER_ACTIVITY_TIMER_TAB[i];
@@ -249,7 +255,7 @@ void systemSettingActivity::rigesterActivityTimer() {
 }
 
 
-void systemSettingActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
+void logoActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SVideoViewCallbackTab[i].id == pVideoView->getID()) {
@@ -264,7 +270,7 @@ void systemSettingActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int ms
     }
 }
 
-void systemSettingActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int callbackTabIndex) {
+void logoActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int callbackTabIndex) {
 
 	switch (msg) {
 	case ZKVideoView::E_MSGTYPE_VIDEO_PLAY_STARTED:
@@ -301,7 +307,7 @@ void systemSettingActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, 
 	}
 }
 
-void systemSettingActivity::startVideoLoopPlayback() {
+void logoActivity::startVideoLoopPlayback() {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
     	if (SVideoViewCallbackTab[i].loop) {
@@ -316,7 +322,7 @@ void systemSettingActivity::startVideoLoopPlayback() {
     }
 }
 
-void systemSettingActivity::stopVideoLoopPlayback() {
+void logoActivity::stopVideoLoopPlayback() {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
     	if (SVideoViewCallbackTab[i].loop) {
@@ -332,7 +338,7 @@ void systemSettingActivity::stopVideoLoopPlayback() {
     }
 }
 
-bool systemSettingActivity::parseVideoFileList(const char *pFileListPath, std::vector<string>& mediaFileList) {
+bool logoActivity::parseVideoFileList(const char *pFileListPath, std::vector<string>& mediaFileList) {
 	mediaFileList.clear();
 	if (NULL == pFileListPath || 0 == strlen(pFileListPath)) {
         LOGD("video file list is null!");
@@ -364,7 +370,7 @@ bool systemSettingActivity::parseVideoFileList(const char *pFileListPath, std::v
 	return true;
 }
 
-int systemSettingActivity::removeCharFromString(string& nString, char c) {
+int logoActivity::removeCharFromString(string& nString, char c) {
     string::size_type   pos;
     while(1) {
         pos = nString.find(c);
@@ -377,14 +383,14 @@ int systemSettingActivity::removeCharFromString(string& nString, char c) {
     return (int)nString.size();
 }
 
-void systemSettingActivity::registerUserTimer(int id, int time) {
+void logoActivity::registerUserTimer(int id, int time) {
 	registerTimer(id, time);
 }
 
-void systemSettingActivity::unregisterUserTimer(int id) {
+void logoActivity::unregisterUserTimer(int id) {
 	unregisterTimer(id);
 }
 
-void systemSettingActivity::resetUserTimer(int id, int time) {
+void logoActivity::resetUserTimer(int id, int time) {
 	resetUserTimer(id, time);
 }
