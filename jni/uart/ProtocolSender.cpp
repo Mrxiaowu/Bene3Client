@@ -6,6 +6,27 @@
 
 extern BYTE getCheckSum(const BYTE *pData, int len);
 
+bool sendProtocol( const BYTE *pData, BYTE len) {
+	BYTE dataBuf[256]; //TODO 字节长度有待商榷
+
+	dataBuf[0] = CMD_HEAD1;
+	dataBuf[1] = CMD_HEAD2;		// 同步帧头 两个字节
+	dataBuf[2] = LOBYTE(len);  //长度
+
+	UINT frameLen = 3;   //一帧的开始长度
+
+	for (int i = 0; i < len; ++i) {
+		dataBuf[frameLen++] = pData[i];
+	}
+
+#ifdef PRO_SUPPORT_CHECK_SUM
+	dataBuf[frameLen++] = getCheckSum(pData, len);
+#endif
+
+	return UARTCONTEXT->send(dataBuf, frameLen);
+}
+
+
 /**
  * 需要根据协议格式进行拼接，以下只是个模板
  */
@@ -36,26 +57,5 @@ extern BYTE getCheckSum(const BYTE *pData, int len);
 //
 //	return UARTCONTEXT->send(dataBuf, frameLen);
 //}
-
-
-bool sendProtocol( const BYTE *pData, BYTE len) {
-	BYTE dataBuf[256]; //TODO 字节长度有待商榷
-
-	dataBuf[0] = CMD_HEAD1;
-	dataBuf[1] = CMD_HEAD2;		// 同步帧头 两个字节
-	dataBuf[2] = LOBYTE(len);  //长度
-
-	UINT frameLen = 3;   //一帧的开始长度
-
-	for (int i = 0; i < len; ++i) {
-		dataBuf[frameLen++] = pData[i];
-	}
-
-#ifdef PRO_SUPPORT_CHECK_SUM
-	dataBuf[frameLen++] = getCheckSum(pData, len);
-#endif
-
-	return UARTCONTEXT->send(dataBuf, frameLen);
-}
 
 

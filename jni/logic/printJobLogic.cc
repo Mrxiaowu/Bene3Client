@@ -98,3 +98,16 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 }
 
 
+static void onProgressChanged_Seekbar1(ZKSeekBar *pSeekBar, int progress) {
+    //LOGD(" ProgressChanged Seekbar1 %d !!!\n", progress);
+}
+
+static bool onButtonClick_Button1(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button1 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button2(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button2 !!!\n");
+    return false;
+}

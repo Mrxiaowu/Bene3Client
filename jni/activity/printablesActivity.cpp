@@ -4,6 +4,10 @@
 #include "printablesActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mdeletePtr;
+static ZKButton* mUSBPtr;
+static ZKButton* mprintPtr;
+static ZKListView* mListview1Ptr;
 static ZKButton* msys_backPtr;
 static printablesActivity* mActivityPtr;
 
@@ -42,6 +46,9 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTABLES_delete, onButtonClick_delete,
+    ID_PRINTABLES_USB, onButtonClick_USB,
+    ID_PRINTABLES_print, onButtonClick_print,
     ID_PRINTABLES_sys_back, onButtonClick_sys_back,
 };
 /***************/
@@ -68,6 +75,7 @@ typedef struct {
 }S_ListViewFunctionsCallback;
 /*TAG:ListViewFunctionsCallback*/
 static S_ListViewFunctionsCallback SListViewFunctionsCallbackTab[] = {
+    ID_PRINTABLES_Listview1, getListItemCount_Listview1, obtainListItemData_Listview1, onListItemClick_Listview1,
 };
 
 
@@ -123,6 +131,10 @@ const char* printablesActivity::getAppName() const{
 //TAG:onCreate
 void printablesActivity::onCreate() {
 	Activity::onCreate();
+    mdeletePtr = (ZKButton*)findControlByID(ID_PRINTABLES_delete);
+    mUSBPtr = (ZKButton*)findControlByID(ID_PRINTABLES_USB);
+    mprintPtr = (ZKButton*)findControlByID(ID_PRINTABLES_print);
+    mListview1Ptr = (ZKListView*)findControlByID(ID_PRINTABLES_Listview1);if(mListview1Ptr!= NULL){mListview1Ptr->setListAdapter(this);mListview1Ptr->setItemClickListener(this);}
     msys_backPtr = (ZKButton*)findControlByID(ID_PRINTABLES_sys_back);
 	mActivityPtr = this;
 	onUI_init();

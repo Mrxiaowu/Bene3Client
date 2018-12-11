@@ -85,8 +85,8 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
 }
 
 const char* IconTab[]={
-		"printJobActivity",
 		"printablesActivity",
+		"printJobActivity",
 		"printSettingActivity",
 		"systemSettingActivity"
 };

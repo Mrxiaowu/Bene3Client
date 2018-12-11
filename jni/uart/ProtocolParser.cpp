@@ -90,7 +90,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 							BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
 							sendProtocol(mode , 5);
 							break;
-
 					}
 					break;
 
@@ -102,9 +101,8 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 
 				case TurnOff_PageID:
 					break;
-
-
 			}
+
 			LOGD("当前数据中有效长度为5");
 			break;
 
