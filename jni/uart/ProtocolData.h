@@ -1,5 +1,3 @@
-//Bene3
-
 #ifndef _UART_PROTOCOL_DATA_H_
 #define _UART_PROTOCOL_DATA_H_
 
@@ -239,6 +237,7 @@
 /**************************************************/
 
 typedef struct {
+	std::string textStr;
 	BYTE power;
 } SProtocolData;
 

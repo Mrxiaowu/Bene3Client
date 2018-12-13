@@ -1,17 +1,25 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 
+
+/**
+ * 注册定时器
+ * 填充数组用于注册定时器
+ * 注意：id不能重复
+ */
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
 
-/**
- * 当界面构造时触发
- */
+static SProtocolData mProtocolData;
 static void onUI_init(){
-    //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
+	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
+	// 开始初始化页面的UI显示
 
+	LOGD("machineInfo onUI_init !!!\n"); //06FF011F01DA
+	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x1F, 0x01 };
+	sendProtocol( mode , 5);
 }
 
 /**
@@ -20,7 +28,9 @@ static void onUI_init(){
 static void onUI_intent(const Intent *intentPtr) {
     if (intentPtr != NULL) {
         //TODO
+    	LOGD("2!!!\n"); //进不了
     }
+//    msnsidtextPtr->setText("123");
 }
 
 /*
@@ -44,23 +54,13 @@ static void onUI_quit() {
 
 }
 
-/**
- * 串口数据回调接口
- */
+
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	msnsidtextPtr->setText(data.textStr);
 }
 
-/**
- * 定时器触发函数
- * 不建议在此函数中写耗时操作，否则将影响UI刷新
- * 参数： id
- *         当前所触发定时器的id，与注册时的id相同
- * 返回值: true
- *             继续运行当前定时器
- *         false
- *             停止运行当前定时器
- */
+
 static bool onUI_Timer(int id){
 	switch (id) {
 
@@ -79,15 +79,11 @@ static bool onUI_Timer(int id){
  *         false
  *            触摸事件将继续传递到控件上
  */
-static bool onlogoActivityTouchEvent(const MotionEvent &ev) {
+static bool onmachineInfoActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
-static bool onButtonClick_logo(ZKButton *pButton) {
-    //LOGD(" ButtonClick logo !!!\n");
-    return false;
-}
-static bool onButtonClick_Button1(ZKButton *pButton) {
+static bool onButtonClick_sys_back(ZKButton *pButton) {
 	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");
 	return false;

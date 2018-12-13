@@ -88,7 +88,10 @@ const char* IconTab[]={
 		"printablesActivity",
 		"printJobActivity",
 		"printSettingActivity",
-		"systemSettingActivity"
+		"systemSettingActivity",
+		"networkControlActivity",
+		"machineInfoActivity",
+		"slcParamActivity"
 };
 
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {
@@ -98,3 +101,4 @@ static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index
 	}
 	LOGD(" onSlideItemClick_ Slidewindow1 %d !!!\n", index);
 }
+

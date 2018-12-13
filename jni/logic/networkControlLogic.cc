@@ -1,6 +1,12 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 
+
+/**
+ * 注册定时器
+ * 填充数组用于注册定时器
+ * 注意：id不能重复
+ */
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -79,16 +85,17 @@ static bool onUI_Timer(int id){
  *         false
  *            触摸事件将继续传递到控件上
  */
-static bool onlogoActivityTouchEvent(const MotionEvent &ev) {
+static bool onnetworkControlActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
-static bool onButtonClick_logo(ZKButton *pButton) {
-    //LOGD(" ButtonClick logo !!!\n");
-    return false;
-}
-static bool onButtonClick_Button1(ZKButton *pButton) {
+
+static bool onButtonClick_sys_back(ZKButton *pButton) {
 	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");
 	return false;
+}
+
+static void onEditTextChanged_Edittext1(const std::string &text) {
+    //LOGD(" onEditTextChanged_ Edittext1 %s !!!\n", text.c_str());
 }

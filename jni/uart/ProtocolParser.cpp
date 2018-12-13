@@ -1,9 +1,10 @@
-//Bene3
 #include <vector>
 #include <system/Mutex.h>
 #include "CommDef.h"
 #include "uart/ProtocolParser.h"
 #include "utils/Log.h"
+#include <cstddef>
+#include <iostream>
 
 static Mutex sLock;
 BYTE *mRealData;         //除去AA55和校检码的中间的实际的数据
@@ -41,7 +42,7 @@ static void notifyProtocolDataUpdate(const SProtocolData &data) {
 	}
 }
 
-static SProtocolData sProtocolData = { 0 };
+static SProtocolData sProtocolData = {"", 0 };
 
 SProtocolData& getProtocolData() {
 	return sProtocolData;
@@ -69,45 +70,80 @@ BYTE getCheckSum(const BYTE *pData, int len) {
  * 解析每一帧数据
  */
 static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的所有数据，len是一帧的总长度
-	// CmdID
-//	switch (MAKEWORD(pData[3], pData[2])) {
+
+//	switch (MAKEWORD(pData[2], pData[3])) {
 //		case CMDID_POWER:
 //			sProtocolData.power = pData[5];
+//			LOGD("power status:%d",sProtocolData.power);
 //			break;
-//	}
+//		}
 
-	LOGD("%x pData[2]", pData[2]);
-	LOGD("%x pData[3]", pData[3]);
-	LOGD("%x pData[4]", pData[4]);
-	switch (pData[2]){  //
-		case 5:  //长度
-			switch(pData[3]){
-				case SWITCH_PAGE:
-					switch(pData[4]){
-						case 0x0c:
-							LOGD("开机LOGO，认证信息");
-							EASYUICONTEXT->openActivity("logoActivity");
-							BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
-							sendProtocol(mode , 5);
-							break;
-					}
+	LOGD("%x pData[2]", pData[2]);// 长度
+	LOGD("%x pData[3]", pData[3]);//CMD_ID
+	LOGD("%x pData[4]", pData[4]);//Page_ID
+	LOGD("%x pData[5]", pData[5]);//Region ID
+	LOGD("%x pData[6]", pData[6]);//Type ID
+	LOGD("%x pData[7]", pData[7]);//Label ID
+
+	switch(pData[3]){
+		case SWITCH_PAGE:
+			LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
+			switch(pData[4]){
+				case 0x05:
+					LOGD("需要跳转到networkPage页面，但这个屏幕不需要跳转了");
 					break;
 
-				case SWITCH_REGION:
-					break;
-
-				case SET_LABEL_VALUE:
-					break;
-
-				case TurnOff_PageID:
+				case 0x0c:
+					LOGD("开机LOGO，认证信息");
+					EASYUICONTEXT->openActivity("logoActivity");
+					BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
+					sendProtocol(mode , 5);
 					break;
 			}
+			break;
 
-			LOGD("当前数据中有效长度为5");
+		case SET_LABEL_VALUE:
+			LOGD("当前命令为8，给label赋值");
+			switch (pData[7]){
+				case NetWorkControl_CurrentWifiValueLabelID:
+					LOGD("%x pData[7]",pData[7]);
+
+					std::string newString;
+					for(UINT i = 8; i < len-1; i++)
+					{
+						std::string byte(1, pData[i]);
+					    char chr = (char) (int)strtol(byte.c_str(), NULL, 16);
+					    newString.push_back(chr);
+					}
+					LOGD("%s newString", newString);
+
+
+
+
+					BYTE temp = 0;
+					for(UINT i = 8; i < len-1; i++)
+					{
+						temp = MAKEWORD(pData[i],pData[i+1]);
+					}
+					sProtocolData.textStr = newString;
+
+					std::cout << "Value of str is : " << std::endl;
+
+					break;
+			}
+//			switch (pData[4]){
+//				case NetworkControl_PageID:
+//					LOGD("进入网络信息页面");
+//					break;
+//
+//				case MachineInfo_PageID:
+//					LOGD("进入网络信息页面");
+//					break;
+//			}
 			break;
 
 		default :
-			LOGD("默认页面");
+			LOGD("未知的命令");
 			break;
 	}
 
@@ -182,6 +218,36 @@ int parseProtocol(const BYTE *pData, UINT len) {
 	}
 	return len - remainLen;
 }
+
+
+void hex_to_str(char *ptr,unsigned char *buf,int len)
+{
+	for(int i = 0; i < len; i++)
+	{
+		sprintf(ptr, "%02x",buf[i]);
+		ptr += 2;
+	}
+}
+
+
+// 转化十六进制编码为字符串
+//    public static String toStringText(String s) {
+//        byte[] baKeyword = new byte[s.length() / 2];
+//        for (int i = 0; i < baKeyword.length; i++) {
+//            try {
+//                baKeyword[i] = (byte) (0xff & Integer.parseInt(s.substring(
+//                        i * 2, i * 2 + 2), 16));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        try {
+//            s = new String(baKeyword, "GB2312");// UTF-16le:Not
+//        } catch (Exception e1) {
+//            e1.printStackTrace();
+//        }
+//        return s;
+//    }
 
 //int parseProtocol(const BYTE *pData, UINT len) {
 //	UINT remainLen = len;	// 剩余数据长度
