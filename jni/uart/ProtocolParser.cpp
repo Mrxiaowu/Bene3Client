@@ -42,7 +42,7 @@ static void notifyProtocolDataUpdate(const SProtocolData &data) {
 	}
 }
 
-static SProtocolData sProtocolData = {"", 0 };
+static SProtocolData sProtocolData = {"\0"};
 
 SProtocolData& getProtocolData() {
 	return sProtocolData;
@@ -84,6 +84,10 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 	LOGD("%x pData[5]", pData[5]);//Region ID
 	LOGD("%x pData[6]", pData[6]);//Type ID
 	LOGD("%x pData[7]", pData[7]);//Label ID
+//	sProtocolData.pdata = (char*)pData;
+//	sProtocolData.len = len;
+//	sProtocolData.pdata[len] = '\0';
+//	LOGD("%s data.textStr",sProtocolData.pdata);
 
 	switch(pData[3]){
 		case SWITCH_PAGE:
@@ -106,40 +110,37 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			LOGD("当前命令为8，给label赋值");
 			switch (pData[7]){
 				case NetWorkControl_CurrentWifiValueLabelID:
+				case NetWorkControl_StaticIPValueLabelID:
 					LOGD("%x pData[7]",pData[7]);
 
-					std::string newString;
+					//BYTE赋值给BYTE
+					BYTE temp[len-1];
 					for(UINT i = 8; i < len-1; i++)
 					{
-						std::string byte(1, pData[i]);
-					    char chr = (char) (int)strtol(byte.c_str(), NULL, 16);
-					    newString.push_back(chr);
+						temp[i-8]= pData[i];
+						LOGD("第%d次 temp=%s",i,temp);
 					}
-					LOGD("%s newString", newString);
+					LOGD("temp=%s",temp);
+					LOGD("(char*)temp)=%s",(char*)temp);
+					sProtocolData.pdata = (char*)temp;
+					sProtocolData.len = len-1  ;
+					sProtocolData.pdata[len-1] = '\0';
+					LOGD("sProtocolData=%s",sProtocolData.pdata);
 
-
-
-
-					BYTE temp = 0;
-					for(UINT i = 8; i < len-1; i++)
-					{
-						temp = MAKEWORD(pData[i],pData[i+1]);
-					}
-					sProtocolData.textStr = newString;
-
-					std::cout << "Value of str is : " << std::endl;
-
+//					int i,v;
+//					char hs[30];
+//					char s[4];
+//					strcpy(hs,"e6b189e5ad97");
+//					i=0;
+//					while (1) {
+//						if (1!=sscanf(hs+i*2,"%2x",&v)) break;
+//						s[i]=(char)v;
+//						i++;
+//					}
+//					s[i]='\0';
+//					LOGD("hs=%s,s=%s\n",hs,s);
 					break;
 			}
-//			switch (pData[4]){
-//				case NetworkControl_PageID:
-//					LOGD("进入网络信息页面");
-//					break;
-//
-//				case MachineInfo_PageID:
-//					LOGD("进入网络信息页面");
-//					break;
-//			}
 			break;
 
 		default :
@@ -151,7 +152,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 	notifyProtocolDataUpdate(sProtocolData);
 }
 
-//  AA 55 +长度+CMD+PageID+FF FF FF +Check Sum`mer
 int parseProtocol(const BYTE *pData, UINT len) {
 
 	int remainLen = len;	// 剩余数据长度
@@ -176,27 +176,11 @@ int parseProtocol(const BYTE *pData, UINT len) {
 			break;
 		}
 
-//		// 打印一帧数据，需要时在CommDef.h文件中打开DEBUG_PRO_DATA宏,打开之后会有很多日志，可以先注释
-//#ifdef DEBUG_PRO_DATA
-//		for (int i = 0; i < frameLen; ++i) {
-//			LOGD("%x ", pData[i]);
-//		}
-//		LOGD("\n");
-//#endif
-
 		mRealData = new BYTE[dataLen];  //除去AA55和校检码的中间的实际的数据
 
 		for (int i = 0; i <= dataLen; i++) {
 			mRealData[i] = pData[i + 3];
 		}
-
-////实际数据的打印日志
-//#ifdef DEBUG_PRO_DATA
-//		for (int i = 0; i < dataLen; ++i) {
-//			LOGD("%x mRealData", mRealData[i]);
-//		}
-//		LOGD("\n");
-//#endif
 
 		LOGD("%x CheckSum1", getCheckSum(mRealData, dataLen));//这里调用了两遍gerchecksum，所以日志中会出现两遍日志
 		LOGD("%x CheckSum2", pData[frameLen - 1]);
@@ -228,79 +212,3 @@ void hex_to_str(char *ptr,unsigned char *buf,int len)
 		ptr += 2;
 	}
 }
-
-
-// 转化十六进制编码为字符串
-//    public static String toStringText(String s) {
-//        byte[] baKeyword = new byte[s.length() / 2];
-//        for (int i = 0; i < baKeyword.length; i++) {
-//            try {
-//                baKeyword[i] = (byte) (0xff & Integer.parseInt(s.substring(
-//                        i * 2, i * 2 + 2), 16));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        try {
-//            s = new String(baKeyword, "GB2312");// UTF-16le:Not
-//        } catch (Exception e1) {
-//            e1.printStackTrace();
-//        }
-//        return s;
-//    }
-
-//int parseProtocol(const BYTE *pData, UINT len) {
-//	UINT remainLen = len;	// 剩余数据长度
-//	UINT dataLen;	// 数据包长度
-//	UINT frameLen;	// 帧长度
-//
-//	/**
-//	 * 以下部分需要根据协议格式进行相应的修改，解析出每一帧的数据
-//	 */
-//	while (remainLen >= DATA_PACKAGE_MIN_LEN) {
-//		// 找到一帧数据的数据头
-//		while ((remainLen >= 2) && ((pData[0] != CMD_HEAD1) || (pData[1] != CMD_HEAD2))) {
-//			pData++;
-//			remainLen--;
-//			continue;
-//		}
-//
-//		if (remainLen < DATA_PACKAGE_MIN_LEN) {
-//			break;
-//		}
-//
-//		dataLen = pData[4];
-//		frameLen = dataLen + DATA_PACKAGE_MIN_LEN;
-//		if (frameLen > remainLen) {
-//			// 数据内容不全
-//			break;
-//		}
-//
-//		// 打印一帧数据，需要时在CommDef.h文件中打开DEBUG_PRO_DATA宏
-//#ifdef DEBUG_PRO_DATA
-//		for (int i = 0; i < frameLen; ++i) {
-//			LOGD("%x ", pData[i]);
-//		}
-//		LOGD("\n");
-//#endif
-//
-//		// 支持checksum校验，需要时在CommDef.h文件中打开PRO_SUPPORT_CHECK_SUM宏
-//#ifdef PRO_SUPPORT_CHECK_SUM
-//		// 检测校验码
-//		if (getCheckSum(pData, frameLen - 1) == pData[frameLen - 1]) {
-//			// 解析一帧数据
-//			procParse(pData, frameLen);
-//		} else {
-//			LOGE("CheckSum error!!!!!!\n");
-//		}
-//#else
-//		// 解析一帧数据
-//		procParse(pData, frameLen);
-//#endif
-//
-//		pData += frameLen;
-//		remainLen -= frameLen;
-//	}
-//
-//	return len - remainLen;
-//}

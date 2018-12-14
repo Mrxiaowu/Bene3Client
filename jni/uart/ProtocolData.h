@@ -237,8 +237,10 @@
 /**************************************************/
 
 typedef struct {
-	std::string textStr;
-	BYTE power;
+//	BYTE textStr;
+//	BYTE power;
+	std::string pdata;
+	int len;
 } SProtocolData;
 
 #endif /* _UART_PROTOCOL_DATA_H_ */

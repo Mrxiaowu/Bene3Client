@@ -2,11 +2,6 @@
 #include "uart/ProtocolSender.h"
 
 
-/**
- * 注册定时器
- * 填充数组用于注册定时器
- * 注意：id不能重复
- */
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -56,10 +51,13 @@ static void onUI_quit() {
 
 
 static void onProtocolDataUpdate(const SProtocolData &data) {
-
-	msnsidtextPtr->setText(data.textStr);
+	LOGD("%s data.pdata",mProtocolData.pdata);
+	if (mProtocolData.pdata != data.pdata) {
+		mProtocolData.pdata = data.pdata;
+	}
+	msnsidtextPtr->setText(mProtocolData.pdata);
+	LOGD("%s data.pdata",mProtocolData.pdata);
 }
-
 
 static bool onUI_Timer(int id){
 	switch (id) {
@@ -70,19 +68,12 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
+
 static bool onmachineInfoActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
+
 static bool onButtonClick_sys_back(ZKButton *pButton) {
 	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");

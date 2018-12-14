@@ -51,16 +51,7 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 
 }
 
-/**
- * 定时器触发函数
- * 不建议在此函数中写耗时操作，否则将影响UI刷新
- * 参数： id
- *         当前所触发定时器的id，与注册时的id相同
- * 返回值: true
- *             继续运行当前定时器
- *         false
- *             停止运行当前定时器
- */
+
 static bool onUI_Timer(int id){
 	switch (id) {
 
