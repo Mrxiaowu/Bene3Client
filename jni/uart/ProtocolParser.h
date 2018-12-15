@@ -16,4 +16,6 @@ SProtocolData& getProtocolData();
 
 void hex_to_str(char *ptr,unsigned char *buf,int len);
 
+void BYTEToString();
+
 #endif /* _UART_PROTOCOL_PARSER_H_ */

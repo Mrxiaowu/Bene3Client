@@ -6,6 +6,12 @@
 
 extern BYTE getCheckSum(const BYTE *pData, int len);
 
+bool sendSampleProtocol(BYTE data1,BYTE data2,BYTE data3,BYTE data4,BYTE data5){
+	BYTE mode[] = { data1, data2, data3, data4, data5 };
+	return sendProtocol(mode , 5);
+}
+
+
 bool sendProtocol( const BYTE *pData, BYTE len) {
 	BYTE dataBuf[256]; //TODO 字节长度有待商榷
 

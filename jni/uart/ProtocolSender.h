@@ -10,4 +10,6 @@
 
 bool sendProtocol( const BYTE *pData, BYTE len);
 
+bool sendSampleProtocol(BYTE data1,BYTE data2,BYTE data3,BYTE data4,BYTE data5);
+
 #endif /* _UART_PROTOCOL_SENDER_H_ */

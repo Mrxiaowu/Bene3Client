@@ -1,23 +1,20 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 
+//网络控制
 
-/**
- * 注册定时器
- * 填充数组用于注册定时器
- * 注意：id不能重复
- */
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
 
-/**
- * 当界面构造时触发
- */
-static void onUI_init(){
-    //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
 
+ //当界面构造时触发
+static SProtocolData mProtocolData;
+static void onUI_init(){
+	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
+	LOGD("machineInfo onUI_init !!!\n"); //00FF010101FE
+	sendSampleProtocol(0x00, 0xFF, 0x01, 0x01, 0x01);
 }
 
 /**
@@ -29,9 +26,9 @@ static void onUI_intent(const Intent *intentPtr) {
     }
 }
 
-/*
- * 当界面显示时触发
- */
+
+//当界面显示时触发
+
 static void onUI_show() {
 
 }
@@ -54,6 +51,30 @@ static void onUI_quit() {
  * 串口数据回调接口
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
+	if (mProtocolData.pdata != data.pdata) {
+		mProtocolData.pdata = data.pdata;
+	}
+
+	LOGD("%s data.pdata",mProtocolData.pdata);
+
+	if (mProtocolData.region != data.region) {
+		mProtocolData.region = data.region;
+
+	}
+
+	if(mProtocolData.region == 16){   //这里要用10进制数来运算？
+		LOGD("region == 16");
+		mmodeltextPtr->setText(mProtocolData.pdata);
+	} else if (mProtocolData.region == 18){
+		LOGD("region == 18");
+		msnsidtextPtr->setText(mProtocolData.pdata);
+	} else if(mProtocolData.region == 20){
+		LOGD("region == 20");
+		mversiontext1Ptr->setText(mProtocolData.pdata);
+	} else if(mProtocolData.region == 32){
+		LOGD("region == 32");
+		mversiontext2Ptr->setText(mProtocolData.pdata);
+	}
 
 }
 

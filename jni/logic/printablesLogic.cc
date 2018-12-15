@@ -1,22 +1,19 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 
-/**
- * 注册定时器
- * 填充数组用于注册定时器
- * 注意：id不能重复
- */
+//文件管理
+
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
 
-/**
- * 当界面构造时触发
- */
-static void onUI_init(){
-    //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
 
+static SProtocolData mProtocolData;
+static void onUI_init(){
+	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
+	LOGD("printables onUI_init !!!\n"); //00FF010201FD
+	sendSampleProtocol(0x00, 0xFF, 0x01, 0x02, 0x01);
 }
 
 /**

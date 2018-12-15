@@ -48,6 +48,26 @@ SProtocolData& getProtocolData() {
 	return sProtocolData;
 }
 
+
+//BYTE赋值给BYTE
+void BYTEToString(const BYTE *pData, UINT len){
+	LOGD("%d,len",len);
+	BYTE temp[len-1];
+	for(UINT i = 8; i < len-1; i++)
+	{
+		temp[i-8]= pData[i];
+//		LOGD("第%d次 temp=%s",(i-8),temp[i-8]);
+		LOGD("第%d次 temp=%s",(i-8),temp);
+	}
+	LOGD("(char*)temp)=%s",(char*)temp);
+	sProtocolData.pdata = (char*)temp;
+	sProtocolData.len = len-1;
+	sProtocolData.pdata[len-1] = '\0';
+	sProtocolData.region = pData[7];
+	LOGD("%d,sProtocolData.region",sProtocolData.region);
+}
+
+
 //获取校验码
 BYTE getCheckSum(const BYTE *pData, int len) {
 
@@ -84,17 +104,22 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 	LOGD("%x pData[5]", pData[5]);//Region ID
 	LOGD("%x pData[6]", pData[6]);//Type ID
 	LOGD("%x pData[7]", pData[7]);//Label ID
-//	sProtocolData.pdata = (char*)pData;
-//	sProtocolData.len = len;
-//	sProtocolData.pdata[len] = '\0';
-//	LOGD("%s data.textStr",sProtocolData.pdata);
 
 	switch(pData[3]){
 		case SWITCH_PAGE:
 			LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
 			switch(pData[4]){
+
+				case 0x03:
+					LOGD("跳转到打印设置的电机控制页面");
+					break;
+
 				case 0x05:
-					LOGD("需要跳转到networkPage页面，但这个屏幕不需要跳转了");
+					LOGD("跳转到系统设置的系统设置页面");
+					break;
+
+				case 0x06:
+					LOGD("跳转到机器控制页面，这个屏幕就不需要做什么操作了");
 					break;
 
 				case 0x0c:
@@ -108,37 +133,10 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 
 		case SET_LABEL_VALUE:
 			LOGD("当前命令为8，给label赋值");
-			switch (pData[7]){
-				case NetWorkControl_CurrentWifiValueLabelID:
-				case NetWorkControl_StaticIPValueLabelID:
-					LOGD("%x pData[7]",pData[7]);
-
-					//BYTE赋值给BYTE
-					BYTE temp[len-1];
-					for(UINT i = 8; i < len-1; i++)
-					{
-						temp[i-8]= pData[i];
-						LOGD("第%d次 temp=%s",i,temp);
-					}
-					LOGD("temp=%s",temp);
-					LOGD("(char*)temp)=%s",(char*)temp);
-					sProtocolData.pdata = (char*)temp;
-					sProtocolData.len = len-1  ;
-					sProtocolData.pdata[len-1] = '\0';
-					LOGD("sProtocolData=%s",sProtocolData.pdata);
-
-//					int i,v;
-//					char hs[30];
-//					char s[4];
-//					strcpy(hs,"e6b189e5ad97");
-//					i=0;
-//					while (1) {
-//						if (1!=sscanf(hs+i*2,"%2x",&v)) break;
-//						s[i]=(char)v;
-//						i++;
-//					}
-//					s[i]='\0';
-//					LOGD("hs=%s,s=%s\n",hs,s);
+			switch (pData[4]){
+				case MachineInfo_PageID:
+					LOGD("%x pData[4]",pData[4]);
+					BYTEToString(pData,len);
 					break;
 			}
 			break;
@@ -148,8 +146,7 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			break;
 	}
 
-	// 通知协议数据更新
-	notifyProtocolDataUpdate(sProtocolData);
+	notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 }
 
 int parseProtocol(const BYTE *pData, UINT len) {
@@ -203,12 +200,30 @@ int parseProtocol(const BYTE *pData, UINT len) {
 	return len - remainLen;
 }
 
+//BYTE赋值给BYTE
+//		BYTE temp[len-1];
+//		for(UINT i = 8; i < len-1; i++)
+//		{
+//			temp[i-8]= pData[i];
+//			LOGD("第%d次 temp=%s",i,temp);
+//		}
+//		LOGD("temp=%s",temp);
+//		LOGD("(char*)temp)=%s",(char*)temp);
+//		sProtocolData.pdata = (char*)temp;
+//		sProtocolData.len = len-1  ;
+//		sProtocolData.pdata[len-1] = '\0';
+//		LOGD("sProtocolData=%s",sProtocolData.pdata);
 
-void hex_to_str(char *ptr,unsigned char *buf,int len)
-{
-	for(int i = 0; i < len; i++)
-	{
-		sprintf(ptr, "%02x",buf[i]);
-		ptr += 2;
-	}
-}
+
+//					int i,v;
+//					char hs[30];
+//					char s[4];
+//					strcpy(hs,"e6b189e5ad97");
+//					i=0;
+//					while (1) {
+//						if (1!=sscanf(hs+i*2,"%2x",&v)) break;
+//						s[i]=(char)v;
+//						i++;
+//					}
+//					s[i]='\0';
+//					LOGD("hs=%s,s=%s\n",hs,s);

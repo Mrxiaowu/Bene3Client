@@ -1,6 +1,8 @@
 #pragma once
 #include "uart/ProtocolSender.h"
+#include "uart/ProtocolData.h"
 
+//机器控制，机器信息
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
@@ -10,11 +12,8 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 static SProtocolData mProtocolData;
 static void onUI_init(){
 	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
-	// 开始初始化页面的UI显示
-
-	LOGD("machineInfo onUI_init !!!\n"); //06FF011F01DA
-	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x1F, 0x01 };
-	sendProtocol( mode , 5);
+	LOGD("machineInfo onUI_init !!!\n"); //06FF011F01DA    05FF011901E1
+	sendSampleProtocol(0x05, 0xFF, 0x01, 0x19, 0x01);
 }
 
 /**
@@ -25,7 +24,6 @@ static void onUI_intent(const Intent *intentPtr) {
         //TODO
     	LOGD("2!!!\n"); //进不了
     }
-//    msnsidtextPtr->setText("123");
 }
 
 /*
@@ -51,12 +49,31 @@ static void onUI_quit() {
 
 
 static void onProtocolDataUpdate(const SProtocolData &data) {
-	LOGD("%s data.pdata",mProtocolData.pdata);
+
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
-	msnsidtextPtr->setText(mProtocolData.pdata);
+
 	LOGD("%s data.pdata",mProtocolData.pdata);
+
+	if (mProtocolData.region != data.region) {
+		mProtocolData.region = data.region;
+
+	}
+
+	if(mProtocolData.region == 16){   //这里要用10进制数来运算？
+		LOGD("region == 16");
+		mmodeltextPtr->setText(mProtocolData.pdata);
+	} else if (mProtocolData.region == 18){
+		LOGD("region == 18");
+		msnsidtextPtr->setText(mProtocolData.pdata);
+	} else if(mProtocolData.region == 20){
+		LOGD("region == 20");
+		mversiontext1Ptr->setText(mProtocolData.pdata);
+	} else if(mProtocolData.region == 32){
+		LOGD("region == 32");
+		mversiontext2Ptr->setText(mProtocolData.pdata);
+	}
 }
 
 static bool onUI_Timer(int id){

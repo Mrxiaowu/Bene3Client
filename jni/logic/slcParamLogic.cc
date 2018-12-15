@@ -2,36 +2,27 @@
 #include "uart/ProtocolSender.h"
 
 
-/**
- * 注册定时器
- * 填充数组用于注册定时器
- * 注意：id不能重复
- */
+//SLC参数设置
+
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
 
-/**
- * 当界面构造时触发
- */
-static void onUI_init(){
-    //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
 
+static void onUI_init(){
+	LOGD("slcParam onUI_init !!!\n"); //00FF010301FC
+	sendSampleProtocol(0x03, 0xFF, 0x01, 0x14, 0x01);//03FF011401E8
 }
 
-/**
- * 当切换到该界面时触发
- */
+
 static void onUI_intent(const Intent *intentPtr) {
     if (intentPtr != NULL) {
         //TODO
     }
 }
 
-/*
- * 当界面显示时触发
- */
+
 static void onUI_show() {
 
 }
