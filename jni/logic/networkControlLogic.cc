@@ -59,23 +59,21 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 
 	if (mProtocolData.region != data.region) {
 		mProtocolData.region = data.region;
-
 	}
 
-	if(mProtocolData.region == 16){   //这里要用10进制数来运算？
-		LOGD("region == 16");
-		mmodeltextPtr->setText(mProtocolData.pdata);
-	} else if (mProtocolData.region == 18){
-		LOGD("region == 18");
-		msnsidtextPtr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.region == 20){
-		LOGD("region == 20");
-		mversiontext1Ptr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.region == 32){
-		LOGD("region == 32");
-		mversiontext2Ptr->setText(mProtocolData.pdata);
-	}
-
+//	if(mProtocolData.region == 16){   //这里要用10进制数来运算？
+//		LOGD("region == 16");
+//		mmodeltextPtr->setText(mProtocolData.pdata);
+//	} else if (mProtocolData.region == 18){
+//		LOGD("region == 18");
+//		msnsidtextPtr->setText(mProtocolData.pdata);
+//	} else if(mProtocolData.region == 20){
+//		LOGD("region == 20");
+//		mversiontext1Ptr->setText(mProtocolData.pdata);
+//	} else if(mProtocolData.region == 32){
+//		LOGD("region == 32");
+//		mversiontext2Ptr->setText(mProtocolData.pdata);
+//	}
 }
 
 /**
@@ -119,4 +117,12 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 
 static void onEditTextChanged_Edittext1(const std::string &text) {
     //LOGD(" onEditTextChanged_ Edittext1 %s !!!\n", text.c_str());
+}
+static void onEditTextChanged_accessPointText(const std::string &text) {
+    //LOGD(" onEditTextChanged_ accessPointText %s !!!\n", text.c_str());
+}
+
+static bool onButtonClick_sure(ZKButton *pButton) {
+    //LOGD(" ButtonClick sure !!!\n");
+    return false;
 }

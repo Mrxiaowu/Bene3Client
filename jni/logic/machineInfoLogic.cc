@@ -96,3 +96,12 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	LOGD(" ButtonClick sys_back !!!\n");
 	return false;
 }
+static bool onButtonClick_chinese(ZKButton *pButton) {
+	EASYUICONTEXT->updateLocalesCode("zh_CN"); //设置为中文
+    return false;
+}
+
+static bool onButtonClick_english(ZKButton *pButton) {
+	EASYUICONTEXT->updateLocalesCode("en_US"); //设置为英文
+    return false;
+}

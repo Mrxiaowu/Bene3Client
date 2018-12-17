@@ -82,10 +82,10 @@ const char* IconTab[]={
 		"printablesActivity",
 		"printJobActivity",
 		"printSettingActivity",
-		"systemSettingActivity",
 		"networkControlActivity",
 		"machineInfoActivity",
-		"slcParamActivity"
+		"slcParamActivity",
+		"publicWindowActivity"
 };
 
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {

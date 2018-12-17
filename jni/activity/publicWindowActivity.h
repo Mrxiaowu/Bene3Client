@@ -1,8 +1,8 @@
 /***********************************************
 /gen auto by zuitools
 ***********************************************/
-#ifndef __NETWORKCONTROLACTIVITY_H__
-#define __NETWORKCONTROLACTIVITY_H__
+#ifndef __PUBLICWINDOWACTIVITY_H__
+#define __PUBLICWINDOWACTIVITY_H__
 
 
 #include "app/Activity.h"
@@ -26,21 +26,9 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_NETWORKCONTROL_Edittext1    51002
-#define ID_NETWORKCONTROL_sure    20001
-#define ID_NETWORKCONTROL_dynamicIPText    50009
-#define ID_NETWORKCONTROL_dynamicIP    50008
-#define ID_NETWORKCONTROL_staticIPText    50006
-#define ID_NETWORKCONTROL_WifiIP    50005
-#define ID_NETWORKCONTROL_currentWifi    50004
-#define ID_NETWORKCONTROL_accessPointText    51001
-#define ID_NETWORKCONTROL_password    50002
-#define ID_NETWORKCONTROL_accessPoint    50001
-#define ID_NETWORKCONTROL_Textview3    50003
-#define ID_NETWORKCONTROL_sys_back   100
 /*TAG:Macro宏ID END*/
 
-class networkControlActivity : public Activity, 
+class publicWindowActivity : public Activity, 
                      public ZKSeekBar::ISeekBarChangeListener, 
                      public ZKListView::IItemClickListener,
                      public ZKListView::AbsListAdapter,
@@ -50,8 +38,8 @@ class networkControlActivity : public Activity,
                      public ZKVideoView::IVideoPlayerMessageListener
 {
 public:
-    networkControlActivity();
-    virtual ~networkControlActivity();
+    publicWindowActivity();
+    virtual ~publicWindowActivity();
 
     /**
      * 注册定时器
