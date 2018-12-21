@@ -4,10 +4,15 @@
 #include "printablesActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mpageNumberPtr;
+static ZKButton* mpageDownPtr;
+static ZKButton* mpageUpPtr;
+static ZKButton* mfileList2Ptr;
+static ZKButton* mfileList3Ptr;
+static ZKButton* mfileList1Ptr;
 static ZKButton* mdeletePtr;
 static ZKButton* mUSBPtr;
 static ZKButton* mprintPtr;
-static ZKListView* mListview1Ptr;
 static ZKButton* msys_backPtr;
 static printablesActivity* mActivityPtr;
 
@@ -46,6 +51,11 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTABLES_pageDown, onButtonClick_pageDown,
+    ID_PRINTABLES_pageUp, onButtonClick_pageUp,
+    ID_PRINTABLES_fileList2, onButtonClick_fileList2,
+    ID_PRINTABLES_fileList3, onButtonClick_fileList3,
+    ID_PRINTABLES_fileList1, onButtonClick_fileList1,
     ID_PRINTABLES_delete, onButtonClick_delete,
     ID_PRINTABLES_USB, onButtonClick_USB,
     ID_PRINTABLES_print, onButtonClick_print,
@@ -75,7 +85,6 @@ typedef struct {
 }S_ListViewFunctionsCallback;
 /*TAG:ListViewFunctionsCallback*/
 static S_ListViewFunctionsCallback SListViewFunctionsCallbackTab[] = {
-    ID_PRINTABLES_Listview1, getListItemCount_Listview1, obtainListItemData_Listview1, onListItemClick_Listview1,
 };
 
 
@@ -131,10 +140,15 @@ const char* printablesActivity::getAppName() const{
 //TAG:onCreate
 void printablesActivity::onCreate() {
 	Activity::onCreate();
+    mpageNumberPtr = (ZKTextView*)findControlByID(ID_PRINTABLES_pageNumber);
+    mpageDownPtr = (ZKButton*)findControlByID(ID_PRINTABLES_pageDown);
+    mpageUpPtr = (ZKButton*)findControlByID(ID_PRINTABLES_pageUp);
+    mfileList2Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_fileList2);
+    mfileList3Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_fileList3);
+    mfileList1Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_fileList1);
     mdeletePtr = (ZKButton*)findControlByID(ID_PRINTABLES_delete);
     mUSBPtr = (ZKButton*)findControlByID(ID_PRINTABLES_USB);
     mprintPtr = (ZKButton*)findControlByID(ID_PRINTABLES_print);
-    mListview1Ptr = (ZKListView*)findControlByID(ID_PRINTABLES_Listview1);if(mListview1Ptr!= NULL){mListview1Ptr->setListAdapter(this);mListview1Ptr->setItemClickListener(this);}
     msys_backPtr = (ZKButton*)findControlByID(ID_PRINTABLES_sys_back);
 	mActivityPtr = this;
 	onUI_init();

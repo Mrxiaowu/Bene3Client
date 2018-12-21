@@ -51,18 +51,40 @@ static void onUI_quit() {
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(mProtocolData.page != 2){
+//		LOGD("当前读取的串口信息中的PageID不为2");
+		return;
+	}
+
+	if (mProtocolData.pdata != data.pdata) {
+		mProtocolData.pdata = data.pdata;
+	}
+	if(mProtocolData.page != data.page){
+		mProtocolData.page = data.page;
+	}
+	if(mProtocolData.type != data.type){
+		mProtocolData.type = data.type;
+	}
+	if(mProtocolData.buttonIndex != data.buttonIndex){
+		mProtocolData.buttonIndex = data.buttonIndex;
+	}
+	LOGD("%s data.pdata",mProtocolData.pdata);
+
+	if(mProtocolData.type == 16){
+		LOGD("当前的buttonIndex=%d",mProtocolData.buttonIndex);
+		if(mProtocolData.buttonIndex == 0){
+			mfileList1Ptr->setText(mProtocolData.pdata);
+		} else if(mProtocolData.buttonIndex == 1){
+			mfileList2Ptr->setText(mProtocolData.pdata);
+		} else if(mProtocolData.buttonIndex == 2){
+			mfileList3Ptr->setText(mProtocolData.pdata);
+		}
+	} else if(mProtocolData.type == 4){
+		mpageNumberPtr->setText(mProtocolData.pdata);
+	}
 }
 
-/**
- * 定时器触发函数
- * 不建议在此函数中写耗时操作，否则将影响UI刷新
- * 参数： id
- *         当前所触发定时器的id，与注册时的id相同
- * 返回值: true
- *             继续运行当前定时器
- *         false
- *             停止运行当前定时器
- */
+
 static bool onUI_Timer(int id){
 	switch (id) {
 
@@ -72,15 +94,7 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
+
 static bool onprintablesActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
@@ -92,18 +106,7 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	LOGD(" ButtonClick sys_back !!!\n");
 	return false;
 }
-static int getListItemCount_Listview1(const ZKListView *pListView) {
-    //LOGD("getListItemCount_Listview1 !\n");
-    return 3;
-}
 
-static void obtainListItemData_Listview1(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index) {
-    //LOGD(" obtainListItemData_ Listview1  !!!\n");
-}
-
-static void onListItemClick_Listview1(ZKListView *pListView, int index, int id) {
-    //LOGD(" onListItemClick_ Listview1  !!!\n");
-}
 
 static bool onButtonClick_print(ZKButton *pButton) {
 	LOGD(" onButtonClick_print !!!\n");//02FF010601F7
@@ -123,5 +126,36 @@ static bool onButtonClick_delete(ZKButton *pButton) {
 	LOGD(" onButtonClick_delete !!!\n"); //02FF010501F8
 	BYTE mode[] = { 0x02, 0xFF, 0x01, 0x05, 0x01 };
 	sendProtocol( mode , 5);
+	return true;
+}
+
+static bool onButtonClick_fileList1(ZKButton *pButton) {
+	LOGD(" ButtonClick fileList1 !!!\n");//02FF10010100ED 第一行
+	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x00};
+	sendProtocol(mode , 6);
+	return true;
+}
+
+static bool onButtonClick_fileList2(ZKButton *pButton) {
+    LOGD(" ButtonClick fileList2 !!!\n");//02FF10010101EC
+	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x01};
+	sendProtocol(mode , 6);
+	return true;
+}
+
+static bool onButtonClick_fileList3(ZKButton *pButton) {
+    LOGD(" ButtonClick fileList3 !!!\n");//02FF10010102EB
+	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x02};
+	sendProtocol(mode , 6);
+    return true;
+}
+
+static bool onButtonClick_pageUp(ZKButton *pButton) {
+	sendSampleProtocol(0x02, 0xFF, 0x01, 0x08, 0x01);//上页 02FF010801F5
+	return true;
+}
+
+static bool onButtonClick_pageDown(ZKButton *pButton) {
+	sendSampleProtocol(0x02, 0xFF, 0x01, 0x09, 0x01);//下页 02FF010901F4
 	return true;
 }

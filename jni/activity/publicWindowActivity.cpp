@@ -4,6 +4,12 @@
 #include "publicWindowActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mButton7Ptr;
+static ZKButton* mButton6Ptr;
+static ZKButton* mButton5Ptr;
+static ZKButton* mButton3Ptr;
+static ZKButton* mButton2Ptr;
+static ZKButton* mButton1Ptr;
 static publicWindowActivity* mActivityPtr;
 
 /*register activity*/
@@ -41,6 +47,12 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PUBLICWINDOW_Button7, onButtonClick_Button7,
+    ID_PUBLICWINDOW_Button6, onButtonClick_Button6,
+    ID_PUBLICWINDOW_Button5, onButtonClick_Button5,
+    ID_PUBLICWINDOW_Button3, onButtonClick_Button3,
+    ID_PUBLICWINDOW_Button2, onButtonClick_Button2,
+    ID_PUBLICWINDOW_Button1, onButtonClick_Button1,
 };
 /***************/
 
@@ -121,6 +133,12 @@ const char* publicWindowActivity::getAppName() const{
 //TAG:onCreate
 void publicWindowActivity::onCreate() {
 	Activity::onCreate();
+    mButton7Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button7);
+    mButton6Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button6);
+    mButton5Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button5);
+    mButton3Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button3);
+    mButton2Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button2);
+    mButton1Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button1);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 

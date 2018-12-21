@@ -239,7 +239,13 @@
 typedef struct {
 	std::string pdata;
 	int len;
+
+	BYTE buttonIndex;
+
+	BYTE page;
 	BYTE region;
+	BYTE type;
+	BYTE label;
 } SProtocolData;
 
 #endif /* _UART_PROTOCOL_DATA_H_ */

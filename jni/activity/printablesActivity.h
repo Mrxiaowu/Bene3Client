@@ -26,11 +26,15 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_PRINTABLES_SubItem1    20004
+#define ID_PRINTABLES_pageNumber    50001
+#define ID_PRINTABLES_pageDown    20008
+#define ID_PRINTABLES_pageUp    20007
+#define ID_PRINTABLES_fileList2    20006
+#define ID_PRINTABLES_fileList3    20005
+#define ID_PRINTABLES_fileList1    20004
 #define ID_PRINTABLES_delete    20003
 #define ID_PRINTABLES_USB    20002
 #define ID_PRINTABLES_print    20001
-#define ID_PRINTABLES_Listview1    80001
 #define ID_PRINTABLES_sys_back   100
 /*TAG:Macro宏ID END*/
 

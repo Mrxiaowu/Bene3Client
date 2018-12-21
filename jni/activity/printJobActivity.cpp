@@ -4,9 +4,9 @@
 #include "printJobActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mstopPtr;
+static ZKButton* mcancellPtr;
 static ZKWindow* mWindow1Ptr;
-static ZKButton* mButton2Ptr;
-static ZKButton* mButton1Ptr;
 static ZKSeekBar* mSeekbar1Ptr;
 static ZKButton* msys_backPtr;
 static printJobActivity* mActivityPtr;
@@ -46,8 +46,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_PRINTJOB_Button2, onButtonClick_Button2,
-    ID_PRINTJOB_Button1, onButtonClick_Button1,
+    ID_PRINTJOB_stop, onButtonClick_stop,
+    ID_PRINTJOB_cancell, onButtonClick_cancell,
     ID_PRINTJOB_sys_back, onButtonClick_sys_back,
 };
 /***************/
@@ -130,9 +130,9 @@ const char* printJobActivity::getAppName() const{
 //TAG:onCreate
 void printJobActivity::onCreate() {
 	Activity::onCreate();
+    mstopPtr = (ZKButton*)findControlByID(ID_PRINTJOB_stop);
+    mcancellPtr = (ZKButton*)findControlByID(ID_PRINTJOB_cancell);
     mWindow1Ptr = (ZKWindow*)findControlByID(ID_PRINTJOB_Window1);
-    mButton2Ptr = (ZKButton*)findControlByID(ID_PRINTJOB_Button2);
-    mButton1Ptr = (ZKButton*)findControlByID(ID_PRINTJOB_Button1);
     mSeekbar1Ptr = (ZKSeekBar*)findControlByID(ID_PRINTJOB_Seekbar1);if(mSeekbar1Ptr!= NULL){mSeekbar1Ptr->setSeekBarChangeListener(this);}
     msys_backPtr = (ZKButton*)findControlByID(ID_PRINTJOB_sys_back);
 	mActivityPtr = this;

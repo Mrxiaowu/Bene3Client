@@ -142,3 +142,12 @@ static bool onButtonClick_Button5(ZKButton *pButton) {
     //LOGD(" ButtonClick Button5 !!!\n");
     return false;
 }
+static bool onButtonClick_Button6(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button6 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button7(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button7 !!!\n");
+    return false;
+}

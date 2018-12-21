@@ -26,6 +26,12 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PUBLICWINDOW_Button7    20007
+#define ID_PUBLICWINDOW_Button6    20006
+#define ID_PUBLICWINDOW_Button5    20005
+#define ID_PUBLICWINDOW_Button3    20003
+#define ID_PUBLICWINDOW_Button2    20002
+#define ID_PUBLICWINDOW_Button1    20001
 /*TAG:Macro宏ID END*/
 
 class publicWindowActivity : public Activity, 

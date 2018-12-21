@@ -12,7 +12,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 static SProtocolData mProtocolData;
 static void onUI_init(){
 	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
-	LOGD("machineInfo onUI_init !!!\n"); //06FF011F01DA    05FF011901E1
+	LOGD("machineInfo onUI_init !!!\n"); //05FF011901E1
 	sendSampleProtocol(0x05, 0xFF, 0x01, 0x19, 0x01);
 }
 
@@ -56,22 +56,21 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 
 	LOGD("%s data.pdata",mProtocolData.pdata);
 
-	if (mProtocolData.region != data.region) {
-		mProtocolData.region = data.region;
-
+	if (mProtocolData.label != data.label) {
+		mProtocolData.label = data.label;
 	}
 
-	if(mProtocolData.region == 16){   //这里要用10进制数来运算？
-		LOGD("region == 16");
+	if(mProtocolData.label == 16){   //这里要用10进制数来运算？
+		LOGD("label == 16");
 		mmodeltextPtr->setText(mProtocolData.pdata);
-	} else if (mProtocolData.region == 18){
-		LOGD("region == 18");
+	} else if (mProtocolData.label == 18){
+		LOGD("label == 18");
 		msnsidtextPtr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.region == 20){
-		LOGD("region == 20");
+	} else if(mProtocolData.label == 20){
+		LOGD("label == 20");
 		mversiontext1Ptr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.region == 32){
-		LOGD("region == 32");
+	} else if(mProtocolData.label == 32){
+		LOGD("label == 32");
 		mversiontext2Ptr->setText(mProtocolData.pdata);
 	}
 }

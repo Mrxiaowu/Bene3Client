@@ -51,20 +51,30 @@ SProtocolData& getProtocolData() {
 
 //BYTE赋值给BYTE
 void BYTEToString(const BYTE *pData, UINT len){
-	LOGD("%d,len",len);
+	LOGD("串口长度=%d",len);
 	BYTE temp[len-1];
-	for(UINT i = 8; i < len-1; i++)
+
+	UINT pDataStartIndex = 7;
+	if(pData[6] == 16){
+		pDataStartIndex = 8;
+	}
+
+
+	for(UINT i = pDataStartIndex; i < len-1; i++)
 	{
-		temp[i-8]= pData[i];
-//		LOGD("第%d次 temp=%s",(i-8),temp[i-8]);
+		temp[i-(pDataStartIndex+1)]= pData[i];
 		LOGD("第%d次 temp=%s",(i-8),temp);
 	}
 	LOGD("(char*)temp)=%s",(char*)temp);
 	sProtocolData.pdata = (char*)temp;
 	sProtocolData.len = len-1;
 	sProtocolData.pdata[len-1] = '\0';
-	sProtocolData.region = pData[7];
-	LOGD("%d,sProtocolData.region",sProtocolData.region);
+
+	sProtocolData.page = pData[4];
+	sProtocolData.region = pData[5];
+	sProtocolData.type = pData[6];
+	sProtocolData.label = pData[7];
+	sProtocolData.buttonIndex = pData[8];
 }
 
 
@@ -98,29 +108,17 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 //			break;
 //		}
 
-	LOGD("%x pData[2]", pData[2]);// 长度
-	LOGD("%x pData[3]", pData[3]);//CMD_ID
-	LOGD("%x pData[4]", pData[4]);//Page_ID
-	LOGD("%x pData[5]", pData[5]);//Region ID
-	LOGD("%x pData[6]", pData[6]);//Type ID
-	LOGD("%x pData[7]", pData[7]);//Label ID
+	LOGD("%x 长度ID", pData[2]);// 长度
+	LOGD("%x CMD_ID", pData[3]);//CMD_ID
+	LOGD("%x PageID", pData[4]);//Page_ID
+	LOGD("%x Region_ID", pData[5]);//Region ID
+	LOGD("%x Type_ID", pData[6]);//Type ID
+	LOGD("%x labelID", pData[7]);//Label ID
 
 	switch(pData[3]){
 		case SWITCH_PAGE:
 			LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
 			switch(pData[4]){
-
-				case 0x03:
-					LOGD("跳转到打印设置的电机控制页面");
-					break;
-
-				case 0x05:
-					LOGD("跳转到系统设置的系统设置页面");
-					break;
-
-				case 0x06:
-					LOGD("跳转到机器控制页面，这个屏幕就不需要做什么操作了");
-					break;
 
 				case 0x0c:
 					LOGD("开机LOGO，认证信息");
@@ -128,17 +126,21 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 					BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
 					sendProtocol(mode , 5);
 					break;
+
+//				default:
+//					LOGD("跳转页面命令，不需要再跳转了");
+//					break;
 			}
 			break;
 
 		case SET_LABEL_VALUE:
 			LOGD("当前命令为8，给label赋值");
-			switch (pData[4]){
-				case MachineInfo_PageID:
-					LOGD("%x pData[4]",pData[4]);
+//			switch (pData[4]){
+//				case MachineInfo_PageID:
+					LOGD("页面ID=%x",pData[4]);
 					BYTEToString(pData,len);
-					break;
-			}
+//					break;
+//			}
 			break;
 
 		default :
@@ -199,31 +201,3 @@ int parseProtocol(const BYTE *pData, UINT len) {
 	}
 	return len - remainLen;
 }
-
-//BYTE赋值给BYTE
-//		BYTE temp[len-1];
-//		for(UINT i = 8; i < len-1; i++)
-//		{
-//			temp[i-8]= pData[i];
-//			LOGD("第%d次 temp=%s",i,temp);
-//		}
-//		LOGD("temp=%s",temp);
-//		LOGD("(char*)temp)=%s",(char*)temp);
-//		sProtocolData.pdata = (char*)temp;
-//		sProtocolData.len = len-1  ;
-//		sProtocolData.pdata[len-1] = '\0';
-//		LOGD("sProtocolData=%s",sProtocolData.pdata);
-
-
-//					int i,v;
-//					char hs[30];
-//					char s[4];
-//					strcpy(hs,"e6b189e5ad97");
-//					i=0;
-//					while (1) {
-//						if (1!=sscanf(hs+i*2,"%2x",&v)) break;
-//						s[i]=(char)v;
-//						i++;
-//					}
-//					s[i]='\0';
-//					LOGD("hs=%s,s=%s\n",hs,s);

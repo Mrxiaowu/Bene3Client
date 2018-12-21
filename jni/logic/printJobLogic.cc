@@ -99,12 +99,14 @@ static void onProgressChanged_Seekbar1(ZKSeekBar *pSeekBar, int progress) {
     //LOGD(" ProgressChanged Seekbar1 %d !!!\n", progress);
 }
 
-static bool onButtonClick_Button1(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button1 !!!\n");
+static bool onButtonClick_cancell(ZKButton *pButton) {
+    LOGD(" ButtonClick cancell !!!\n");//09FF012A01CC
+	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2A, 0x01);
     return false;
 }
 
-static bool onButtonClick_Button2(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button2 !!!\n");
+static bool onButtonClick_stop(ZKButton *pButton) {
+    LOGD(" ButtonClick stop !!!\n");//09FF012C01CA
+    sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
     return false;
 }
