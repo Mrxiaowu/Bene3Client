@@ -1,6 +1,7 @@
 #include "machineInfoActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mTextview1Ptr;
 static ZKTextView* mtranslatePtr;
 static ZKButton* menglishPtr;
 static ZKButton* mchinesePtr;
@@ -132,6 +133,7 @@ const char* machineInfoActivity::getAppName() const{
 //TAG:onCreate
 void machineInfoActivity::onCreate() {
 	Activity::onCreate();
+    mTextview1Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_Textview1);
     mtranslatePtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_translate);
     menglishPtr = (ZKButton*)findControlByID(ID_MACHINEINFO_english);
     mchinesePtr = (ZKButton*)findControlByID(ID_MACHINEINFO_chinese);

@@ -51,29 +51,37 @@ static void onUI_quit() {
  * 串口数据回调接口
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
+	if(mProtocolData.page != 5){
+		LOGD("当前读取的串口信息中的PageID不为5");
+		return;
+	}
+
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
-
+	if(mProtocolData.page != data.page){
+		mProtocolData.page = data.page;
+	}
+	if(mProtocolData.type != data.type){
+		mProtocolData.type = data.type;
+	}
+	if(mProtocolData.buttonIndex != data.buttonIndex){
+		mProtocolData.buttonIndex = data.buttonIndex;
+	}
 	LOGD("%s data.pdata",mProtocolData.pdata);
 
-	if (mProtocolData.region != data.region) {
-		mProtocolData.region = data.region;
+	if(mProtocolData.type == 16){
+		LOGD("label=%d",mProtocolData.label);
+		if(mProtocolData.label == 10){
+			mfileList1Ptr->setText(mProtocolData.pdata);
+		} else if(mProtocolData.label == 12){
+			mfileList2Ptr->setText(mProtocolData.pdata);
+		} else if(mProtocolData.buttonIndex == 14){
+			mfileList3Ptr->setText(mProtocolData.pdata);
+		}
+	} else if(mProtocolData.type == 4){
+		mpageNumberPtr->setText(mProtocolData.pdata);
 	}
-
-//	if(mProtocolData.region == 16){   //这里要用10进制数来运算？
-//		LOGD("region == 16");
-//		mmodeltextPtr->setText(mProtocolData.pdata);
-//	} else if (mProtocolData.region == 18){
-//		LOGD("region == 18");
-//		msnsidtextPtr->setText(mProtocolData.pdata);
-//	} else if(mProtocolData.region == 20){
-//		LOGD("region == 20");
-//		mversiontext1Ptr->setText(mProtocolData.pdata);
-//	} else if(mProtocolData.region == 32){
-//		LOGD("region == 32");
-//		mversiontext2Ptr->setText(mProtocolData.pdata);
-//	}
 }
 
 

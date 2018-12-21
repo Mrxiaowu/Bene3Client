@@ -79,12 +79,12 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
 }
 
 const char* IconTab[]={
-		"printablesActivity",
 		"printJobActivity",
-		"printSettingActivity",
+		"printablesActivity",
 		"networkControlActivity",
 		"machineInfoActivity",
-		"slcParamActivity",
+		"printSettingActivity",
+		"slcParamActivity", //这差一个错误信息页面
 		"publicWindowActivity"
 };
 

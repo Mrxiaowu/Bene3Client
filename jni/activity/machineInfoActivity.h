@@ -23,6 +23,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_MACHINEINFO_Textview1    50009
 #define ID_MACHINEINFO_translate    50008
 #define ID_MACHINEINFO_english    20002
 #define ID_MACHINEINFO_chinese    20001

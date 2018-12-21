@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">你好世界</string>
-    <string name="model">型号</string>
+    <string name="Language">语言</string>
+    <string name="version">版本信息</string>
+    <string name="hardware">硬件信息</string>
+    <string name="Wlan">无线网</string>
+    <string name="Password">密码</string>
+    <string name="CurrentWifi">当前wifi</string>
+    <string name="staticIP">静态IP</string>
+    <string name="dynamicIP">动态IP</string>
+    <string name="save">保存</string>
+    <string name="PgUp">上页</string>
+    <string name="PgDn">下页</string>
+    <string name="PrintJob">打印任务</string>
+    <string name="File">文件管理</string>
+    <string name="Network">网络控制</string>
+    <string name="MachineInfo">机器信息</string>
+    <string name="PrintSetting">电机移动</string>
+    <string name="SLC Param">SLC参数设置</string>
+    <string name="CheckInfo">检查</string>
+    <string name="PublicPage">公共页面</string>
 </resources>

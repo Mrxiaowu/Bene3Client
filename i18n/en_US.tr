@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">Hello world!</string>
-    <string name="model">model</string>
+    <string name="Language">Language</string>
+    <string name="version">version</string>
+    <string name="hardware">hardware</string>
+    <string name="Wlan">Wlan</string>
+    <string name="Password">Password</string>
+    <string name="CurrentWifi">CurrentWifi</string>
+    <string name="staticIP">staticIP</string>
+    <string name="dynamicIP">dynamicIP</string>
+    <string name="save">save</string>
+    <string name="PgUp">PgUp</string>
+    <string name="PgDn">PgDn</string>
+    <string name="PrintJob">PrintJob</string>
+    <string name="File">File</string>
+    <string name="Network">Network</string>
+    <string name="MachineInfo">MachineInfo</string>
+    <string name="PrintSetting">PrintSetting</string>
+    <string name="SLC Param">SLC Param</string>
+    <string name="CheckInfo">CheckInfo</string>
+    <string name="PublicPage">PublicPage</string>
 </resources>

@@ -4,6 +4,7 @@
 #include "networkControlActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mstaticIPPtr;
 static ZKButton* msurePtr;
 static ZKTextView* mdynamicIPTextPtr;
 static ZKTextView* mdynamicIPPtr;
@@ -13,7 +14,6 @@ static ZKTextView* mcurrentWifiPtr;
 static ZKEditText* maccessPointTextPtr;
 static ZKTextView* mpasswordPtr;
 static ZKTextView* maccessPointPtr;
-static ZKTextView* mTextview3Ptr;
 static ZKEditText* mEdittext1Ptr;
 static ZKButton* msys_backPtr;
 static networkControlActivity* mActivityPtr;
@@ -137,6 +137,7 @@ const char* networkControlActivity::getAppName() const{
 //TAG:onCreate
 void networkControlActivity::onCreate() {
 	Activity::onCreate();
+    mstaticIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_staticIP);
     msurePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sure);
     mdynamicIPTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIPText);
     mdynamicIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIP);
@@ -146,7 +147,6 @@ void networkControlActivity::onCreate() {
     maccessPointTextPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_accessPointText);if(maccessPointTextPtr!= NULL){maccessPointTextPtr->setTextChangeListener(this);}
     mpasswordPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_password);
     maccessPointPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_accessPoint);
-    mTextview3Ptr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_Textview3);
     mEdittext1Ptr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_Edittext1);if(mEdittext1Ptr!= NULL){mEdittext1Ptr->setTextChangeListener(this);}
     msys_backPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sys_back);
 	mActivityPtr = this;

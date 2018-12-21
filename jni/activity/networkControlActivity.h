@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_NETWORKCONTROL_staticIP    50003
 #define ID_NETWORKCONTROL_Edittext1    51002
 #define ID_NETWORKCONTROL_sure    20001
 #define ID_NETWORKCONTROL_dynamicIPText    50009
@@ -36,7 +37,6 @@
 #define ID_NETWORKCONTROL_accessPointText    51001
 #define ID_NETWORKCONTROL_password    50002
 #define ID_NETWORKCONTROL_accessPoint    50001
-#define ID_NETWORKCONTROL_Textview3    50003
 #define ID_NETWORKCONTROL_sys_back   100
 /*TAG:Macro宏ID END*/
 
