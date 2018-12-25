@@ -53,9 +53,15 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
-
-	LOGD("%s data.pdata",mProtocolData.pdata);
-
+	if(mProtocolData.page != data.page){
+		mProtocolData.page = data.page;
+	}
+	if(mProtocolData.type != data.type){
+		mProtocolData.type = data.type;
+	}
+	if(mProtocolData.buttonIndex != data.buttonIndex){
+		mProtocolData.buttonIndex = data.buttonIndex;
+	}
 	if (mProtocolData.label != data.label) {
 		mProtocolData.label = data.label;
 	}

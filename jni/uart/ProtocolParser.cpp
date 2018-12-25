@@ -52,23 +52,29 @@ SProtocolData& getProtocolData() {
 //BYTE赋值给BYTE
 void BYTEToString(const BYTE *pData, UINT len){
 	LOGD("串口长度=%d",len);
-	BYTE temp[len-1];
 
-	UINT pDataStartIndex = 7;
+	UINT pDataStart = 9; //一般是从第9个数据开始读取
 	if(pData[6] == 16){
-		pDataStartIndex = 8;
+		pDataStart = 10;
 	}
-
+	UINT pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
+	BYTE temp[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
 
 	for(UINT i = pDataStartIndex; i < len-1; i++)
 	{
-		temp[i-(pDataStartIndex+1)]= pData[i];
-		LOGD("第%d次 temp=%s",(i-8),temp);
+		temp[i-pDataStartIndex]= pData[i];
 	}
 	LOGD("(char*)temp)=%s",(char*)temp);
+
+
+	for (UINT i = 0; i < (len-pDataStartIndex-1); ++i) { //发现数据和自己预期的不对时，首先将数据全部打印出来！！
+		LOGD("temp1 DEBUG %x", temp[i]);
+	}
+	LOGD("\n");
+
 	sProtocolData.pdata = (char*)temp;
-	sProtocolData.len = len-1;
-	sProtocolData.pdata[len-1] = '\0';
+//	sProtocolData.len = len-1;
+//	sProtocolData.pdata[len-1] = '\0';
 
 	sProtocolData.page = pData[4];
 	sProtocolData.region = pData[5];
@@ -100,13 +106,6 @@ BYTE getCheckSum(const BYTE *pData, int len) {
  * 解析每一帧数据
  */
 static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的所有数据，len是一帧的总长度
-
-//	switch (MAKEWORD(pData[2], pData[3])) {
-//		case CMDID_POWER:
-//			sProtocolData.power = pData[5];
-//			LOGD("power status:%d",sProtocolData.power);
-//			break;
-//		}
 
 	LOGD("%x 长度ID", pData[2]);// 长度
 	LOGD("%x CMD_ID", pData[3]);//CMD_ID

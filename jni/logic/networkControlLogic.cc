@@ -51,36 +51,35 @@ static void onUI_quit() {
  * 串口数据回调接口
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
-	if(mProtocolData.page != 5){
-		LOGD("当前读取的串口信息中的PageID不为5");
-		return;
+
+	if(mProtocolData.page != data.page){
+		mProtocolData.page = data.page;
 	}
 
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
-	if(mProtocolData.page != data.page){
-		mProtocolData.page = data.page;
-	}
+
 	if(mProtocolData.type != data.type){
 		mProtocolData.type = data.type;
 	}
-	if(mProtocolData.buttonIndex != data.buttonIndex){
-		mProtocolData.buttonIndex = data.buttonIndex;
+
+	if(mProtocolData.page != 5){
+		LOGD("当前读取的串口信息中的PageID不为5");
+		return;
 	}
+
 	LOGD("%s data.pdata",mProtocolData.pdata);
 
-	if(mProtocolData.type == 16){
-		LOGD("label=%d",mProtocolData.label);
+	if(mProtocolData.type == 4){
+		LOGD("当前读取的网络管理页面的label=%d",mProtocolData.label);
 		if(mProtocolData.label == 10){
-			mfileList1Ptr->setText(mProtocolData.pdata);
+			mWifiIPPtr->setText(mProtocolData.pdata);
 		} else if(mProtocolData.label == 12){
-			mfileList2Ptr->setText(mProtocolData.pdata);
-		} else if(mProtocolData.buttonIndex == 14){
-			mfileList3Ptr->setText(mProtocolData.pdata);
+			mstaticIPTextPtr->setText(mProtocolData.pdata);
+		} else if(mProtocolData.label == 14){
+			mdynamicIPTextPtr->setText(mProtocolData.pdata);
 		}
-	} else if(mProtocolData.type == 4){
-		mpageNumberPtr->setText(mProtocolData.pdata);
 	}
 }
 

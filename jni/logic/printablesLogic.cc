@@ -51,11 +51,6 @@ static void onUI_quit() {
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
-	if(mProtocolData.page != 2){
-//		LOGD("当前读取的串口信息中的PageID不为2");
-		return;
-	}
-
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
@@ -69,6 +64,11 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		mProtocolData.buttonIndex = data.buttonIndex;
 	}
 	LOGD("%s data.pdata",mProtocolData.pdata);
+
+	if(mProtocolData.page != 2){
+		LOGD("当前读取的串口信息中的PageID不为2");
+		return;
+	}
 
 	if(mProtocolData.type == 16){
 		LOGD("当前的buttonIndex=%d",mProtocolData.buttonIndex);
