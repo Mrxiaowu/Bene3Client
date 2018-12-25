@@ -113,15 +113,15 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	return false;
 }
 
-static void onEditTextChanged_Edittext1(const std::string &text) {
-    //LOGD(" onEditTextChanged_ Edittext1 %s !!!\n", text.c_str());
-}
 static void onEditTextChanged_accessPointText(const std::string &text) {
-    //LOGD(" onEditTextChanged_ accessPointText %s !!!\n", text.c_str());
+    LOGD(" 标准事 %s !!!\n", text.c_str());
 }
 
 static bool onButtonClick_sure(ZKButton *pButton) {
-    //LOGD(" ButtonClick sure !!!\n");05FF011C01DE
-	sendSampleProtocol(0x05, 0xFF, 0x01, 0x1C, 0x01);//确定按钮
+	sendSampleProtocol(0x05, 0xFF, 0x01, 0x1C, 0x01);
     return true;
+}
+
+static void onEditTextChanged_passwordText(const std::string &text) {
+	LOGD(" 正在输入键盘值 %s !!!\n", text.c_str());
 }

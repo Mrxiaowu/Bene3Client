@@ -95,10 +95,9 @@ BYTE getCheckSum(const BYTE *pData, int len) {
 #endif
 
 	int sum = 0;
-	for (int i = 0; i < len; ++i) {
+	for (int i = 0; i < len; ++i){
 		sum += pData[i];
 	}
-
 	return (BYTE) (~sum + 1);
 }
 

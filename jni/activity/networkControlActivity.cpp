@@ -4,6 +4,7 @@
 #include "networkControlActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKEditText* mpasswordTextPtr;
 static ZKTextView* mstaticIPPtr;
 static ZKButton* msurePtr;
 static ZKTextView* mdynamicIPTextPtr;
@@ -14,7 +15,6 @@ static ZKTextView* mcurrentWifiPtr;
 static ZKEditText* maccessPointTextPtr;
 static ZKTextView* mpasswordPtr;
 static ZKTextView* maccessPointPtr;
-static ZKEditText* mEdittext1Ptr;
 static ZKButton* msys_backPtr;
 static networkControlActivity* mActivityPtr;
 
@@ -100,8 +100,8 @@ typedef struct {
 }S_EditTextInputCallback;
 /*TAG:EditTextInputCallback*/
 static S_EditTextInputCallback SEditTextInputCallbackTab[] = {
+    ID_NETWORKCONTROL_passwordText, onEditTextChanged_passwordText,
     ID_NETWORKCONTROL_accessPointText, onEditTextChanged_accessPointText,
-    ID_NETWORKCONTROL_Edittext1, onEditTextChanged_Edittext1,
 };
 
 typedef void (*VideoViewCallback)(ZKVideoView *pVideoView, int msg);
@@ -137,6 +137,7 @@ const char* networkControlActivity::getAppName() const{
 //TAG:onCreate
 void networkControlActivity::onCreate() {
 	Activity::onCreate();
+    mpasswordTextPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_passwordText);if(mpasswordTextPtr!= NULL){mpasswordTextPtr->setTextChangeListener(this);}
     mstaticIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_staticIP);
     msurePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sure);
     mdynamicIPTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIPText);
@@ -147,7 +148,6 @@ void networkControlActivity::onCreate() {
     maccessPointTextPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_accessPointText);if(maccessPointTextPtr!= NULL){maccessPointTextPtr->setTextChangeListener(this);}
     mpasswordPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_password);
     maccessPointPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_accessPoint);
-    mEdittext1Ptr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_Edittext1);if(mEdittext1Ptr!= NULL){mEdittext1Ptr->setTextChangeListener(this);}
     msys_backPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sys_back);
 	mActivityPtr = this;
 	onUI_init();
