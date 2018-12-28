@@ -4,6 +4,7 @@
 
 //机器控制，机器信息
 
+
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -50,6 +51,11 @@ static void onUI_quit() {
 
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(data.page != 6){
+		LOGD("当前读取的串口信息中的PageID不为6");
+		return;
+	}
+
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
@@ -58,6 +64,9 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 	if(mProtocolData.type != data.type){
 		mProtocolData.type = data.type;
+	}
+	if (mProtocolData.region != data.region) {
+		mProtocolData.region = data.region;
 	}
 	if(mProtocolData.buttonIndex != data.buttonIndex){
 		mProtocolData.buttonIndex = data.buttonIndex;
@@ -83,7 +92,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 
 static bool onUI_Timer(int id){
 	switch (id) {
-
 		default:
 			break;
 	}
@@ -92,7 +100,6 @@ static bool onUI_Timer(int id){
 
 
 static bool onmachineInfoActivityTouchEvent(const MotionEvent &ev) {
-
 	return false;
 }
 

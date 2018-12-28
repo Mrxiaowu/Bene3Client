@@ -51,24 +51,23 @@ static void onUI_quit() {
  * 串口数据回调接口
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
+	if(data.page != 5){
+		LOGD("当前读取的串口信息中的PageID不为6");
+		return;
+	}
 
 	if(mProtocolData.page != data.page){
 		mProtocolData.page = data.page;
 	}
-
 	if (mProtocolData.pdata != data.pdata) {
 		mProtocolData.pdata = data.pdata;
 	}
-
+	if (mProtocolData.region != data.region) {
+		mProtocolData.region = data.region;
+	}
 	if(mProtocolData.type != data.type){
 		mProtocolData.type = data.type;
 	}
-
-	if(mProtocolData.page != 5){
-		LOGD("当前读取的串口信息中的PageID不为5");
-		return;
-	}
-
 	LOGD("%s data.pdata",mProtocolData.pdata);
 
 	if(mProtocolData.type == 4){
@@ -122,6 +121,22 @@ static bool onButtonClick_sure(ZKButton *pButton) {
     return true;
 }
 
+//仿照这个格式
+//AA 55 17 47 58 48 32 30 31 52 54 33 35 49 43 34 38 33 32 5F 31 2E 30 2E 31 31 3F
 static void onEditTextChanged_passwordText(const std::string &text) {
-	LOGD(" 正在输入键盘值 %s !!!\n", text.c_str());
+	LOGD(" 正在输入键盘值 %s 密码长度 %d", text.c_str(),strlen(text.c_str()));
+
+	UINT passWordLength = strlen(text.c_str()) + 1;
+	BYTE passwordData[passWordLength];
+
+	passwordData[0] = 0x48;
+	for (UINT i = 1; i <= (strlen(text.c_str())); i++) {
+		LOGD("text %x", text.c_str()[i-1]);
+		passwordData[i] = text.c_str()[i-1];
+	}
+
+	for (UINT i = 0; i < passWordLength; i++) {
+		LOGD("passwordData %x", passwordData[i]);
+	}
+	sendProtocol(passwordData , passWordLength);
 }

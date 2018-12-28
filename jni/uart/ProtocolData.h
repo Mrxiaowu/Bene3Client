@@ -8,6 +8,7 @@
 #define CMDID_POWER							0x0
 
 /***UART CMD*************/
+#define SEND_IMAGE      0
 #define SWITCH_PAGE      3
 #define SWITCH_REGION    4
 #define SET_LABEL_VALUE  8
@@ -246,6 +247,8 @@ typedef struct {
 	BYTE region;
 	BYTE type;
 	BYTE label;
+
+	BYTE *imageData;
 } SProtocolData;
 
 #endif /* _UART_PROTOCOL_DATA_H_ */

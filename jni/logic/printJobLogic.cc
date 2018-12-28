@@ -1,9 +1,69 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 
+typedef struct                       /**** BMP file header structure ****/
+{
+    unsigned int   bfSize;           /* Size of file */
+    unsigned short bfReserved1;      /* Reserved */
+    unsigned short bfReserved2;      /* ... */
+    unsigned int   bfOffBits;        /* Offset to bitmap data */
+} BITMAPFILEHEADER;
+
+typedef struct                       /**** BMP file info structure ****/
+{
+    unsigned int   biSize;           /* Size of info header */
+    int            biWidth;          /* Width of image */
+    int            biHeight;         /* Height of image */
+    unsigned short biPlanes;         /* Number of color planes */
+    unsigned short biBitCount;       /* Number of bits per pixel */
+    unsigned int   biCompression;    /* Type of compression to use */
+    unsigned int   biSizeImage;      /* Size of image data */
+    int            biXPelsPerMeter;  /* X pixels per meter */
+    int            biYPelsPerMeter;  /* Y pixels per meter */
+    unsigned int   biClrUsed;        /* Number of colors used */
+    unsigned int   biClrImportant;   /* Number of important colors */
+} BITMAPINFOHEADER;
+
+void MySaveBmp(const char *filename,unsigned char *rgbbuf,int width,int height)
+{
+    BITMAPFILEHEADER bfh;
+    BITMAPINFOHEADER bih;
+    /* Magic number for file. It does not fit in the header structure due to alignment requirements, so put it outside */
+    unsigned short bfType=0x4d42;
+    bfh.bfReserved1 = 0;
+    bfh.bfReserved2 = 0;
+    bfh.bfSize = 2+sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER)+width*height*3;
+    bfh.bfOffBits = 0x36;
+
+    bih.biSize = sizeof(BITMAPINFOHEADER);
+    bih.biWidth = width;
+    bih.biHeight = height;
+    bih.biPlanes = 1;
+    bih.biBitCount = 24;
+    bih.biCompression = 0;
+    bih.biSizeImage = 0;
+    bih.biXPelsPerMeter = 5000;
+    bih.biYPelsPerMeter = 5000;
+    bih.biClrUsed = 0;
+    bih.biClrImportant = 0;
+
+    FILE *file = fopen(filename, "wb");
+    if (!file)
+    {
+        printf("Could not write file\n");
+        return;
+    }
+
+    /*Write headers*/
+    fwrite(&bfType,sizeof(bfType),1,file);
+    fwrite(&bfh,sizeof(bfh),1, file);
+    fwrite(&bih,sizeof(bih),1, file);
+
+    fwrite(rgbbuf,width*height*3,1,file);
+    fclose(file);
+}
 
 //打印任务
-
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -12,6 +72,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 /**
  * 当界面构造时触发
  */
+static SProtocolData mProtocolData;
 static void onUI_init(){
 	LOGD("printjob onUI_init !!!\n"); //06FF011F01DA
 	sendSampleProtocol(0x06, 0xFF, 0x01, 0x1F, 0x01);
@@ -50,8 +111,37 @@ static void onUI_quit() {
 /**
  * 串口数据回调接口
  */
+
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(data.page != 9){
+		LOGD("当前读取的串口信息中的PageID不为9");
+		return;
+	} else {
+		LOGD("进入打印任务页面");
+	}
+
+	if (mProtocolData.pdata != data.pdata) {
+		mProtocolData.pdata = data.pdata;
+	}
+	if(mProtocolData.page != data.page){
+		mProtocolData.page = data.page;
+	}
+	if (mProtocolData.region != data.region) {
+		mProtocolData.region = data.region;
+	}
+	if(mProtocolData.type != data.type){
+		mProtocolData.type = data.type;
+	}
+	if (mProtocolData.label != data.label) {
+		mProtocolData.label = data.label;
+	}
+	LOGD("%s data.pdata",mProtocolData.pdata);
+
+	if(mProtocolData.region == 16 && mProtocolData.type == 10 && mProtocolData.label == 2){
+		LOGD("这是在传输图片");
+		MySaveBmp("/mnt/extsd/ui/1.jpg", mProtocolData.imageData, 200, 112);
+	}
 }
 
 /**
@@ -108,5 +198,7 @@ static bool onButtonClick_cancell(ZKButton *pButton) {
 static bool onButtonClick_stop(ZKButton *pButton) {
     LOGD(" ButtonClick stop !!!\n");//09FF012C01CA
     sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
+    mstopPtr->setBackgroundPic("/mnt/extsd/ui/bitmap.png");
+//    mstopPtr->setBackgroundPic("/mnt/extsd/ui/1.jpg");
     return false;
 }
