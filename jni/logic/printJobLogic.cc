@@ -114,6 +114,9 @@ static void onUI_quit() {
 
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(mProtocolData.page != data.page){
+		mProtocolData.page = data.page;
+	}
 	if(data.page != 9){
 		LOGD("当前读取的串口信息中的PageID不为9");
 		return;
@@ -121,12 +124,11 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		LOGD("进入打印任务页面");
 	}
 
-	if (mProtocolData.pdata != data.pdata) {
-		mProtocolData.pdata = data.pdata;
+	if (mProtocolData.imageData != data.imageData) {
+		mProtocolData.imageData = data.imageData;
 	}
-	if(mProtocolData.page != data.page){
-		mProtocolData.page = data.page;
-	}
+	LOGD("实际数据: %x" , mProtocolData.imageData);
+
 	if (mProtocolData.region != data.region) {
 		mProtocolData.region = data.region;
 	}
@@ -136,11 +138,10 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	if (mProtocolData.label != data.label) {
 		mProtocolData.label = data.label;
 	}
-	LOGD("%s data.pdata",mProtocolData.pdata);
 
 	if(mProtocolData.region == 16 && mProtocolData.type == 10 && mProtocolData.label == 2){
 		LOGD("这是在传输图片");
-		MySaveBmp("/mnt/extsd/ui/1.jpg", mProtocolData.imageData, 200, 112);
+		MySaveBmp("/mnt/extsd/1.png", mProtocolData.imageData, 200, 112);
 	}
 }
 
@@ -191,6 +192,7 @@ static void onProgressChanged_Seekbar1(ZKSeekBar *pSeekBar, int progress) {
 
 static bool onButtonClick_cancell(ZKButton *pButton) {
     LOGD(" ButtonClick cancell !!!\n");//09FF012A01CC
+    mcancellPtr->setBackgroundPic("/mnt/extsd/ui/bitmap.png");
 	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2A, 0x01);
     return false;
 }
@@ -198,7 +200,7 @@ static bool onButtonClick_cancell(ZKButton *pButton) {
 static bool onButtonClick_stop(ZKButton *pButton) {
     LOGD(" ButtonClick stop !!!\n");//09FF012C01CA
     sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
-    mstopPtr->setBackgroundPic("/mnt/extsd/ui/bitmap.png");
-//    mstopPtr->setBackgroundPic("/mnt/extsd/ui/1.jpg");
+//    mstopPtr->setBackgroundPic("/mnt/extsd/ui/bitmap.png");
+    mstopPtr->setBackgroundPic("/mnt/extsd/1.png");
     return false;
 }

@@ -248,7 +248,7 @@ typedef struct {
 	BYTE type;
 	BYTE label;
 
-	BYTE *imageData;
+	unsigned char *imageData;
 } SProtocolData;
 
 #endif /* _UART_PROTOCOL_DATA_H_ */

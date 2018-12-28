@@ -119,18 +119,22 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			UINT pDataStart = 11; //图片是从第9个数据开始读取
 			UINT pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
 			BYTE temp[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
-//
-//			for(UINT i = pDataStartIndex; i < len-1; i++)
-//			{
-//				temp[i-pDataStartIndex] = pData[i];
-//				sProtocolData.imageData[i-pDataStartIndex] = pData[i] ;
-//			}
-//			sProtocolData.imageData = temp;
-//			sProtocolData.pdata = (char*)temp;
+
+			for(UINT i = pDataStartIndex; i < len-1; i++)
+			{
+				temp[i-pDataStartIndex] = pData[i];
+//				LOGD("pData[i]: %x" , pData[i]);
+			}
+			sProtocolData.imageData = (unsigned char*)temp;
+
+			LOGD("sProtocolData.imageData: %x" , temp);
+			LOGD("sProtocolData.imageData: %x" , sProtocolData.imageData);
+
 			sProtocolData.page = pData[6]; //9
 			sProtocolData.region = pData[7];//16
 			sProtocolData.type = pData[8];//10
 			sProtocolData.label = pData[9];//2
+			LOGD("page:%x region:%x type:%x label:%x",pData[6],pData[7],pData[8],pData[9]);
 		}
 	} else {
 		switch(pData[3]){
