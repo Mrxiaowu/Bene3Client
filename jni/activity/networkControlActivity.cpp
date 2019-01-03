@@ -4,17 +4,13 @@
 #include "networkControlActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKEditText* mpasswordTextPtr;
-static ZKTextView* mstaticIPPtr;
-static ZKButton* msurePtr;
-static ZKTextView* mdynamicIPTextPtr;
-static ZKTextView* mdynamicIPPtr;
-static ZKTextView* mstaticIPTextPtr;
-static ZKTextView* mWifiIPPtr;
-static ZKTextView* mcurrentWifiPtr;
-static ZKEditText* maccessPointTextPtr;
-static ZKTextView* mpasswordPtr;
-static ZKTextView* maccessPointPtr;
+static ZKWindow* mWindow2Ptr;
+static ZKButton* mnetworkSettingPtr;
+static ZKTextView* mcurrentWIFITextPtr;
+static ZKTextView* mCurrentWifiPtr;
+static ZKWindow* mWindow1Ptr;
+static ZKTextView* mnetworkTextPtr;
+static ZKButton* mlinePtr;
 static ZKButton* msys_backPtr;
 static networkControlActivity* mActivityPtr;
 
@@ -53,7 +49,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_NETWORKCONTROL_sure, onButtonClick_sure,
+    ID_NETWORKCONTROL_networkSetting, onButtonClick_networkSetting,
+    ID_NETWORKCONTROL_line, onButtonClick_line,
     ID_NETWORKCONTROL_sys_back, onButtonClick_sys_back,
 };
 /***************/
@@ -100,8 +97,6 @@ typedef struct {
 }S_EditTextInputCallback;
 /*TAG:EditTextInputCallback*/
 static S_EditTextInputCallback SEditTextInputCallbackTab[] = {
-    ID_NETWORKCONTROL_passwordText, onEditTextChanged_passwordText,
-    ID_NETWORKCONTROL_accessPointText, onEditTextChanged_accessPointText,
 };
 
 typedef void (*VideoViewCallback)(ZKVideoView *pVideoView, int msg);
@@ -137,17 +132,13 @@ const char* networkControlActivity::getAppName() const{
 //TAG:onCreate
 void networkControlActivity::onCreate() {
 	Activity::onCreate();
-    mpasswordTextPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_passwordText);if(mpasswordTextPtr!= NULL){mpasswordTextPtr->setTextChangeListener(this);}
-    mstaticIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_staticIP);
-    msurePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sure);
-    mdynamicIPTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIPText);
-    mdynamicIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIP);
-    mstaticIPTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_staticIPText);
-    mWifiIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_WifiIP);
-    mcurrentWifiPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_currentWifi);
-    maccessPointTextPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_accessPointText);if(maccessPointTextPtr!= NULL){maccessPointTextPtr->setTextChangeListener(this);}
-    mpasswordPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_password);
-    maccessPointPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_accessPoint);
+    mWindow2Ptr = (ZKWindow*)findControlByID(ID_NETWORKCONTROL_Window2);
+    mnetworkSettingPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_networkSetting);
+    mcurrentWIFITextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_currentWIFIText);
+    mCurrentWifiPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_CurrentWifi);
+    mWindow1Ptr = (ZKWindow*)findControlByID(ID_NETWORKCONTROL_Window1);
+    mnetworkTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_networkText);
+    mlinePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_line);
     msys_backPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sys_back);
 	mActivityPtr = this;
 	onUI_init();

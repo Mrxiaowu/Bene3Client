@@ -70,16 +70,16 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 	LOGD("%s data.pdata",mProtocolData.pdata);
 
-	if(mProtocolData.type == 4){
-		LOGD("当前读取的网络管理页面的label=%d",mProtocolData.label);
-		if(mProtocolData.label == 10){
-			mWifiIPPtr->setText(mProtocolData.pdata);
-		} else if(mProtocolData.label == 12){
-			mstaticIPTextPtr->setText(mProtocolData.pdata);
-		} else if(mProtocolData.label == 14){
-			mdynamicIPTextPtr->setText(mProtocolData.pdata);
-		}
-	}
+//	if(mProtocolData.type == 4){
+//		LOGD("当前读取的网络管理页面的label=%d",mProtocolData.label);
+//		if(mProtocolData.label == 10){
+//			mWifiIPPtr->setText(mProtocolData.pdata);
+//		} else if(mProtocolData.label == 12){
+//			mstaticIPTextPtr->setText(mProtocolData.pdata);
+//		} else if(mProtocolData.label == 14){
+//			mdynamicIPTextPtr->setText(mProtocolData.pdata);
+//		}
+//	}
 }
 
 
@@ -139,4 +139,17 @@ static void onEditTextChanged_passwordText(const std::string &text) {
 		LOGD("passwordData %x", passwordData[i]);
 	}
 	sendProtocol(passwordData , passWordLength);
+}
+static bool onButtonClick_line(ZKButton *pButton) {
+    //LOGD(" ButtonClick line !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button1(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button1 !!!\n");
+    return false;
+}
+static bool onButtonClick_networkSetting(ZKButton *pButton) {
+    //LOGD(" ButtonClick networkSetting !!!\n");
+    return false;
 }

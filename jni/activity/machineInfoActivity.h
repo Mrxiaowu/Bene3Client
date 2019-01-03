@@ -23,17 +23,22 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_MACHINEINFO_Textview1    50009
-#define ID_MACHINEINFO_translate    50008
-#define ID_MACHINEINFO_english    20002
-#define ID_MACHINEINFO_chinese    20001
-#define ID_MACHINEINFO_versiontext2    50007
-#define ID_MACHINEINFO_versiontext1    50006
-#define ID_MACHINEINFO_version    50005
-#define ID_MACHINEINFO_snsidtext    50004
-#define ID_MACHINEINFO_modeltext    50003
-#define ID_MACHINEINFO_snsid    50002
-#define ID_MACHINEINFO_model    50001
+#define ID_MACHINEINFO_english    20006
+#define ID_MACHINEINFO_chinese    20002
+#define ID_MACHINEINFO_language    20001
+#define ID_MACHINEINFO_Window3    110003
+#define ID_MACHINEINFO_versionText2    50003
+#define ID_MACHINEINFO_version    20005
+#define ID_MACHINEINFO_versionText1    50004
+#define ID_MACHINEINFO_Window2    110002
+#define ID_MACHINEINFO_snsidText    50002
+#define ID_MACHINEINFO_snsid    50001
+#define ID_MACHINEINFO_hardware    20004
+#define ID_MACHINEINFO_modelText    50012
+#define ID_MACHINEINFO_model    50011
+#define ID_MACHINEINFO_Window1    110001
+#define ID_MACHINEINFO_machineInfoPage    50010
+#define ID_MACHINEINFO_line    20003
 #define ID_MACHINEINFO_sys_back   100
 /*TAG:Macro宏ID END*/
 

@@ -1,15 +1,20 @@
 #include "machineInfoActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKTextView* mTextview1Ptr;
-static ZKTextView* mtranslatePtr;
+static ZKButton* mlanguagePtr;
+static ZKWindow* mWindow3Ptr;
+static ZKTextView* mversionText2Ptr;
+static ZKButton* mversionPtr;
+static ZKTextView* mversionText1Ptr;
+static ZKWindow* mWindow2Ptr;
+static ZKTextView* msnsidTextPtr;
+static ZKButton* mhardwarePtr;
+static ZKTextView* mmodelTextPtr;
+static ZKWindow* mWindow1Ptr;
+static ZKTextView* mmachineInfoPagePtr;
+static ZKButton* mlinePtr;
 static ZKButton* menglishPtr;
 static ZKButton* mchinesePtr;
-static ZKTextView* mversiontext2Ptr;
-static ZKTextView* mversiontext1Ptr;
-static ZKTextView* mversionPtr;
-static ZKTextView* msnsidtextPtr;
-static ZKTextView* mmodeltextPtr;
 static ZKTextView* msnsidPtr;
 static ZKTextView* mmodelPtr;
 static ZKButton* msys_backPtr;
@@ -50,6 +55,10 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_MACHINEINFO_language, onButtonClick_language,
+    ID_MACHINEINFO_version, onButtonClick_version,
+    ID_MACHINEINFO_hardware, onButtonClick_hardware,
+    ID_MACHINEINFO_line, onButtonClick_line,
     ID_MACHINEINFO_english, onButtonClick_english,
     ID_MACHINEINFO_chinese, onButtonClick_chinese,
     ID_MACHINEINFO_sys_back, onButtonClick_sys_back,
@@ -133,15 +142,20 @@ const char* machineInfoActivity::getAppName() const{
 //TAG:onCreate
 void machineInfoActivity::onCreate() {
 	Activity::onCreate();
-    mTextview1Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_Textview1);
-    mtranslatePtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_translate);
+    mlanguagePtr = (ZKButton*)findControlByID(ID_MACHINEINFO_language);
+    mWindow3Ptr = (ZKWindow*)findControlByID(ID_MACHINEINFO_Window3);
+    mversionText2Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_versionText2);
+    mversionPtr = (ZKButton*)findControlByID(ID_MACHINEINFO_version);
+    mversionText1Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_versionText1);
+    mWindow2Ptr = (ZKWindow*)findControlByID(ID_MACHINEINFO_Window2);
+    msnsidTextPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_snsidText);
+    mhardwarePtr = (ZKButton*)findControlByID(ID_MACHINEINFO_hardware);
+    mmodelTextPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_modelText);
+    mWindow1Ptr = (ZKWindow*)findControlByID(ID_MACHINEINFO_Window1);
+    mmachineInfoPagePtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_machineInfoPage);
+    mlinePtr = (ZKButton*)findControlByID(ID_MACHINEINFO_line);
     menglishPtr = (ZKButton*)findControlByID(ID_MACHINEINFO_english);
     mchinesePtr = (ZKButton*)findControlByID(ID_MACHINEINFO_chinese);
-    mversiontext2Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_versiontext2);
-    mversiontext1Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_versiontext1);
-    mversionPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_version);
-    msnsidtextPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_snsidtext);
-    mmodeltextPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_modeltext);
     msnsidPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_snsid);
     mmodelPtr = (ZKTextView*)findControlByID(ID_MACHINEINFO_model);
     msys_backPtr = (ZKButton*)findControlByID(ID_MACHINEINFO_sys_back);

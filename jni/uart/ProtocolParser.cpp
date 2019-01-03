@@ -123,7 +123,7 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			for(UINT i = pDataStartIndex; i < len-1; i++)
 			{
 				temp[i-pDataStartIndex] = pData[i];
-//				LOGD("pData[i]: %x" , pData[i]);
+//				LOGD("pData[i]: %x" , pData[i]); //日志太多，注释掉
 			}
 			sProtocolData.imageData = (unsigned char*)temp;
 

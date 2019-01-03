@@ -2,7 +2,7 @@
 <resources>
     <string name="hello_world">Hello world!</string>
     <string name="Language">Language</string>
-    <string name="version">version</string>
+    
     <string name="hardware">hardware</string>
     <string name="Wlan">Wlan</string>
     <string name="Password">Password</string>
@@ -20,4 +20,13 @@
     <string name="SLC Param">SLC Param</string>
     <string name="CheckInfo">CheckInfo</string>
     <string name="PublicPage">PublicPage</string>
+    
+    <string name="machineInfoPage">MachineInfo</string>
+    <string name="hardware">Hardware</string>
+    <string name="model">Model</string>
+    <string name="snsid">Snsid</string>
+    <string name="version">Version</string>
+    <string name="language">Language</string>
+    <string name="chinese">中文</string>
+    <string name="english">English</string>
 </resources>

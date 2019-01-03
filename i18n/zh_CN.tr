@@ -20,4 +20,13 @@
     <string name="SLC Param">SLC参数设置</string>
     <string name="CheckInfo">检查</string>
     <string name="PublicPage">公共页面</string>
+    
+    <string name="machineInfoPage">机器信息</string>
+    <string name="hardware">硬件信息</string>
+    <string name="model">型号</string>
+    <string name="snsid">序列号</string>
+    <string name="version">版本信息</string>
+    <string name="language">语言</string>
+    <string name="chinese">中文</string>
+    <string name="english">English</string>
 </resources>

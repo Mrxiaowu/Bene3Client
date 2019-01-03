@@ -75,19 +75,19 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		mProtocolData.label = data.label;
 	}
 
-	if(mProtocolData.label == 16){   //这里要用10进制数来运算？
-		LOGD("label == 16");
-		mmodeltextPtr->setText(mProtocolData.pdata);
-	} else if (mProtocolData.label == 18){
-		LOGD("label == 18");
-		msnsidtextPtr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.label == 20){
-		LOGD("label == 20");
-		mversiontext1Ptr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.label == 32){
-		LOGD("label == 32");
-		mversiontext2Ptr->setText(mProtocolData.pdata);
-	}
+//	if(mProtocolData.label == 16){   //这里要用10进制数来运算？
+//		LOGD("label == 16");
+//		mmodeltextPtr->setText(mProtocolData.pdata);
+//	} else if (mProtocolData.label == 18){
+//		LOGD("label == 18");
+//		msnsidtextPtr->setText(mProtocolData.pdata);
+//	} else if(mProtocolData.label == 20){
+//		LOGD("label == 20");
+//		mversiontext1Ptr->setText(mProtocolData.pdata);
+//	} else if(mProtocolData.label == 32){
+//		LOGD("label == 32");
+//		mversiontext2Ptr->setText(mProtocolData.pdata);
+//	}
 }
 
 static bool onUI_Timer(int id){
@@ -115,5 +115,28 @@ static bool onButtonClick_chinese(ZKButton *pButton) {
 
 static bool onButtonClick_english(ZKButton *pButton) {
 	EASYUICONTEXT->updateLocalesCode("en_US"); //设置为英文
+    return false;
+}
+static bool onButtonClick_line(ZKButton *pButton) {
+    //LOGD(" ButtonClick line !!!\n");
+    return false;
+}
+
+static bool onButtonClick_hardware(ZKButton *pButton) {
+    //LOGD(" ButtonClick hardware !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button1(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button1 !!!\n");
+    return false;
+}
+static bool onButtonClick_version(ZKButton *pButton) {
+    //LOGD(" ButtonClick version !!!\n");
+    return false;
+}
+
+static bool onButtonClick_language(ZKButton *pButton) {
+    //LOGD(" ButtonClick language !!!\n");
     return false;
 }
