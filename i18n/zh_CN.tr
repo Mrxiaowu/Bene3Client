@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">你好世界</string>
-    <string name="Language">语言</string>
-    <string name="version">版本信息</string>
-    <string name="hardware">硬件信息</string>
+
     <string name="Wlan">无线网</string>
     <string name="Password">密码</string>
     <string name="CurrentWifi">当前wifi</string>
@@ -29,4 +27,6 @@
     <string name="language">语言</string>
     <string name="chinese">中文</string>
     <string name="english">English</string>
+    
+    <string name="motorControl">电机控制</string>
 </resources>

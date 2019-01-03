@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">Hello world!</string>
-    <string name="Language">Language</string>
-    
-    <string name="hardware">hardware</string>
+
+
     <string name="Wlan">Wlan</string>
     <string name="Password">Password</string>
     <string name="CurrentWifi">CurrentWifi</string>
@@ -29,4 +28,6 @@
     <string name="language">Language</string>
     <string name="chinese">中文</string>
     <string name="english">English</string>
+    
+    <string name="motorControl">motorControl</string>
 </resources>
