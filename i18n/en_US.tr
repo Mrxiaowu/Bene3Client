@@ -36,5 +36,8 @@
     <string name="PgDn">PgDn</string>
     
     <string name="printjob">PrintJob</string>
+    <string name="filename">FileName</string>
+    <string name="time">PrintTime</string>
+    
     
 </resources>

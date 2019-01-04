@@ -1,7 +1,6 @@
 #ifndef __MACHINEINFOACTIVITY_H__
 #define __MACHINEINFOACTIVITY_H__
 
-
 #include "app/Activity.h"
 #include "entry/EasyUIContext.h"
 

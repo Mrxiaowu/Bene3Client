@@ -1,7 +1,5 @@
-
 #ifndef __LOGOACTIVITY_H__
 #define __LOGOACTIVITY_H__
-
 
 #include "app/Activity.h"
 #include "entry/EasyUIContext.h"

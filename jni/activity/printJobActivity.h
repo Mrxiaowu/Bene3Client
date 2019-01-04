@@ -26,10 +26,21 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTJOB_printstatusText    50014
+#define ID_PRINTJOB_layerspeedText    50013
+#define ID_PRINTJOB_layerText    50012
+#define ID_PRINTJOB_yzhouText    50011
+#define ID_PRINTJOB_printtimeText    50009
+#define ID_PRINTJOB_filenameText    50008
+#define ID_PRINTJOB_filename    50007
+#define ID_PRINTJOB_printTime    50006
+#define ID_PRINTJOB_printstatus    50005
+#define ID_PRINTJOB_layerspeed    50004
+#define ID_PRINTJOB_layer    50003
+#define ID_PRINTJOB_yzhou    50002
+#define ID_PRINTJOB_printImage    50001
 #define ID_PRINTJOB_printjob    50010
-#define ID_PRINTJOB_y    50002
 #define ID_PRINTJOB_line    20005
-#define ID_PRINTJOB_Textview1    50001
 #define ID_PRINTJOB_Circlebar1    130001
 #define ID_PRINTJOB_stop    20002
 #define ID_PRINTJOB_cancell    20001

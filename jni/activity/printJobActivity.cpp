@@ -1,13 +1,21 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
 #include "printJobActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mprintstatusTextPtr;
+static ZKTextView* mlayerspeedTextPtr;
+static ZKTextView* mlayerTextPtr;
+static ZKTextView* myzhouTextPtr;
+static ZKTextView* mprinttimeTextPtr;
+static ZKTextView* mfilenameTextPtr;
+static ZKTextView* mfilenamePtr;
+static ZKTextView* mprintTimePtr;
+static ZKTextView* mprintstatusPtr;
+static ZKTextView* mlayerspeedPtr;
+static ZKTextView* mlayerPtr;
+static ZKTextView* myzhouPtr;
+static ZKTextView* mprintImagePtr;
 static ZKTextView* mprintjobPtr;
-static ZKTextView* myPtr;
 static ZKButton* mlinePtr;
-static ZKTextView* mTextview1Ptr;
 static ZKCircleBar* mCirclebar1Ptr;
 static ZKButton* mstopPtr;
 static ZKButton* mcancellPtr;
@@ -133,10 +141,21 @@ const char* printJobActivity::getAppName() const{
 //TAG:onCreate
 void printJobActivity::onCreate() {
 	Activity::onCreate();
+    mprintstatusTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printstatusText);
+    mlayerspeedTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerspeedText);
+    mlayerTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerText);
+    myzhouTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_yzhouText);
+    mprinttimeTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printtimeText);
+    mfilenameTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_filenameText);
+    mfilenamePtr = (ZKTextView*)findControlByID(ID_PRINTJOB_filename);
+    mprintTimePtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printTime);
+    mprintstatusPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printstatus);
+    mlayerspeedPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerspeed);
+    mlayerPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layer);
+    myzhouPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_yzhou);
+    mprintImagePtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printImage);
     mprintjobPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printjob);
-    myPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_y);
     mlinePtr = (ZKButton*)findControlByID(ID_PRINTJOB_line);
-    mTextview1Ptr = (ZKTextView*)findControlByID(ID_PRINTJOB_Textview1);
     mCirclebar1Ptr = (ZKCircleBar*)findControlByID(ID_PRINTJOB_Circlebar1);
     mstopPtr = (ZKButton*)findControlByID(ID_PRINTJOB_stop);
     mcancellPtr = (ZKButton*)findControlByID(ID_PRINTJOB_cancell);

@@ -34,4 +34,6 @@
      <string name="PgDn">下页</string>
      
      <string name="printjob">打印任务</string>
+     <string name="filename">文件名</string>
+    <string name="time">打印时间</string>
 </resources>

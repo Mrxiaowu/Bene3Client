@@ -61,8 +61,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 	if (mProtocolData.imageData != data.imageData) {
 		mProtocolData.imageData = data.imageData;
 	}
-	LOGD("实际数据: %x" , mProtocolData.imageData);
-
 	if (mProtocolData.region != data.region) {
 		mProtocolData.region = data.region;
 	}
@@ -72,32 +70,59 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 	if (mProtocolData.label != data.label) {
 		mProtocolData.label = data.label;
 	}
+	if (mProtocolData.pdata != data.pdata) {
+		mProtocolData.pdata = data.pdata;
+	}
 
 
-	mCirclebar1Ptr->setProgress(16);
-
-	int dw = 200, dh = 200;
-	int n = 3;	// rgb
-
-	uint8_t *buffer = (uint8_t *) malloc(dw * dh * n); // 存储转化后的图像数据
-	memset(buffer, 0xFF, dw * dh * n);	// 对数组清零
-
-	for(int i =0;i < dh;i++){
-		for(int w =0;w < dw;w++){
-			if(i < dh/3){
-				buffer[i*dw*3+w*3]=buffer[i*dw*3+w*3+1]=buffer[i*dw*3+w*3+2]= 0xFF;
-			}else if(i < dh*2/3){
-				buffer[i*dw*3+w*3]=buffer[i*dw*3+w*3+1]=buffer[i*dw*3+w*3+2]= 0x00;
-			}else{
-				buffer[i*dw*3+w*3]=buffer[i*dw*3+w*3+1]=buffer[i*dw*3+w*3+2]=0x00;
+	LOGD("data.pdata=%s , %s",data.pdata,mProtocolData.pdata);
+	if(mProtocolData.region == 16){
+		if(mProtocolData.type == 1){
+			if(mProtocolData.label == 45){
+				myzhouTextPtr->setText(mProtocolData.pdata);
+			} else if(mProtocolData.label == 46){
+				mlayerTextPtr->setText(mProtocolData.pdata);
+			} else if(mProtocolData.label == 47){
+				mlayerspeedTextPtr->setText(mProtocolData.pdata);
+			} else if(mProtocolData.label == 48){
+				mprintstatusTextPtr->setText(mProtocolData.pdata);
 			}
+		} else if(mProtocolData.type == 4 && mProtocolData.label == 22){
+			mfilenameTextPtr->setText(mProtocolData.pdata);
+		}
+	} else if(mProtocolData.region == 17){
+		if(mProtocolData.type == 4 && mProtocolData.label == 23){
+			mprinttimeTextPtr->setText(mProtocolData.pdata);
+		} else if(mProtocolData.type == 12 && mProtocolData.label == 0){
+
+			LOGD("打印进度 %d",mProtocolData.pdata);
+			mCirclebar1Ptr->setProgress(16);
 		}
 	}
 
-	int ret = stbi_write_jpg("/mnt/extsd/3.jpg", dw, dh, n, buffer, 100);
-	printf("ret %d\n", ret);
 
-	LOGD("保存完毕");
+//	int dw = 200, dh = 200;
+//	int n = 3;	// rgb
+//
+//	uint8_t *buffer = (uint8_t *) malloc(dw * dh * n); // 存储转化后的图像数据
+//	memset(buffer, 0xFF, dw * dh * n);	// 对数组清零
+//
+//	for(int i =0;i < dh;i++){
+//		for(int w =0;w < dw;w++){
+//			if(i < dh/3){
+//				buffer[i*dw*3+w*3]=buffer[i*dw*3+w*3+1]=buffer[i*dw*3+w*3+2]= 0xFF;
+//			}else if(i < dh*2/3){
+//				buffer[i*dw*3+w*3]=buffer[i*dw*3+w*3+1]=buffer[i*dw*3+w*3+2]= 0x00;
+//			}else{
+//				buffer[i*dw*3+w*3]=buffer[i*dw*3+w*3+1]=buffer[i*dw*3+w*3+2]=0x00;
+//			}
+//		}
+//	}
+//
+//	int ret = stbi_write_jpg("/mnt/extsd/3.jpg", dw, dh, n, buffer, 100);
+//	printf("ret %d\n", ret);
+//
+//	LOGD("保存完毕");
 
 	if(mProtocolData.region == 16 && mProtocolData.type == 10 && mProtocolData.label == 2){
 		LOGD("这是在传输图片");
