@@ -29,4 +29,6 @@
     <string name="english">English</string>
     
     <string name="motorControl">电机控制</string>
+    
+     <string name="printable">文件管理</string>
 </resources>

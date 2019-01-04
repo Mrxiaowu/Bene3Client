@@ -29,5 +29,8 @@
     <string name="chinese">中文</string>
     <string name="english">English</string>
     
-    <string name="motorControl">motorControl</string>
+    <string name="motorControl">MotorControl</string>
+    
+    <string name="printable">Printable</string>
+    
 </resources>

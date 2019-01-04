@@ -1,9 +1,8 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
 #include "printablesActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mprintablePagePtr;
+static ZKButton* mlinePtr;
 static ZKTextView* mpageNumberPtr;
 static ZKButton* mpageDownPtr;
 static ZKButton* mpageUpPtr;
@@ -51,6 +50,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTABLES_line, onButtonClick_line,
     ID_PRINTABLES_pageDown, onButtonClick_pageDown,
     ID_PRINTABLES_pageUp, onButtonClick_pageUp,
     ID_PRINTABLES_fileList2, onButtonClick_fileList2,
@@ -140,6 +140,8 @@ const char* printablesActivity::getAppName() const{
 //TAG:onCreate
 void printablesActivity::onCreate() {
 	Activity::onCreate();
+    mprintablePagePtr = (ZKTextView*)findControlByID(ID_PRINTABLES_printablePage);
+    mlinePtr = (ZKButton*)findControlByID(ID_PRINTABLES_line);
     mpageNumberPtr = (ZKTextView*)findControlByID(ID_PRINTABLES_pageNumber);
     mpageDownPtr = (ZKButton*)findControlByID(ID_PRINTABLES_pageDown);
     mpageUpPtr = (ZKButton*)findControlByID(ID_PRINTABLES_pageUp);

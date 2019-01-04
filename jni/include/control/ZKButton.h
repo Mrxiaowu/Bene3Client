@@ -1,9 +1,4 @@
-/*
- * ZKButton.h
- *
- *  Created on: Jun 10, 2017
- *      Author: guoxs
- */
+
 
 #ifndef _CONTROL_ZKBUTTON_H_
 #define _CONTROL_ZKBUTTON_H_

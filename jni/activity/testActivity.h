@@ -1,8 +1,8 @@
 /***********************************************
 /gen auto by zuitools
 ***********************************************/
-#ifndef __PRINTABLESACTIVITY_H__
-#define __PRINTABLESACTIVITY_H__
+#ifndef __TESTACTIVITY_H__
+#define __TESTACTIVITY_H__
 
 
 #include "app/Activity.h"
@@ -26,21 +26,10 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_PRINTABLES_printablePage    50010
-#define ID_PRINTABLES_line    20009
-#define ID_PRINTABLES_pageNumber    50001
-#define ID_PRINTABLES_pageDown    20008
-#define ID_PRINTABLES_pageUp    20007
-#define ID_PRINTABLES_fileList2    20006
-#define ID_PRINTABLES_fileList3    20005
-#define ID_PRINTABLES_fileList1    20004
-#define ID_PRINTABLES_delete    20003
-#define ID_PRINTABLES_USB    20002
-#define ID_PRINTABLES_print    20001
-#define ID_PRINTABLES_sys_back   100
+#define ID_TEST_sys_back   100
 /*TAG:Macro宏ID END*/
 
-class printablesActivity : public Activity, 
+class testActivity : public Activity, 
                      public ZKSeekBar::ISeekBarChangeListener, 
                      public ZKListView::IItemClickListener,
                      public ZKListView::AbsListAdapter,
@@ -50,8 +39,8 @@ class printablesActivity : public Activity,
                      public ZKVideoView::IVideoPlayerMessageListener
 {
 public:
-    printablesActivity();
-    virtual ~printablesActivity();
+    testActivity();
+    virtual ~testActivity();
 
     /**
      * 注册定时器

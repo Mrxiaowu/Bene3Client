@@ -73,6 +73,9 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 		mProtocolData.label = data.label;
 	}
 
+
+	mCirclebar1Ptr->setProgress(16);
+
 	int dw = 200, dh = 200;
 	int n = 3;	// rgb
 
@@ -125,11 +128,7 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	return false;
 }
 
-
-static void onProgressChanged_Seekbar1(ZKSeekBar *pSeekBar, int progress) {
-    //LOGD(" ProgressChanged Seekbar1 %d !!!\n", progress);
-}
-
+//取消按钮
 static bool onButtonClick_cancell(ZKButton *pButton) {
     LOGD(" ButtonClick cancell !!!\n");//09FF012A01CC
     mcancellPtr->setBackgroundPic("/mnt/extsd/ui/bitmap.png");
@@ -137,6 +136,7 @@ static bool onButtonClick_cancell(ZKButton *pButton) {
     return false;
 }
 
+//停止按钮
 static bool onButtonClick_stop(ZKButton *pButton) {
     LOGD(" ButtonClick stop !!!\n");//09FF012C01CA
     mstopPtr->setBackgroundPic("/mnt/extsd/3.jpg");
