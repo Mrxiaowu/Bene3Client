@@ -26,6 +26,10 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTJOB_printjob    50010
+#define ID_PRINTJOB_y    50002
+#define ID_PRINTJOB_line    20005
+#define ID_PRINTJOB_Textview1    50001
 #define ID_PRINTJOB_Circlebar1    130001
 #define ID_PRINTJOB_stop    20002
 #define ID_PRINTJOB_cancell    20001

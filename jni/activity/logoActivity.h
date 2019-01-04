@@ -1,6 +1,4 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
+
 #ifndef __LOGOACTIVITY_H__
 #define __LOGOACTIVITY_H__
 

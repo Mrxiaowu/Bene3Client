@@ -143,3 +143,7 @@ static bool onButtonClick_stop(ZKButton *pButton) {
     sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
     return false;
 }
+static bool onButtonClick_line(ZKButton *pButton) {
+    //LOGD(" ButtonClick line !!!\n");
+    return false;
+}

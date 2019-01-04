@@ -4,6 +4,10 @@
 #include "printJobActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mprintjobPtr;
+static ZKTextView* myPtr;
+static ZKButton* mlinePtr;
+static ZKTextView* mTextview1Ptr;
 static ZKCircleBar* mCirclebar1Ptr;
 static ZKButton* mstopPtr;
 static ZKButton* mcancellPtr;
@@ -45,6 +49,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTJOB_line, onButtonClick_line,
     ID_PRINTJOB_stop, onButtonClick_stop,
     ID_PRINTJOB_cancell, onButtonClick_cancell,
     ID_PRINTJOB_sys_back, onButtonClick_sys_back,
@@ -128,6 +133,10 @@ const char* printJobActivity::getAppName() const{
 //TAG:onCreate
 void printJobActivity::onCreate() {
 	Activity::onCreate();
+    mprintjobPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printjob);
+    myPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_y);
+    mlinePtr = (ZKButton*)findControlByID(ID_PRINTJOB_line);
+    mTextview1Ptr = (ZKTextView*)findControlByID(ID_PRINTJOB_Textview1);
     mCirclebar1Ptr = (ZKCircleBar*)findControlByID(ID_PRINTJOB_Circlebar1);
     mstopPtr = (ZKButton*)findControlByID(ID_PRINTJOB_stop);
     mcancellPtr = (ZKButton*)findControlByID(ID_PRINTJOB_cancell);

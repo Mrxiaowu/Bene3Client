@@ -8,8 +8,7 @@
     <string name="staticIP">静态IP</string>
     <string name="dynamicIP">动态IP</string>
     <string name="save">保存</string>
-    <string name="PgUp">上页</string>
-    <string name="PgDn">下页</string>
+    
     <string name="PrintJob">打印任务</string>
     <string name="File">文件管理</string>
     <string name="Network">网络控制</string>
@@ -31,4 +30,8 @@
     <string name="motorControl">电机控制</string>
     
      <string name="printable">文件管理</string>
+     <string name="PgUp">上页</string>
+     <string name="PgDn">下页</string>
+     
+     <string name="printjob">打印任务</string>
 </resources>
