@@ -1,5 +1,6 @@
 #include "printJobActivity.h"
 
+
 /*TAG:GlobalVariable全局变量*/
 static ZKTextView* mprintstatusTextPtr;
 static ZKTextView* mlayerspeedTextPtr;
