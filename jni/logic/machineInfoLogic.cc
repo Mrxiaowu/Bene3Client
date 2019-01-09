@@ -73,21 +73,21 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 	if (mProtocolData.label != data.label) {
 		mProtocolData.label = data.label;
-	}
+	} //后面需要全部更换成data的数据
 
-//	if(mProtocolData.label == 16){   //这里要用10进制数来运算？
-//		LOGD("label == 16");
-//		mmodeltextPtr->setText(mProtocolData.pdata);
-//	} else if (mProtocolData.label == 18){
-//		LOGD("label == 18");
-//		msnsidtextPtr->setText(mProtocolData.pdata);
-//	} else if(mProtocolData.label == 20){
-//		LOGD("label == 20");
-//		mversiontext1Ptr->setText(mProtocolData.pdata);
-//	} else if(mProtocolData.label == 32){
-//		LOGD("label == 32");
-//		mversiontext2Ptr->setText(mProtocolData.pdata);
-//	}
+	if(mProtocolData.label == 16){   //这里要用10进制数来运算？
+		LOGD("label == 16");
+		mmodelTextPtr->setText(mProtocolData.pdata);
+	} else if (mProtocolData.label == 18){
+		LOGD("label == 18");
+		msnsidTextPtr->setText(mProtocolData.pdata);
+	} else if(mProtocolData.label == 20){
+		LOGD("label == 20");
+		mversionText1Ptr->setText(mProtocolData.pdata);
+	} else if(mProtocolData.label == 32){
+		LOGD("label == 32");
+		mversionText2Ptr->setText(mProtocolData.pdata);
+	}
 }
 
 static bool onUI_Timer(int id){

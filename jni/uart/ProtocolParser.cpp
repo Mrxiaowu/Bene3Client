@@ -58,28 +58,21 @@ void BYTEToString(const BYTE *pData, UINT len){
 		pDataStart = 10;
 	}
 	UINT pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
-	BYTE temp[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
+	BYTE tempData[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
 
 	for(UINT i = pDataStartIndex; i < len-1; i++)
 	{
-		temp[i-pDataStartIndex]= pData[i];
+		tempData[i-pDataStartIndex]= pData[i];
+		LOGD("%x 前tempData后 %x  第几个%d", pData[i],tempData[i-pDataStartIndex],i);// 长度
 	}
-	LOGD("(char*)temp)=%s",(char*)temp);
 
-	for (UINT i = 0; i < (len-pDataStartIndex-1); ++i) { //发现数据和自己预期的不对时，首先将数据全部打印出来！！
-		LOGD("temp1 DEBUG %x", temp[i]);
-	}
-	LOGD("\n");
-
-	sProtocolData.pdata = (char*)temp;
-//	sProtocolData.len = len-1;
-//	sProtocolData.pdata[len-1] = '\0';
-
+	sProtocolData.pdata = (char*)tempData;
 	sProtocolData.page = pData[4];
 	sProtocolData.region = pData[5];
 	sProtocolData.type = pData[6];
 	sProtocolData.label = pData[7];
 	sProtocolData.buttonIndex = pData[8];
+	LOGD("信息为 %s", sProtocolData.pdata.c_str());//信息有误差，比如前一次此信息为100.0【】，下一次就恢复正常的100.0
 }
 
 //获取校验码
@@ -113,29 +106,31 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 
 	if(pData[2] == 0){ //长度等于0时代表是传输的是图片
 		LOGD("当前首先的长度为0，可能为传输图片专用");
+		int pDataStart = 11; //图片是从第9个数据开始读取
+		int pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
+		int tempLength = len-pDataStartIndex-1;//要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
+		BYTE *temp; //
+		temp = new BYTE[tempLength];
+		LOGD("%x tempLength数据长度", tempLength);//长度应该是datalan的长度减5
+
 		if(pData[5] == 10 && pData[6] == 9 && pData[7] == 16 && pData[8] == 10 && pData[9] == 2){
 			LOGD("条件全部满足，是在传输图片");
 
-			UINT pDataStart = 11; //图片是从第9个数据开始读取
-			UINT pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
-			BYTE temp[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
-
 			for(UINT i = pDataStartIndex; i < len-1; i++)
 			{
-				temp[i-pDataStartIndex] = pData[i];
-//				LOGD("pData[i]: %x" , pData[i]); //日志太多，注释掉
+				temp[tempLength-(i-pDataStartIndex)] = pData[i];
 			}
-			sProtocolData.imageData = (unsigned char*)temp;
 
-			LOGD("sProtocolData.imageData: %x" , temp);
-			LOGD("sProtocolData.imageData: %x" , sProtocolData.imageData);
-
+			sProtocolData.imageData = temp;
+			sProtocolData.imageLength = tempLength; //一般是AF5
 			sProtocolData.page = pData[6]; //9
 			sProtocolData.region = pData[7];//16
 			sProtocolData.type = pData[8];//10
 			sProtocolData.label = pData[9];//2
 			LOGD("page:%x region:%x type:%x label:%x",pData[6],pData[7],pData[8],pData[9]);
 		}
+		notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
+		delete[] temp;
 	} else {
 		switch(pData[3]){
 			case SWITCH_PAGE:
@@ -147,29 +142,27 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 						BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
 						sendProtocol(mode , 5);
 						break;
-
-	//				default:
-	//					LOGD("跳转页面命令，不需要再跳转了");
-	//					break;
 				}
+				//切换页面时也要将数据赋值
+				sProtocolData.page = pData[4];
+				sProtocolData.region = pData[5];
+				sProtocolData.type = pData[6];
+				sProtocolData.label = pData[7];
+
 				break;
 
 			case SET_LABEL_VALUE:
-				LOGD("当前命令为8，给label赋值");
-
 				LOGD("页面ID=%x",pData[4]);
 				BYTEToString(pData,len);
-
 				break;
 
 			default :
 				LOGD("未知的命令");
 				break;
 		}
+		notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 	}
-	notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 }
-
 
 int parseProtocol(const BYTE *pData, UINT len) {
 
@@ -232,3 +225,64 @@ int parseProtocol(const BYTE *pData, UINT len) {
 //	LOGE("解析函数完毕，返回");
 	return len - lastLength;
 }
+
+
+//int parseProtocol(const BYTE *pData, UINT len) {
+//
+//	int lastLength = len; // 剩余数据长度
+//	int dataLen;	// 数据包长度
+//	int frameLen;	// 帧的总长度
+//	int realDataIndex; //实际数据的起始位置
+//
+//	while (lastLength >= DATA_PACKAGE_MIN_LEN) {
+//		// 找到一帧数据的数据头并校检
+//		while ((lastLength >= 2) && ((pData[0] != CMD_HEAD1) || (pData[1] != CMD_HEAD2))) {
+//			pData++;
+//			lastLength--;
+//			continue;
+//		}
+//
+//		if (lastLength < DATA_PACKAGE_MIN_LEN) { //但剩余数据的长度不能比最小的还小
+//			break;
+//		}
+//		dataLen = pData[2];  //一般来说长度在第三个字节
+//
+//		if(dataLen == 0){
+//			dataLen = MAKEWORD(pData[4],pData[3]);//前面为地位，后面为高位
+//			realDataIndex = 5; //如果是图片数据，那就是从第5块数据开始算
+//			frameLen = dataLen + 6; //图片的话的总长度为实际数据加上 头数据 2  长度数据3  校检码 1 也就是加6
+//		} else {
+//			realDataIndex = 3; //如果是正常的数据，那就是从第三块数据开始算
+//			frameLen = dataLen + DATA_PACKAGE_MIN_LEN; //总长度为实际数据加上 头数据 2  长度数据 1  校检码 1 也就是加上这个宏 4
+//		}
+////		LOGD("dataLen数据长度 %x", dataLen);
+//		mRealData = new BYTE[dataLen];  //除去AA55和校检码的中间的实际的数据
+//
+//		if (lastLength < frameLen) { //比较长度，如果第一次进来的时候的剩余数据长度和总长度不一致，说明包内筒不全
+//			break;
+//		}
+//
+////		for (int i = 0; i <= dataLen; i++) {
+////			mRealData[i] = pData[i + realDataIndex];
+////		}
+//
+////		LOGD("%x CheckSum1", getCheckSum(mRealData, dataLen));//这里调用了两遍gerchecksum，所以日志中会出现两遍日志
+////		LOGD("%x 最后的校检码", pData[frameLen - 1]);
+//
+//#ifdef PRO_SUPPORT_CHECK_SUM
+////		if (getCheckSum(mRealData, dataLen) == pData[frameLen - 1]) { // 检测校验码
+////			LOGE("CheckSum successe!!!!!!\n");
+////			procParse(pData, frameLen); // 解析一帧数据,在这里可以写业务逻辑
+////		} else {
+////			LOGE("CheckSum error!!!!!!\n");
+////		}
+//#else
+////		procParse(pData, frameLen);
+//#endif
+////		delete[] mRealData;
+////
+////		pData += frameLen;
+////		lastLength -= frameLen;
+//	}
+//	return len - lastLength;
+//}
