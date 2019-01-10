@@ -56,35 +56,36 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-	if (mProtocolData.pdata != data.pdata) {
-		mProtocolData.pdata = data.pdata;
-	}
-	if(mProtocolData.page != data.page){
-		mProtocolData.page = data.page;
-	}
-	if (mProtocolData.region != data.region) {
-		mProtocolData.region = data.region;
-	}
-	if(mProtocolData.type != data.type){
-		mProtocolData.type = data.type;
-	}
-	if(mProtocolData.buttonIndex != data.buttonIndex){
-		mProtocolData.buttonIndex = data.buttonIndex;
-	}
-	LOGD("%s data.pdata",mProtocolData.pdata);
+//	if (mProtocolData.pdata != data.pdata) {
+//		mProtocolData.pdata = data.pdata;
+//	}
+//	if(mProtocolData.page != data.page){
+//		mProtocolData.page = data.page;
+//	}
+//	if (mProtocolData.region != data.region) {
+//		mProtocolData.region = data.region;
+//	}
+//	if(mProtocolData.type != data.type){
+//		mProtocolData.type = data.type;
+//	}
+//	if(mProtocolData.buttonIndex != data.buttonIndex){
+//		mProtocolData.buttonIndex = data.buttonIndex;
+//	}
+//	LOGD("%s data.pdata",mProtocolData.pdata);
 
 
-	if(mProtocolData.type == 16){
-		LOGD("当前的buttonIndex=%d",mProtocolData.buttonIndex);
-		if(mProtocolData.buttonIndex == 0){
-			mfileList1Ptr->setText(mProtocolData.pdata);
-		} else if(mProtocolData.buttonIndex == 1){
-			mfileList2Ptr->setText(mProtocolData.pdata);
-		} else if(mProtocolData.buttonIndex == 2){
-			mfileList3Ptr->setText(mProtocolData.pdata);
+	if(data.type == 16){
+		LOGD("当前的buttonIndex=%d",data.buttonIndex);
+		if(data.buttonIndex == 0){
+			LOGD("mfileList1Ptr!!");
+			mfileList1Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 1){
+			mfileList2Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 2){
+			mfileList3Ptr->setText(data.pdata);
 		}
-	} else if(mProtocolData.type == 4){
-		mpageNumberPtr->setText(mProtocolData.pdata);
+	} else if(data.type == 4){
+		mpageNumberPtr->setText(data.pdata);
 	}
 }
 

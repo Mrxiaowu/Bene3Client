@@ -4,7 +4,11 @@
 #include "publicWindowActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* mButton7Ptr;
+static ZKButton* mcancellPtr;
+static ZKButton* mpgdownPtr;
+static ZKButton* mpgupPtr;
+static ZKButton* msurePtr;
+static ZKButton* mButton4Ptr;
 static ZKButton* mButton6Ptr;
 static ZKButton* mButton5Ptr;
 static ZKButton* mButton3Ptr;
@@ -47,7 +51,11 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_PUBLICWINDOW_Button7, onButtonClick_Button7,
+    ID_PUBLICWINDOW_cancell, onButtonClick_cancell,
+    ID_PUBLICWINDOW_pgdown, onButtonClick_pgdown,
+    ID_PUBLICWINDOW_pgup, onButtonClick_pgup,
+    ID_PUBLICWINDOW_sure, onButtonClick_sure,
+    ID_PUBLICWINDOW_Button4, onButtonClick_Button4,
     ID_PUBLICWINDOW_Button6, onButtonClick_Button6,
     ID_PUBLICWINDOW_Button5, onButtonClick_Button5,
     ID_PUBLICWINDOW_Button3, onButtonClick_Button3,
@@ -133,7 +141,11 @@ const char* publicWindowActivity::getAppName() const{
 //TAG:onCreate
 void publicWindowActivity::onCreate() {
 	Activity::onCreate();
-    mButton7Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button7);
+    mcancellPtr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_cancell);
+    mpgdownPtr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_pgdown);
+    mpgupPtr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_pgup);
+    msurePtr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_sure);
+    mButton4Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button4);
     mButton6Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button6);
     mButton5Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button5);
     mButton3Ptr = (ZKButton*)findControlByID(ID_PUBLICWINDOW_Button3);

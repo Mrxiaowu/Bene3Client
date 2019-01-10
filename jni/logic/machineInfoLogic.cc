@@ -56,37 +56,42 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-	if (mProtocolData.pdata != data.pdata) {
-		mProtocolData.pdata = data.pdata;
-	}
-	if(mProtocolData.page != data.page){
-		mProtocolData.page = data.page;
-	}
-	if(mProtocolData.type != data.type){
-		mProtocolData.type = data.type;
-	}
-	if (mProtocolData.region != data.region) {
-		mProtocolData.region = data.region;
-	}
-	if(mProtocolData.buttonIndex != data.buttonIndex){
-		mProtocolData.buttonIndex = data.buttonIndex;
-	}
-	if (mProtocolData.label != data.label) {
-		mProtocolData.label = data.label;
-	} //后面需要全部更换成data的数据
+//	if (mProtocolData.pdata != data.pdata) {
+//		mProtocolData.pdata = data.pdata;
+//	}
+//	if(mProtocolData.page != data.page){
+//		mProtocolData.page = data.page;
+//	}
+//	if(mProtocolData.type != data.type){
+//		mProtocolData.type = data.type;
+//	}
+//	if (mProtocolData.region != data.region) {
+//		mProtocolData.region = data.region;
+//	}
+//	if(mProtocolData.buttonIndex != data.buttonIndex){
+//		mProtocolData.buttonIndex = data.buttonIndex;
+//	}
+//	if (mProtocolData.label != data.label) {
+//		mProtocolData.label = data.label;
+//	} //后面需要全部更换成data的数据
 
-	if(mProtocolData.label == 16){   //这里要用10进制数来运算？
-		LOGD("label == 16");
-		mmodelTextPtr->setText(mProtocolData.pdata);
-	} else if (mProtocolData.label == 18){
-		LOGD("label == 18");
-		msnsidTextPtr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.label == 20){
-		LOGD("label == 20");
-		mversionText1Ptr->setText(mProtocolData.pdata);
-	} else if(mProtocolData.label == 32){
-		LOGD("label == 32");
-		mversionText2Ptr->setText(mProtocolData.pdata);
+	if(data.region == 9){
+		if(data.type == 4){
+			if(data.label == 16){
+				mmodelTextPtr->setText(data.pdata);
+				LOGD(" mmodelTextPtr !!!\n");
+			} else if(data.label == 18){
+				msnsidTextPtr->setText(data.pdata);
+			}
+		}
+	} else if(data.region == 11){
+		if(data.type == 4){
+			if(data.label == 20){
+				mversionText1Ptr->setText(data.pdata);
+			}else if(data.label == 32){
+				mversionText2Ptr->setText(data.pdata);
+			}
+		}
 	}
 }
 

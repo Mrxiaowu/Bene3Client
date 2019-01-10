@@ -36,4 +36,15 @@
      <string name="printjob">打印任务</string>
      <string name="filename">文件名</string>
     <string name="time">打印时间</string>
+    
+    <string name="network">网络配置</string>
+    <string name="point">网络</string>
+    <string name="password">输入密码</string>
+    <string name="staticIP">静态IP</string>
+    <string name="dynamicIP">动态IP</string>
+    <string name="save">保存</string>
+    <string name="CurrentWifi">当前WIFI</string>
+    
+    <string name="cancell">取消</string>
+ 	<string name="sure">确认</string>
 </resources>

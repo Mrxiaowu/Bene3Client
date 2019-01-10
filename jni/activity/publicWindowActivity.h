@@ -26,11 +26,15 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_PUBLICWINDOW_Button7    20007
-#define ID_PUBLICWINDOW_Button6    20006
-#define ID_PUBLICWINDOW_Button5    20005
-#define ID_PUBLICWINDOW_Button3    20003
-#define ID_PUBLICWINDOW_Button2    20002
+#define ID_PUBLICWINDOW_Button3    20007
+#define ID_PUBLICWINDOW_cancell    20011
+#define ID_PUBLICWINDOW_pgdown    20010
+#define ID_PUBLICWINDOW_pgup    20008
+#define ID_PUBLICWINDOW_sure    20004
+#define ID_PUBLICWINDOW_Button2    20006
+#define ID_PUBLICWINDOW_Button4    20005
+#define ID_PUBLICWINDOW_Button5    20003
+#define ID_PUBLICWINDOW_Button6    20002
 #define ID_PUBLICWINDOW_Button1    20001
 /*TAG:Macro宏ID END*/
 

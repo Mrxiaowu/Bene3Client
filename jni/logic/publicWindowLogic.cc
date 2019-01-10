@@ -1,11 +1,7 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 
-/**
- * 注册定时器
- * 填充数组用于注册定时器
- * 注意：id不能重复
- */
+
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -93,13 +89,13 @@ static bool onButtonClick_Button1(ZKButton *pButton) {
     return false;
 }
 
-static bool onButtonClick_Button2(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button2 !!!\n");
+static bool onButtonClick_Button6(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button6 !!!\n");
     return false;
 }
 
-static bool onButtonClick_Button3(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button3 !!!\n");
+static bool onButtonClick_Button5(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button5 !!!\n");
     return false;
 }
 
@@ -108,16 +104,32 @@ static bool onButtonClick_Button4(ZKButton *pButton) {
     return false;
 }
 
-static bool onButtonClick_Button5(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button5 !!!\n");
-    return false;
-}
-static bool onButtonClick_Button6(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button6 !!!\n");
+static bool onButtonClick_Button2(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button2 !!!\n");
     return false;
 }
 
-static bool onButtonClick_Button7(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button7 !!!\n");
+static bool onButtonClick_sure(ZKButton *pButton) {
+    //LOGD(" ButtonClick sure !!!\n");
+    return false;
+}
+
+static bool onButtonClick_pgup(ZKButton *pButton) {
+    //LOGD(" ButtonClick pgup !!!\n");
+    return false;
+}
+
+static bool onButtonClick_pgdown(ZKButton *pButton) {
+    //LOGD(" ButtonClick pgdown !!!\n");
+    return false;
+}
+
+static bool onButtonClick_cancell(ZKButton *pButton) {
+    //LOGD(" ButtonClick cancell !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button3(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button3 !!!\n");
     return false;
 }

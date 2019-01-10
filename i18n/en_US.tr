@@ -2,15 +2,6 @@
 <resources>
     <string name="hello_world">Hello world!</string>
 
-
-    <string name="Wlan">Wlan</string>
-    <string name="Password">Password</string>
-    <string name="CurrentWifi">CurrentWifi</string>
-    <string name="staticIP">staticIP</string>
-    <string name="dynamicIP">dynamicIP</string>
-    <string name="save">save</string>
-    
-    
     <string name="PrintJob">PrintJob</string>
     <string name="File">File</string>
     <string name="Network">Network</string>
@@ -39,5 +30,15 @@
     <string name="filename">FileName</string>
     <string name="time">PrintTime</string>
     
-    
+    <string name="network">Network</string>
+    <string name="point">AccessPoint</string>
+    <string name="password">EnterPassword</string>
+    <string name="staticIP">StaticIP</string>
+    <string name="dynamicIP">DynamicIP</string>
+    <string name="save">Save</string>
+    <string name="CurrentWifi">CurrentWifi</string>
+  
+ 	<string name="cancell">cancell</string>
+ 	<string name="sure">confirm</string>
+
 </resources>
