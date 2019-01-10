@@ -58,21 +58,29 @@ void BYTEToString(const BYTE *pData, UINT len){
 		pDataStart = 10;
 	}
 	UINT pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
-	BYTE tempData[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
 
-	for(UINT i = pDataStartIndex; i < len-1; i++)
-	{
-		tempData[i-pDataStartIndex]= pData[i];
-		LOGD("%x 前tempData后 %x  第几个%d", pData[i],tempData[i-pDataStartIndex],i);// 长度
+	//这个会在末尾增加一个零
+//	BYTE tempData[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
+//	for(UINT i = pDataStartIndex; i < len-1; i++)
+//	{
+//		tempData[i-pDataStartIndex]= pData[i];
+//		LOGD("第%d个数值为的 %d  %x ", i ,i-pDataStartIndex,pData[i]);// 长度
+//		tempStr.append(1, pData[i]);
+//	}
+//	sProtocolData.pdata = (char*)tempData;
+
+	std::string tempStr;
+	for(UINT i = pDataStartIndex; i < len-1; i++){
+		tempStr.append(1, pData[i]);
 	}
+	sProtocolData.pdata = tempStr;
 
-	sProtocolData.pdata = (char*)tempData;
 	sProtocolData.page = pData[4];
 	sProtocolData.region = pData[5];
 	sProtocolData.type = pData[6];
 	sProtocolData.label = pData[7];
 	sProtocolData.buttonIndex = pData[8];
-	LOGD("信息为 %s", sProtocolData.pdata.c_str());//信息有误差，比如前一次此信息为100.0【】，下一次就恢复正常的100.0
+	LOGD("信息为 %s", sProtocolData.pdata.c_str());
 }
 
 //获取校验码
@@ -152,7 +160,7 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				break;
 
 			case SET_LABEL_VALUE:
-				LOGD("页面ID=%x",pData[4]);
+				LOGD("页面ID=%x,长度:%d",pData[4],len);
 				BYTEToString(pData,len);
 				break;
 
@@ -192,19 +200,22 @@ int parseProtocol(const BYTE *pData, UINT len) {
 			realDataIndex = 3; //如果是正常的数据，那就是从第三块数据开始算
 			frameLen = dataLen + DATA_PACKAGE_MIN_LEN; //总长度为实际数据加上 头数据 2  长度数据 1  校检码 1 也就是加上这个宏 4
 		}
-		LOGD("dataLen %x", dataLen);
+		LOGD("dataLen %d", dataLen);
 		mRealData = new BYTE[dataLen];  //除去AA55和校检码的中间的实际的数据
 
 		if (lastLength < frameLen) { //比较长度，如果第一次进来的时候的剩余数据长度和总长度不一致，说明包内筒不全
 			break;
 		}
 
-		for (int i = 0; i <= dataLen; i++) {
+
+		for (int i = 0; i < dataLen; i++) {
 			mRealData[i] = pData[i + realDataIndex];
+			LOGD("%d 定位于 %d 此时的数值为 %x", i ,i + realDataIndex,pData[i + realDataIndex]);
 		}
 
 		LOGD("%x CheckSum1", getCheckSum(mRealData, dataLen));//这里调用了两遍gerchecksum，所以日志中会出现两遍日志
 		LOGD("%x 最后的校检码", pData[frameLen - 1]);
+		LOGD("%d 一帧的总长度 %d", frameLen,dataLen+3); //应该是dataLen 加上 4
 
 #ifdef PRO_SUPPORT_CHECK_SUM
 		if (getCheckSum(mRealData, dataLen) == pData[frameLen - 1]) { // 检测校验码
@@ -225,64 +236,3 @@ int parseProtocol(const BYTE *pData, UINT len) {
 //	LOGE("解析函数完毕，返回");
 	return len - lastLength;
 }
-
-
-//int parseProtocol(const BYTE *pData, UINT len) {
-//
-//	int lastLength = len; // 剩余数据长度
-//	int dataLen;	// 数据包长度
-//	int frameLen;	// 帧的总长度
-//	int realDataIndex; //实际数据的起始位置
-//
-//	while (lastLength >= DATA_PACKAGE_MIN_LEN) {
-//		// 找到一帧数据的数据头并校检
-//		while ((lastLength >= 2) && ((pData[0] != CMD_HEAD1) || (pData[1] != CMD_HEAD2))) {
-//			pData++;
-//			lastLength--;
-//			continue;
-//		}
-//
-//		if (lastLength < DATA_PACKAGE_MIN_LEN) { //但剩余数据的长度不能比最小的还小
-//			break;
-//		}
-//		dataLen = pData[2];  //一般来说长度在第三个字节
-//
-//		if(dataLen == 0){
-//			dataLen = MAKEWORD(pData[4],pData[3]);//前面为地位，后面为高位
-//			realDataIndex = 5; //如果是图片数据，那就是从第5块数据开始算
-//			frameLen = dataLen + 6; //图片的话的总长度为实际数据加上 头数据 2  长度数据3  校检码 1 也就是加6
-//		} else {
-//			realDataIndex = 3; //如果是正常的数据，那就是从第三块数据开始算
-//			frameLen = dataLen + DATA_PACKAGE_MIN_LEN; //总长度为实际数据加上 头数据 2  长度数据 1  校检码 1 也就是加上这个宏 4
-//		}
-////		LOGD("dataLen数据长度 %x", dataLen);
-//		mRealData = new BYTE[dataLen];  //除去AA55和校检码的中间的实际的数据
-//
-//		if (lastLength < frameLen) { //比较长度，如果第一次进来的时候的剩余数据长度和总长度不一致，说明包内筒不全
-//			break;
-//		}
-//
-////		for (int i = 0; i <= dataLen; i++) {
-////			mRealData[i] = pData[i + realDataIndex];
-////		}
-//
-////		LOGD("%x CheckSum1", getCheckSum(mRealData, dataLen));//这里调用了两遍gerchecksum，所以日志中会出现两遍日志
-////		LOGD("%x 最后的校检码", pData[frameLen - 1]);
-//
-//#ifdef PRO_SUPPORT_CHECK_SUM
-////		if (getCheckSum(mRealData, dataLen) == pData[frameLen - 1]) { // 检测校验码
-////			LOGE("CheckSum successe!!!!!!\n");
-////			procParse(pData, frameLen); // 解析一帧数据,在这里可以写业务逻辑
-////		} else {
-////			LOGE("CheckSum error!!!!!!\n");
-////		}
-//#else
-////		procParse(pData, frameLen);
-//#endif
-////		delete[] mRealData;
-////
-////		pData += frameLen;
-////		lastLength -= frameLen;
-//	}
-//	return len - lastLength;
-//}
