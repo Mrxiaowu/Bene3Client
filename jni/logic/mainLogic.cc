@@ -86,7 +86,7 @@ const char* IconTab[]={
 		"printSettingActivity",
 		"slcParamActivity", //这差一个错误信息页面
 		"publicWindowActivity",
-		"leveling"
+		"levelingActivity"
 };
 
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {

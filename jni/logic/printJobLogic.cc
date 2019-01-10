@@ -50,15 +50,6 @@ static void onUI_quit() {//当界面完全退出时触发
 
 }
 
-static string convertHsxStringToNormal(string hexString){
-    string Normalstr = "";
-    int i;
-    for(i=hexString.length() ;i >= 2;i=i-2){
-        Normalstr.append(hexString.substr(i-2,2));
-    }
-    return  Normalstr;
-}
-
 
 //static void MySaveJPG(string hexString1) {
 static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {

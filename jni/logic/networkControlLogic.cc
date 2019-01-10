@@ -118,9 +118,6 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	return false;
 }
 
-static void onEditTextChanged_accessPointText(const std::string &text) {
-    LOGD(" 标准事 %s !!!\n", text.c_str());
-}
 
 static bool onButtonClick_sure(ZKButton *pButton) {
 	LOGD(" 网络控制的保存 !!!\n");

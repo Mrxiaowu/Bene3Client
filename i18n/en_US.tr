@@ -42,7 +42,8 @@
  	<string name="cancell">cancell</string>
  	<string name="sure">confirm</string>
  	
- 	
  	<string name="leveling">Leveling</string>
+ 	<string name="zero">zero</string>
+ 	<string name="reset">reset</string>
 
 </resources>

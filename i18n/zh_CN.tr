@@ -50,4 +50,7 @@
  	<string name="sure">确认</string>
  	
  	<string name="leveling">调平</string>
+ 	<string name="zero">归零</string>
+ 	<string name="reset">重置</string>
+ 	
 </resources>

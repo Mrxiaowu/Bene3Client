@@ -132,10 +132,7 @@ static bool onButtonClick_hardware(ZKButton *pButton) {
     return false;
 }
 
-static bool onButtonClick_Button1(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button1 !!!\n");
-    return false;
-}
+
 static bool onButtonClick_version(ZKButton *pButton) {
     //LOGD(" ButtonClick version !!!\n");
     return false;
