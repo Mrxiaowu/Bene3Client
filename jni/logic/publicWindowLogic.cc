@@ -50,6 +50,33 @@ static void onUI_quit() {
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(data.page != 7){
+		LOGD("当前读取的串口信息中的PageID不为2");
+		return;
+	}
+
+	if(data.region == 12){
+		if(data.type == 16){
+			if(data.type == 16){
+				if(data.label == 0){
+					if(data.buttonIndex == 0){
+						LOGD("buttonIndex!!");
+						mButton1Ptr->setText(data.pdata);
+					} else if(data.buttonIndex == 1){
+						mButton2Ptr->setText(data.pdata);
+					} else if(data.buttonIndex == 2){
+						mButton3Ptr->setText(data.pdata);
+					} else if(data.buttonIndex == 3){
+						mButton4Ptr->setText(data.pdata);
+					} else if(data.buttonIndex == 4){
+						mButton5Ptr->setText(data.pdata);
+					} else if(data.buttonIndex == 5){
+						mButton6Ptr->setText(data.pdata);
+					}
+				}
+			}
+		}
+	}
 }
 
 /**
@@ -110,8 +137,9 @@ static bool onButtonClick_Button2(ZKButton *pButton) {
 }
 
 static bool onButtonClick_sure(ZKButton *pButton) {
-    //LOGD(" ButtonClick sure !!!\n");
-    return false;
+	EASYUICONTEXT->openActivity("mainActivity");
+	LOGD(" onButtonClick_sure !!!\n");
+	return false;
 }
 
 static bool onButtonClick_pgup(ZKButton *pButton) {
@@ -125,8 +153,9 @@ static bool onButtonClick_pgdown(ZKButton *pButton) {
 }
 
 static bool onButtonClick_cancell(ZKButton *pButton) {
-    //LOGD(" ButtonClick cancell !!!\n");
-    return false;
+	EASYUICONTEXT->openActivity("mainActivity");
+	LOGD(" onButtonClick_cancell !!!\n");
+	return false;
 }
 
 static bool onButtonClick_Button3(ZKButton *pButton) {

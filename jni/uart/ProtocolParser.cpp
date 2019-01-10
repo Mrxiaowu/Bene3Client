@@ -80,6 +80,13 @@ void BYTEToString(const BYTE *pData, UINT len){
 	sProtocolData.type = pData[6];
 	sProtocolData.label = pData[7];
 	sProtocolData.buttonIndex = pData[8];
+
+	LOGD("%x page", pData[4]);// 长度
+	LOGD("%x region", pData[5]);//CMD_ID
+	LOGD("%x type", pData[6]);//Page_ID
+	LOGD("%x label", pData[7]);//Region ID
+	LOGD("%x buttonIndex", pData[8]);//Type ID
+
 	LOGD("信息为 %s", sProtocolData.pdata.c_str());
 }
 
@@ -104,14 +111,6 @@ BYTE getCheckSum(const BYTE *pData, int len) {
  * 解析每一帧数据
  */
 static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的所有数据，len是一帧的总长度
-
-	LOGD("%x 长度ID", pData[2]);// 长度
-	LOGD("%x CMD_ID", pData[3]);//CMD_ID
-	LOGD("%x PageID", pData[4]);//Page_ID
-	LOGD("%x Region_ID", pData[5]);//Region ID
-	LOGD("%x Type_ID", pData[6]);//Type ID
-	LOGD("%x labelID", pData[7]);//Label ID
-
 	if(pData[2] == 0){ //长度等于0时代表是传输的是图片
 		LOGD("当前首先的长度为0，可能为传输图片专用");
 		int pDataStart = 11; //图片是从第9个数据开始读取
