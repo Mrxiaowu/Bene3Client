@@ -30,6 +30,7 @@
     <string name="filename">FileName</string>
     <string name="time">PrintTime</string>
     
+    <string name="NetWorkPage">NetWork</string>
     <string name="network">Network</string>
     <string name="point">AccessPoint</string>
     <string name="password">EnterPassword</string>
@@ -40,5 +41,8 @@
   
  	<string name="cancell">cancell</string>
  	<string name="sure">confirm</string>
+ 	
+ 	
+ 	<string name="leveling">Leveling</string>
 
 </resources>

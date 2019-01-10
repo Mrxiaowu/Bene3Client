@@ -83,12 +83,10 @@ const char* IconTab[]={
 		"networkControlActivity",
 		"machineInfoActivity",
 		"printablesActivity",
-
-
 		"printSettingActivity",
 		"slcParamActivity", //这差一个错误信息页面
 		"publicWindowActivity",
-		"testActivity"
+		"leveling"
 };
 
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {

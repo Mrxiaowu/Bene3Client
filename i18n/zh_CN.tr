@@ -37,6 +37,7 @@
      <string name="filename">文件名</string>
     <string name="time">打印时间</string>
     
+    <string name="NetWorkPage">网络控制</string>
     <string name="network">网络配置</string>
     <string name="point">网络</string>
     <string name="password">输入密码</string>
@@ -47,4 +48,6 @@
     
     <string name="cancell">取消</string>
  	<string name="sure">确认</string>
+ 	
+ 	<string name="leveling">调平</string>
 </resources>
