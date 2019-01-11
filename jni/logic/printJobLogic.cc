@@ -95,9 +95,7 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 	} else {
 		LOGD("进入打印任务页面");
 	}
-	//直接用data的是可以的！！！！
 
-	LOGD("data.pdata %x", data.pdata);
 	if(data.region == 16){
 		if(data.type == 1){
 			if(data.label == 45){
@@ -118,6 +116,16 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 		} else if(data.type == 12 && data.label == 0){
 			mCirclebar1Ptr->setProgress(16);
 		}
+	} else if(data.region == 0x11){
+		if(data.type == 0x01 && data.label == 0x2A && data.cancellParam == 0x2B){ //AA55 09 04 09 11 01 2A 09 11 01 2B 71
+			LOGD("更换为暂停");
+			mresumePtr->setInvalid(false);
+			mcancellPtr->setInvalid(true);
+		} else if(data.type == 0x01 && data.label == 0x2B && data.cancellParam == 0x2A){
+			LOGD("更换为继续 ");
+			mresumePtr->setInvalid(true);
+			mcancellPtr->setInvalid(false);
+		}//AA55 09 04 09 11 01 2B 09 11 01 2A 71
 	}
 
 	//这里避免其他命令也会进入这里
@@ -154,17 +162,22 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 //取消按钮
 static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 09 FF 01 2A 01 CC
     LOGD(" ButtonClick cancell !!!\n");//09FF012A01CC
-	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2A, 0x01);
+	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2A, 0x01);//
     return false;
 }
 
 //停止按钮
-static bool onButtonClick_stop(ZKButton *pButton) {//09FF012C01CA
+static bool onButtonClick_stop(ZKButton *pButton) {//AA 55 05 09 FF 01 2C 01 CA
     LOGD(" ButtonClick stop !!!\n");
     sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
     return false;
 }
 static bool onButtonClick_line(ZKButton *pButton) {
     //LOGD(" ButtonClick line !!!\n");
+    return false;
+}
+static bool onButtonClick_resume(ZKButton *pButton) {//09FF012B01CB
+    LOGD(" onButtonClick_resume!!!\n");
+	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2B, 0x01);//
     return false;
 }

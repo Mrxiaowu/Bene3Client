@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTJOB_resume    20003
 #define ID_PRINTJOB_printstatusText    50014
 #define ID_PRINTJOB_layerspeedText    50013
 #define ID_PRINTJOB_layerText    50012

@@ -1,6 +1,4 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
+
 #ifndef __PRINTABLESACTIVITY_H__
 #define __PRINTABLESACTIVITY_H__
 

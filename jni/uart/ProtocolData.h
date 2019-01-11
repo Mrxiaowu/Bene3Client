@@ -78,12 +78,13 @@
 #define ParameterSet_PageID  4
 #define NetworkControl_PageID  5
 #define MachineInfo_PageID  6
-#define UsbFile_PageID  7
+#define PublicFile_PageID  7
 #define Dialog_PageID  8
 #define Print_PageID  9
 #define Keyboard_PageID  10
 #define PowerOff_PageID 11
 #define Logo_PageID 12
+
 
 /***Region ID******/
 #define MenuPage_PrintRegionID       0
@@ -247,6 +248,8 @@ typedef struct {
 	BYTE region;
 	BYTE type;
 	BYTE label;
+
+	BYTE cancellParam;
 
 	BYTE *imageData;
 	int imageLength;

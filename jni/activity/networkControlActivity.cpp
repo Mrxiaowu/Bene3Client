@@ -1,9 +1,9 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
+
 #include "networkControlActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mpointText2Ptr;
+static ZKButton* mpointTextPtr;
 static ZKEditText* mpasswordTextPtr;
 static ZKButton* msurePtr;
 static ZKTextView* mdynamicIPTextPtr;
@@ -11,7 +11,6 @@ static ZKTextView* mdynamicIPPtr;
 static ZKTextView* mstaticipTextPtr;
 static ZKTextView* mstaticIPPtr;
 static ZKTextView* mpasswordPtr;
-static ZKTextView* mpointTextPtr;
 static ZKTextView* mpointPtr;
 static ZKButton* mnetworkSettingPtr;
 static ZKTextView* mcurrentWIFITextPtr;
@@ -57,6 +56,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_NETWORKCONTROL_pointText, onButtonClick_pointText,
     ID_NETWORKCONTROL_sure, onButtonClick_sure,
     ID_NETWORKCONTROL_networkSetting, onButtonClick_networkSetting,
     ID_NETWORKCONTROL_line, onButtonClick_line,
@@ -142,6 +142,8 @@ const char* networkControlActivity::getAppName() const{
 //TAG:onCreate
 void networkControlActivity::onCreate() {
 	Activity::onCreate();
+    mpointTextPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_pointText);
+    mpointText2Ptr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_pointText2);
     mpasswordTextPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_passwordText);if(mpasswordTextPtr!= NULL){mpasswordTextPtr->setTextChangeListener(this);}
     msurePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sure);
     mdynamicIPTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIPText);

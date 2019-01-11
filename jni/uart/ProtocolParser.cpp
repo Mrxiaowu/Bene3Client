@@ -59,15 +59,15 @@ void BYTEToString(const BYTE *pData, UINT len){
 	}
 	UINT pDataStartIndex = pDataStart - 1;//从起始数据减1是下标值
 
-	//这个会在末尾增加一个零
-//	BYTE tempData[len-pDataStartIndex-1]; //要拼接的数据是总长度减去前面的数值和校检码，即减8再减1
-//	for(UINT i = pDataStartIndex; i < len-1; i++)
-//	{
-//		tempData[i-pDataStartIndex]= pData[i];
-//		LOGD("第%d个数值为的 %d  %x ", i ,i-pDataStartIndex,pData[i]);// 长度
-//		tempStr.append(1, pData[i]);
-//	}
-//	sProtocolData.pdata = (char*)tempData;
+	sProtocolData.page = pData[4];
+	sProtocolData.region = pData[5];
+	sProtocolData.type = pData[6];
+	sProtocolData.label = pData[7];
+	sProtocolData.buttonIndex = pData[8];
+
+	if(pData[4] == 9 && pData[5] == 0x11 && pData[6] == 0x01){
+		sProtocolData.cancellParam = pData[11];
+	}
 
 	std::string tempStr;
 	for(UINT i = pDataStartIndex; i < len-1; i++){
@@ -75,11 +75,6 @@ void BYTEToString(const BYTE *pData, UINT len){
 	}
 	sProtocolData.pdata = tempStr;
 
-	sProtocolData.page = pData[4];
-	sProtocolData.region = pData[5];
-	sProtocolData.type = pData[6];
-	sProtocolData.label = pData[7];
-	sProtocolData.buttonIndex = pData[8];
 
 	LOGD("%x page", pData[4]);// 长度
 	LOGD("%x region", pData[5]);//CMD_ID
@@ -139,45 +134,45 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 		notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 		delete[] temp;
 	} else {
-		switch(pData[3]){  //这里要加强判断
+		switch(pData[3]){
 			case SWITCH_PAGE:
 				LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
-				switch(pData[4]){
-					case 0x0c:
-						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+				if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+					switch(pData[4]){
+						case Logo_PageID:
 							LOGD("开机LOGO，认证信息");
 							EASYUICONTEXT->openActivity("mainActivity");
 							BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 }; //响应android的返回值
 							sendProtocol(mode , 5);
-						}
-						break;
+							break;
 
-					case 0x09:
-						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+						case Print_PageID:
 							LOGD("跳转到打印页面");
 							EASYUICONTEXT->openActivity("printJobActivity");
-						}
-						break;
+							break;
 
-					case 0x07:
-						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+						case PublicFile_PageID:
 							LOGD("跳转到公共页面");
 							EASYUICONTEXT->openActivity("publicWindowActivity");
-						}
-						break;
-
-
+							break;
+					}
+					//切换页面时也要将数据赋值
+					sProtocolData.page = pData[4];
+					sProtocolData.region = pData[5];
+					sProtocolData.type = pData[6];
+					sProtocolData.label = pData[7];
+				} else {
+					LOGD("不是切换页面的命令，怎么费事？");
 				}
-				//切换页面时也要将数据赋值
-				sProtocolData.page = pData[4];
-				sProtocolData.region = pData[5];
-				sProtocolData.type = pData[6];
-				sProtocolData.label = pData[7];
-
 				break;
 
 			case SET_LABEL_VALUE:
 				LOGD("页面ID=%x,长度:%d",pData[4],len);
+				BYTEToString(pData,len);
+				break;
+
+			case SWITCH_REGION:
+				LOGD("可能用来更换暂停和停止的状态 %x,%x,%x ",pData[4],pData[5],pData[6]);
 				BYTEToString(pData,len);
 				break;
 

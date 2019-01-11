@@ -139,3 +139,7 @@ static bool onButtonClick_networkSetting(ZKButton *pButton) {
     //LOGD(" ButtonClick networkSetting !!!\n");
     return false;
 }
+static bool onButtonClick_pointText(ZKButton *pButton) {
+    //LOGD(" ButtonClick pointText !!!\n");
+    return false;
+}

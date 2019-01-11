@@ -40,12 +40,12 @@
     
     <string name="NetWorkPage">网络控制</string>
     <string name="network">网络配置</string>
-    <string name="point">网络</string>
+    <string name="point">WIFI</string>
     <string name="password">输入密码</string>
     <string name="staticIP">静态IP</string>
     <string name="dynamicIP">动态IP</string>
     <string name="save">保存</string>
-    <string name="CurrentWifi">当前WIFI</string>
+    <string name="CurrentWifi">当前IP</string>
     
     <string name="cancell">取消</string>
  	<string name="sure">确认</string>

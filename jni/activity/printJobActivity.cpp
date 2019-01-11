@@ -1,7 +1,6 @@
 #include "printJobActivity.h"
 
-
-/*TAG:GlobalVariable全局变量*/
+static ZKButton* mresumePtr;
 static ZKTextView* mprintstatusTextPtr;
 static ZKTextView* mlayerspeedTextPtr;
 static ZKTextView* mlayerTextPtr;
@@ -58,6 +57,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTJOB_resume, onButtonClick_resume,
     ID_PRINTJOB_line, onButtonClick_line,
     ID_PRINTJOB_stop, onButtonClick_stop,
     ID_PRINTJOB_cancell, onButtonClick_cancell,
@@ -142,6 +142,7 @@ const char* printJobActivity::getAppName() const{
 //TAG:onCreate
 void printJobActivity::onCreate() {
 	Activity::onCreate();
+    mresumePtr = (ZKButton*)findControlByID(ID_PRINTJOB_resume);
     mprintstatusTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printstatusText);
     mlayerspeedTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerspeedText);
     mlayerTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerText);
