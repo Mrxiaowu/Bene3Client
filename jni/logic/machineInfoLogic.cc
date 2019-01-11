@@ -113,12 +113,18 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	LOGD(" ButtonClick sys_back !!!\n");
 	return true;
 }
-static bool onButtonClick_chinese(ZKButton *pButton) {
+static bool onButtonClick_chinese(ZKButton *pButton) {//AA 55 05 06 FF 01 23 01 D6
+	LOGD(" onButtonClick_chinese !!!\n"); //02FF010701F6
+	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x23, 0x01 };
+	sendProtocol( mode , 5);
 	EASYUICONTEXT->updateLocalesCode("zh_CN"); //设置为中文
     return false;
 }
 
-static bool onButtonClick_english(ZKButton *pButton) {
+static bool onButtonClick_english(ZKButton *pButton) {//AA 55 05 06 FF 01 24 01 D5
+	LOGD(" onButtonClick_english !!!\n"); //02FF010701F6
+	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x24, 0x01 };
+	sendProtocol( mode , 5);
 	EASYUICONTEXT->updateLocalesCode("en_US"); //设置为英文
     return false;
 }
@@ -140,5 +146,11 @@ static bool onButtonClick_version(ZKButton *pButton) {
 
 static bool onButtonClick_language(ZKButton *pButton) {
     //LOGD(" ButtonClick language !!!\n");
+    return false;
+}
+static bool onButtonClick_checkInfo(ZKButton *pButton) {//AA 55 05 06 FF 01 36 01 C3
+	LOGD(" onButtonClick_english !!!\n"); //02FF010701F6
+	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x36, 0x01 };
+	sendProtocol( mode , 5);
     return false;
 }

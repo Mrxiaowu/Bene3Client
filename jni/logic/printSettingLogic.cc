@@ -68,7 +68,7 @@ static bool onprintSettingActivityTouchEvent(const MotionEvent &ev) {
 }
 
 static bool onButtonClick_up5(ZKButton *pButton) {
-	LOGD(" onButtonClick_up5 !!!\n");//03FF010A01F2
+	LOGD(" onButtonClick_up5 !!!\n");//AA 55 05 03 FF 01 0A 01 F2
 	sendSampleProtocol(0x03, 0xFF, 0x01, 0x0A, 0x01);
 	return true;
 }
@@ -125,7 +125,8 @@ static bool onButtonClick_line(ZKButton *pButton) {
     return false;
 }
 
-static bool onButtonClick_Button1(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button1 !!!\n");
-    return false;
+static bool onButtonClick_homing(ZKButton *pButton) {//AA 55 05 03 FF 01 12 01 EA
+	LOGD(" onButtonClick_down5000 !!!\n");
+	sendSampleProtocol(0x03, 0xFF, 0x01, 0x12, 0x01);
+    return true;
 }

@@ -139,19 +139,34 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 		notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 		delete[] temp;
 	} else {
-		switch(pData[3]){
+		switch(pData[3]){  //这里要加强判断
 			case SWITCH_PAGE:
 				LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
 				switch(pData[4]){
 					case 0x0c:
 						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
-							LOGD("开机LOGO，认证信息");//AA5505030CFFFFFFF4
+							LOGD("开机LOGO，认证信息");
 							EASYUICONTEXT->openActivity("mainActivity");
-	//						EASYUICONTEXT->openActivity("logoActivity");
 							BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 }; //响应android的返回值
 							sendProtocol(mode , 5);
-							break;
 						}
+						break;
+
+					case 0x09:
+						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+							LOGD("跳转到打印页面");
+							EASYUICONTEXT->openActivity("printJobActivity");
+						}
+						break;
+
+					case 0x07:
+						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+							LOGD("跳转到公共页面");
+							EASYUICONTEXT->openActivity("publicWindowActivity");
+						}
+						break;
+
+
 				}
 				//切换页面时也要将数据赋值
 				sProtocolData.page = pData[4];

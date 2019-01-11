@@ -56,21 +56,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-//	if(mProtocolData.page != data.page){
-//		mProtocolData.page = data.page;
-//	}
-//	if (mProtocolData.pdata != data.pdata) {
-//		mProtocolData.pdata = data.pdata;
-//	}
-//	if (mProtocolData.region != data.region) {
-//		mProtocolData.region = data.region;
-//	}
-//	if(mProtocolData.type != data.type){
-//		mProtocolData.type = data.type;
-//	}
-//	LOGD("%s data.pdata",mProtocolData.pdata);
-
-	LOGD("data.pdata %x", data.pdata);
 	if(data.region == 6){
 		if(data.type == 4){
 			if(data.label == 10){
@@ -119,7 +104,7 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 }
 
 
-static bool onButtonClick_sure(ZKButton *pButton) {
+static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 05 FF 01 1C 01 DE
 	LOGD(" 网络控制的保存 !!!\n");
 	sendSampleProtocol(0x05, 0xFF, 0x01, 0x1C, 0x01);
     return true;

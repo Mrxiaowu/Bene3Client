@@ -1,6 +1,7 @@
 #include "printablesActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKWindow* mWindow1Ptr;
 static ZKTextView* mprintablePagePtr;
 static ZKButton* mlinePtr;
 static ZKTextView* mpageNumberPtr;
@@ -140,6 +141,7 @@ const char* printablesActivity::getAppName() const{
 //TAG:onCreate
 void printablesActivity::onCreate() {
 	Activity::onCreate();
+    mWindow1Ptr = (ZKWindow*)findControlByID(ID_PRINTABLES_Window1);
     mprintablePagePtr = (ZKTextView*)findControlByID(ID_PRINTABLES_printablePage);
     mlinePtr = (ZKButton*)findControlByID(ID_PRINTABLES_line);
     mpageNumberPtr = (ZKTextView*)findControlByID(ID_PRINTABLES_pageNumber);

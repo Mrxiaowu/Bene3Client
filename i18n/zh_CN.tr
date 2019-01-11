@@ -26,6 +26,7 @@
     <string name="language">语言</string>
     <string name="chinese">中文</string>
     <string name="english">English</string>
+    <string name="check">检查</string>
     
     <string name="motorControl">电机控制</string>
     

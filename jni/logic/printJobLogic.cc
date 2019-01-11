@@ -152,17 +152,15 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 }
 
 //取消按钮
-static bool onButtonClick_cancell(ZKButton *pButton) {
+static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 09 FF 01 2A 01 CC
     LOGD(" ButtonClick cancell !!!\n");//09FF012A01CC
-//    mprintImagePtr->setBackgroundPic("/mnt/extsd/ui/480x272.jpg");
 	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2A, 0x01);
     return false;
 }
 
 //停止按钮
-static bool onButtonClick_stop(ZKButton *pButton) {
-    LOGD(" ButtonClick stop !!!\n");//09FF012C01CA
-//    mprintImagePtr->setBackgroundPic("/mnt/extsd/1.jpg");
+static bool onButtonClick_stop(ZKButton *pButton) {//09FF012C01CA
+    LOGD(" ButtonClick stop !!!\n");
     sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
     return false;
 }

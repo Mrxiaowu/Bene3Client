@@ -19,6 +19,7 @@
     <string name="language">Language</string>
     <string name="chinese">中文</string>
     <string name="english">English</string>
+    <string name="check">Check</string>
     
     <string name="motorControl">MotorControl</string>
     

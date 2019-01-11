@@ -56,6 +56,8 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
+
+	//TODO 判断文件名的长度，如果长了就启动文字滚动
 	if(data.type == 16){
 		LOGD("当前的buttonIndex=%d",data.buttonIndex);
 		if(data.buttonIndex == 0){
@@ -142,19 +144,19 @@ static bool onButtonClick_fileList3(ZKButton *pButton) {
 	mfileList1Ptr->setSelected(false);
 	mfileList2Ptr->setSelected(false);
 	mfileList3Ptr->setSelected(true);
-    LOGD(" ButtonClick fileList3 !!!\n");//02FF10010102EB
+    LOGD(" ButtonClick fileList3 !!!\n");//AA 55 06 02 FF 10 01 01 02 EB
 	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x02};
 	sendProtocol(mode , 6);
     return true;
 }
 
-static bool onButtonClick_pageUp(ZKButton *pButton) {
-	sendSampleProtocol(0x02, 0xFF, 0x01, 0x08, 0x01);//上页 02FF010801F5
+static bool onButtonClick_pageUp(ZKButton *pButton) {//AA 55 05 02 FF 01 08 01 F5
+	sendSampleProtocol(0x02, 0xFF, 0x01, 0x08, 0x01);
 	return true;
 }
 
 static bool onButtonClick_pageDown(ZKButton *pButton) {
-	sendSampleProtocol(0x02, 0xFF, 0x01, 0x09, 0x01);//下页 02FF010901F4
+	sendSampleProtocol(0x02, 0xFF, 0x01, 0x09, 0x01);//下页 AA 55 05 02 FF 01 09 01 F4
 	return true;
 }
 static bool onButtonClick_line(ZKButton *pButton) {

@@ -4,7 +4,7 @@
 #include "printSettingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* mButton1Ptr;
+static ZKButton* mhomingPtr;
 static ZKTextView* mmotorControlPtr;
 static ZKButton* mlinePtr;
 static ZKButton* msys_backPtr;
@@ -53,7 +53,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_PRINTSETTING_Button1, onButtonClick_Button1,
+    ID_PRINTSETTING_homing, onButtonClick_homing,
     ID_PRINTSETTING_line, onButtonClick_line,
     ID_PRINTSETTING_sys_back, onButtonClick_sys_back,
     ID_PRINTSETTING_down5000, onButtonClick_down5000,
@@ -144,7 +144,7 @@ const char* printSettingActivity::getAppName() const{
 //TAG:onCreate
 void printSettingActivity::onCreate() {
 	Activity::onCreate();
-    mButton1Ptr = (ZKButton*)findControlByID(ID_PRINTSETTING_Button1);
+    mhomingPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_homing);
     mmotorControlPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_motorControl);
     mlinePtr = (ZKButton*)findControlByID(ID_PRINTSETTING_line);
     msys_backPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_sys_back);

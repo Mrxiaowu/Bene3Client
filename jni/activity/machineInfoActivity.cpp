@@ -1,6 +1,7 @@
 #include "machineInfoActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mcheckInfoPtr;
 static ZKButton* mlanguagePtr;
 static ZKWindow* mWindow3Ptr;
 static ZKTextView* mversionText2Ptr;
@@ -55,6 +56,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_MACHINEINFO_checkInfo, onButtonClick_checkInfo,
     ID_MACHINEINFO_language, onButtonClick_language,
     ID_MACHINEINFO_version, onButtonClick_version,
     ID_MACHINEINFO_hardware, onButtonClick_hardware,
@@ -142,6 +144,7 @@ const char* machineInfoActivity::getAppName() const{
 //TAG:onCreate
 void machineInfoActivity::onCreate() {
 	Activity::onCreate();
+    mcheckInfoPtr = (ZKButton*)findControlByID(ID_MACHINEINFO_checkInfo);
     mlanguagePtr = (ZKButton*)findControlByID(ID_MACHINEINFO_language);
     mWindow3Ptr = (ZKWindow*)findControlByID(ID_MACHINEINFO_Window3);
     mversionText2Ptr = (ZKTextView*)findControlByID(ID_MACHINEINFO_versionText2);

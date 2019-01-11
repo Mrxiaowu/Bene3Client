@@ -95,54 +95,74 @@ static bool onpublicWindowActivityTouchEvent(const MotionEvent &ev) {
 	return false;
 }
 
-static bool onButtonClick_Button1(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button1 !!!\n");
-    return false;
+static bool onButtonClick_Button1(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 00 E9
+	LOGD(" onButtonClick_Button1 !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x00 };
+	sendProtocol( mode , 6);
+	return false;
 }
 
-static bool onButtonClick_Button6(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button6 !!!\n");
-    return false;
+static bool onButtonClick_Button6(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 05 E4
+	LOGD(" onButtonClick_Button6 !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x05 };
+	sendProtocol( mode , 6);
+	return false;
 }
 
-static bool onButtonClick_Button5(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button5 !!!\n");
-    return false;
+static bool onButtonClick_Button5(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 04 E5
+	LOGD(" onButtonClick_Button5 !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x04 };
+	sendProtocol( mode , 6);
+	return false;
 }
 
-static bool onButtonClick_Button4(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button4 !!!\n");
-    return false;
+static bool onButtonClick_Button4(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 03 E6
+	LOGD(" onButtonClick_Button4 !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x03 };
+	sendProtocol( mode , 6);
+	return false;
 }
 
-static bool onButtonClick_Button2(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button2 !!!\n");
-    return false;
+static bool onButtonClick_Button2(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 01 E8
+	LOGD(" onButtonClick_Button2 !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x01 };
+	sendProtocol( mode , 6);
+	return false;
 }
 
-static bool onButtonClick_sure(ZKButton *pButton) {
-	EASYUICONTEXT->openActivity("mainActivity");
+static bool onButtonClick_Button3(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 02 E7
+	LOGD(" onButtonClick_Button3 !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x02 };
+	sendProtocol( mode , 6);
+	return false;
+}
+
+static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 07 FF 01 26 01 D2
 	LOGD(" onButtonClick_sure !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x26, 0x01 };
+	sendProtocol( mode , 5);
 	return false;
 }
 
-static bool onButtonClick_pgup(ZKButton *pButton) {
-    //LOGD(" ButtonClick pgup !!!\n");
-    return false;
+static bool onButtonClick_pgup(ZKButton *pButton) {//AA 55 05 07 FF 01 31 01 C7
+	LOGD(" onButtonClick_pgup !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x31, 0x01 };
+	sendProtocol( mode , 5);
+	return false;
 }
 
-static bool onButtonClick_pgdown(ZKButton *pButton) {
-    //LOGD(" ButtonClick pgdown !!!\n");
-    return false;
+static bool onButtonClick_pgdown(ZKButton *pButton) {//AA 55 05 07 FF 01 32 01 C6
+	LOGD(" onButtonClick_pgup !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x32, 0x01 };
+	sendProtocol( mode , 5);
+	return false;
 }
 
-static bool onButtonClick_cancell(ZKButton *pButton) {
-	EASYUICONTEXT->openActivity("mainActivity");
+static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 07 FF 01 27 01 D1
 	LOGD(" onButtonClick_cancell !!!\n");
+	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x27, 0x01 };
+	sendProtocol( mode , 5);
 	return false;
 }
 
-static bool onButtonClick_Button3(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button3 !!!\n");
-    return false;
-}
+
