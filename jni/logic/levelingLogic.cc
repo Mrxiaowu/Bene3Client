@@ -97,7 +97,7 @@ static bool onlevelingActivityTouchEvent(const MotionEvent &ev) {
 static bool onButtonClick_sys_back(ZKButton *pButton) {
 	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");
-	return false;
+	return true;
 }
 
 static bool onButtonClick_zero(ZKButton *pButton) {

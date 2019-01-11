@@ -92,13 +92,9 @@ const char* IconTab[]={
 
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {
 	LOGD("正在滑动窗口");
-	if(index <= sizeof(IconTab)/sizeof(char*)){ //这里在这老是提示警告。。。
+	if(index <= sizeof(IconTab)/sizeof(char*)){ //这里在这老是提示警告
 		EASYUICONTEXT->openActivity(IconTab[index]);
 	}
 	LOGD(" onSlideItemClick_ Slidewindow1 %d !!!\n", index);
 }
 
-static bool onButtonClick_back(ZKButton *pButton) {
-	mSlidewindow1Ptr->setVisible(true);
-    return false;
-}

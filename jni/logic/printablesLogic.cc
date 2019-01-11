@@ -56,24 +56,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-//	if (mProtocolData.pdata != data.pdata) {
-//		mProtocolData.pdata = data.pdata;
-//	}
-//	if(mProtocolData.page != data.page){
-//		mProtocolData.page = data.page;
-//	}
-//	if (mProtocolData.region != data.region) {
-//		mProtocolData.region = data.region;
-//	}
-//	if(mProtocolData.type != data.type){
-//		mProtocolData.type = data.type;
-//	}
-//	if(mProtocolData.buttonIndex != data.buttonIndex){
-//		mProtocolData.buttonIndex = data.buttonIndex;
-//	}
-//	LOGD("%s data.pdata",mProtocolData.pdata);
-
-
 	if(data.type == 16){
 		LOGD("当前的buttonIndex=%d",data.buttonIndex);
 		if(data.buttonIndex == 0){
@@ -107,9 +89,9 @@ static bool onprintablesActivityTouchEvent(const MotionEvent &ev) {
 
 //返回按钮
 static bool onButtonClick_sys_back(ZKButton *pButton) {
-	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");
-	return false;
+	EASYUICONTEXT->openActivity("mainActivity");
+	return true;
 }
 
 

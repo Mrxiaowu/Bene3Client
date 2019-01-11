@@ -1,7 +1,6 @@
 #include "mainActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* mbackPtr;
 static ZKSlideWindow* mSlidewindow1Ptr;
 static mainActivity* mActivityPtr;
 
@@ -40,7 +39,6 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_MAIN_back, onButtonClick_back,
 };
 /***************/
 
@@ -122,7 +120,6 @@ const char* mainActivity::getAppName() const{
 //TAG:onCreate
 void mainActivity::onCreate() {
 	Activity::onCreate();
-    mbackPtr = (ZKButton*)findControlByID(ID_MAIN_back);
     mSlidewindow1Ptr = (ZKSlideWindow*)findControlByID(ID_MAIN_Slidewindow1);if(mSlidewindow1Ptr!= NULL){mSlidewindow1Ptr->setSlideItemClickListener(this);}
 	mActivityPtr = this;
 	onUI_init();

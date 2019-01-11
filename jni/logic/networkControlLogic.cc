@@ -113,9 +113,9 @@ static bool onnetworkControlActivityTouchEvent(const MotionEvent &ev) {
 }
 
 static bool onButtonClick_sys_back(ZKButton *pButton) {
-	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");
-	return false;
+	EASYUICONTEXT->openActivity("mainActivity");
+	return true;
 }
 
 

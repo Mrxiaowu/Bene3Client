@@ -144,12 +144,14 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
 				switch(pData[4]){
 					case 0x0c:
-						LOGD("开机LOGO，认证信息");
-						EASYUICONTEXT->openActivity("mainActivity");
-//						EASYUICONTEXT->openActivity("logoActivity");
-						BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 }; //响应android的返回值
-						sendProtocol(mode , 5);
-						break;
+						if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+							LOGD("开机LOGO，认证信息");//AA5505030CFFFFFFF4
+							EASYUICONTEXT->openActivity("mainActivity");
+	//						EASYUICONTEXT->openActivity("logoActivity");
+							BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 }; //响应android的返回值
+							sendProtocol(mode , 5);
+							break;
+						}
 				}
 				//切换页面时也要将数据赋值
 				sProtocolData.page = pData[4];
