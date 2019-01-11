@@ -1,9 +1,4 @@
-/*
- * CameraCtrl.h
- *
- *  Created on: Feb 12, 2018
- *      Author: guoxs
- */
+
 
 #ifndef _CAMERA_CAMERACTRL_H_
 #define _CAMERA_CAMERACTRL_H_

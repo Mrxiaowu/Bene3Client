@@ -66,6 +66,7 @@ void BYTEToString(const BYTE *pData, UINT len){
 	sProtocolData.buttonIndex = pData[8];
 
 	if(pData[4] == 9 && pData[5] == 0x11 && pData[6] == 0x01){
+		LOGD("确实是更换状态");
 		sProtocolData.cancellParam = pData[11];
 	}
 
@@ -142,8 +143,8 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 						case Logo_PageID:
 							LOGD("开机LOGO，认证信息");
 							EASYUICONTEXT->openActivity("mainActivity");
-							BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 }; //响应android的返回值
-							sendProtocol(mode , 5);
+							BYTE mode1[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
+							sendProtocol(mode1 , 5);
 							break;
 
 						case Print_PageID:

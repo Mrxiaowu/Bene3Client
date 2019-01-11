@@ -1,6 +1,3 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
 #ifndef __MAINACTIVITY_H__
 #define __MAINACTIVITY_H__
 

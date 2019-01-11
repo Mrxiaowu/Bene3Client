@@ -1,6 +1,3 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
 #ifndef __LEVELINGACTIVITY_H__
 #define __LEVELINGACTIVITY_H__
 

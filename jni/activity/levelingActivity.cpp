@@ -1,6 +1,3 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
 #include "levelingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/

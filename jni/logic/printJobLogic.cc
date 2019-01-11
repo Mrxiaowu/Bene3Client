@@ -81,7 +81,8 @@ static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 		buffer[i*3] = buffer[i*3+1] = buffer[i*3+2] = hexArray2[i];
 	}
 
-	int ret = stbi_write_jpg("/mnt/extsd/1.jpg", dw, dh, n, buffer, 100);
+	//TODO,这里编译时需要换目录？
+	int ret = stbi_write_jpg("/mnt/extsd/printImage.jpg", dw, dh, n, buffer, 100);
 	LOGD("ret %d\n", ret);
 	free(buffer);
 }
@@ -95,6 +96,8 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 	} else {
 		LOGD("进入打印任务页面");
 	}
+
+	LOGD("当前读取的串口信息 %x %x %x , %x",data.region ,data.type , data.label ,data.cancellParam);
 
 	if(data.region == 16){
 		if(data.type == 1){
@@ -115,24 +118,28 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 			mprinttimeTextPtr->setText(data.pdata);
 		} else if(data.type == 12 && data.label == 0){
 			mCirclebar1Ptr->setProgress(16);
-		}
-	} else if(data.region == 0x11){
-		if(data.type == 0x01 && data.label == 0x2A && data.cancellParam == 0x2B){ //AA55 09 04 09 11 01 2A 09 11 01 2B 71
+		} else if(data.type == 1 && data.label == 0x2A && data.cancellParam == 0x2B){ //AA55 09 04 09 11 01 2A 09 11 01 2B 71
 			LOGD("更换为暂停");
-			mresumePtr->setInvalid(false);
-			mcancellPtr->setInvalid(true);
-		} else if(data.type == 0x01 && data.label == 0x2B && data.cancellParam == 0x2A){
+//			mresumePtr->setInvalid(false);
+//			mcancellPtr->setInvalid(true);
+			mresumePtr->setVisible(false);
+			mcancellPtr->setVisible(true);
+		} else if(data.type == 1 && data.label == 0x2B && data.cancellParam == 0x2A){//AA55 09 04 09 11 01 2B 09 11 01 2A 71
 			LOGD("更换为继续 ");
-			mresumePtr->setInvalid(true);
-			mcancellPtr->setInvalid(false);
-		}//AA55 09 04 09 11 01 2B 09 11 01 2A 71
+//			mresumePtr->setInvalid(true);
+//			mcancellPtr->setInvalid(false);
+			mresumePtr->setVisible(true);
+			mcancellPtr->setVisible(false);
+		}
 	}
+
+
 
 	//这里避免其他命令也会进入这里
 	if(data.region == 16 && data.type == 10 && data.label == 2){
 		LOGD("这是在传输图片");
 		MySaveJPG(data.imageData,data.imageLength);
-		mprintImagePtr->setBackgroundPic("/mnt/extsd/1.jpg");
+		mprintImagePtr->setBackgroundPic("/mnt/extsd/printImage.jpg");
 	}
 }
 

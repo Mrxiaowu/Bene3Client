@@ -1,6 +1,3 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
 #ifndef __NETWORKCONTROLACTIVITY_H__
 #define __NETWORKCONTROLACTIVITY_H__
 

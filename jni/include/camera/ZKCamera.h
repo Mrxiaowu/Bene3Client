@@ -1,9 +1,3 @@
-/*
- * ZKCamera.h
- *
- *  Created on: Feb 14, 2018
- *      Author: guoxs
- */
 
 #ifndef _CAMERA_ZKCAMERA_H_
 #define _CAMERA_ZKCAMERA_H_

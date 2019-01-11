@@ -78,8 +78,4 @@ static bool onButtonClick_logo(ZKButton *pButton) {
     //LOGD(" ButtonClick logo !!!\n");
     return false;
 }
-static bool onButtonClick_Button1(ZKButton *pButton) {
-	EASYUICONTEXT->openActivity("mainActivity");
-	LOGD(" ButtonClick sys_back !!!\n");
-	return false;
-}
+

@@ -1,9 +1,3 @@
-/*
- * CameraCommDef.h
- *
- *  Created on: Feb 14, 2018
- *      Author: guoxs
- */
 
 #ifndef _CAMERA_CAMERACOMMDEF_H_
 #define _CAMERA_CAMERACOMMDEF_H_
