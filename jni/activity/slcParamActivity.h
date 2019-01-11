@@ -26,6 +26,16 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_SLCPARAM_LiftRateJia    20011
+#define ID_SLCPARAM_LiftDistanceJia    20009
+#define ID_SLCPARAM_LiftRateJian    20010
+#define ID_SLCPARAM_LiftDistanceJian    20008
+#define ID_SLCPARAM_BottomTimeJia    20007
+#define ID_SLCPARAM_BottomTimeJian    20006
+#define ID_SLCPARAM_BottomLayersJia    20004
+#define ID_SLCPARAM_BottomLayersJian    20003
+#define ID_SLCPARAM_ExposureTimeButtonJian    20002
+#define ID_SLCPARAM_ExposureTimeButtonJia    20001
 #define ID_SLCPARAM_ADDBUTTONvalue5    50009
 #define ID_SLCPARAM_ADDBUTTONtext4    50008
 #define ID_SLCPARAM_ADDBUTTONvalue4    50007
@@ -36,19 +46,9 @@
 #define ID_SLCPARAM_ADDBUTTONtext1    50002
 #define ID_SLCPARAM_ADDBUTTONvalue1    50001
 #define ID_SLCPARAM_save    20012
-#define ID_SLCPARAM_Button8    20011
 #define ID_SLCPARAM_Textview7    50011
-#define ID_SLCPARAM_Button7    20010
-#define ID_SLCPARAM_Button6    20009
-#define ID_SLCPARAM_Button5    20008
-#define ID_SLCPARAM_Button2    20007
-#define ID_SLCPARAM_Button1    20006
-#define ID_SLCPARAM_Button4    20004
-#define ID_SLCPARAM_Button3    20003
 #define ID_SLCPARAM_slcSetting    50010
 #define ID_SLCPARAM_line    20005
-#define ID_SLCPARAM_ADDBUTTONbutton1    20002
-#define ID_SLCPARAM_ADDBUTTONbutton2    20001
 #define ID_SLCPARAM_sys_back   100
 /*TAG:Macro宏ID END*/
 

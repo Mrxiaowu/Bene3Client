@@ -48,16 +48,7 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 
 }
 
-/**
- * 定时器触发函数
- * 不建议在此函数中写耗时操作，否则将影响UI刷新
- * 参数： id
- *         当前所触发定时器的id，与注册时的id相同
- * 返回值: true
- *             继续运行当前定时器
- *         false
- *             停止运行当前定时器
- */
+
 static bool onUI_Timer(int id){
 	switch (id) {
 
@@ -67,15 +58,7 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
+
 static bool onslcParamActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
@@ -85,62 +68,84 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	LOGD(" ButtonClick sys_back !!!\n");
 	return true;
 }
-static bool onButtonClick_ADDBUTTONbutton2(ZKButton *pButton) {
-    //LOGD(" ButtonClick ADDBUTTONbutton2 !!!\n");
-    return false;
-}
 
-static bool onButtonClick_ADDBUTTONbutton1(ZKButton *pButton) {
-    //LOGD(" ButtonClick ADDBUTTONbutton1 !!!\n");
-    return false;
-}
 
 static bool onButtonClick_line(ZKButton *pButton) {
     //LOGD(" ButtonClick line !!!\n");
     return false;
 }
 
-static bool onButtonClick_Button3(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button3 !!!\n");
+static bool onButtonClick_ExposureTimeButtonJia(ZKButton *pButton) {//AA 55 07 04 FF 0F 00 01 28 23 A2
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x28, 0x23 };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button4(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button4 !!!\n");
+static bool onButtonClick_ExposureTimeButtonJian(ZKButton *pButton) { //AA 55 07 04 FF 0F 00 01 58 1B 7A
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button1(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button1 !!!\n");
+static bool onButtonClick_BottomLayersJian(ZKButton *pButton) {// AA 55 07 04 FF 0F 02 01 02 00 E9
+	LOGD(" onButtonClick_BottomLayersJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x02, 0x01,0x02, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button2(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button2 !!!\n");
+static bool onButtonClick_BottomLayersJia(ZKButton *pButton) {// AA 55 07 04 FF 0F 02 01 03 00 E8
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button5(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button5 !!!\n");
+static bool onButtonClick_BottomTimeJian(ZKButton *pButton) { // AA 55 07 04 FF 0F 04 01 78 E6 8B
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button6(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button6 !!!\n");
+static bool onButtonClick_BottomTimeJia(ZKButton *pButton) {// AA 55 07 04 FF 0F 04 01 60 EA 9F
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button7(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button7 !!!\n");
+static bool onButtonClick_LiftDistanceJian(ZKButton *pButton) { //AA 55 07 04 FF 0F 01 01 03 00 E9
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_Button8(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button8 !!!\n");
+static bool onButtonClick_LiftRateJian(ZKButton *pButton) { //AA 55 07 04 FF 0F 03 01 5A 00 90
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }
 
-static bool onButtonClick_save(ZKButton *pButton) {
-    //LOGD(" ButtonClick save !!!\n");
+static bool onButtonClick_save(ZKButton *pButton) { //AA 55 05 04 FF 01 15 01 E6
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
+    return false;
+}
+static bool onButtonClick_LiftDistanceJia(ZKButton *pButton) { //AA 55 07 04 FF 0F 01 01 04 00 E8
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
+    return false;
+}
+static bool onButtonClick_LiftRateJia(ZKButton *pButton) { //AA 55 07 04 FF 0F 03 01 64 00 86
+	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+	sendProtocol( mode , 7);
     return false;
 }

@@ -4,6 +4,16 @@
 #include "slcParamActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mLiftRateJiaPtr;
+static ZKButton* mLiftDistanceJiaPtr;
+static ZKButton* mLiftRateJianPtr;
+static ZKButton* mLiftDistanceJianPtr;
+static ZKButton* mBottomTimeJiaPtr;
+static ZKButton* mBottomTimeJianPtr;
+static ZKButton* mBottomLayersJiaPtr;
+static ZKButton* mBottomLayersJianPtr;
+static ZKButton* mExposureTimeButtonJianPtr;
+static ZKButton* mExposureTimeButtonJiaPtr;
 static ZKTextView* mADDBUTTONvalue5Ptr;
 static ZKTextView* mADDBUTTONtext4Ptr;
 static ZKTextView* mADDBUTTONvalue4Ptr;
@@ -12,20 +22,10 @@ static ZKTextView* mADDBUTTONvalue3Ptr;
 static ZKTextView* mADDBUTTONvalue2Ptr;
 static ZKTextView* mADDBUTTONvalue1Ptr;
 static ZKButton* msavePtr;
-static ZKButton* mButton8Ptr;
 static ZKTextView* mTextview7Ptr;
-static ZKButton* mButton7Ptr;
-static ZKButton* mButton6Ptr;
-static ZKButton* mButton5Ptr;
-static ZKButton* mButton2Ptr;
-static ZKButton* mButton1Ptr;
-static ZKButton* mButton4Ptr;
-static ZKButton* mButton3Ptr;
 static ZKTextView* mADDBUTTONtext2Ptr;
 static ZKTextView* mslcSettingPtr;
 static ZKButton* mlinePtr;
-static ZKButton* mADDBUTTONbutton1Ptr;
-static ZKButton* mADDBUTTONbutton2Ptr;
 static ZKTextView* mADDBUTTONtext1Ptr;
 static ZKButton* msys_backPtr;
 static slcParamActivity* mActivityPtr;
@@ -65,18 +65,18 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_SLCPARAM_LiftRateJia, onButtonClick_LiftRateJia,
+    ID_SLCPARAM_LiftDistanceJia, onButtonClick_LiftDistanceJia,
+    ID_SLCPARAM_LiftRateJian, onButtonClick_LiftRateJian,
+    ID_SLCPARAM_LiftDistanceJian, onButtonClick_LiftDistanceJian,
+    ID_SLCPARAM_BottomTimeJia, onButtonClick_BottomTimeJia,
+    ID_SLCPARAM_BottomTimeJian, onButtonClick_BottomTimeJian,
+    ID_SLCPARAM_BottomLayersJia, onButtonClick_BottomLayersJia,
+    ID_SLCPARAM_BottomLayersJian, onButtonClick_BottomLayersJian,
+    ID_SLCPARAM_ExposureTimeButtonJian, onButtonClick_ExposureTimeButtonJian,
+    ID_SLCPARAM_ExposureTimeButtonJia, onButtonClick_ExposureTimeButtonJia,
     ID_SLCPARAM_save, onButtonClick_save,
-    ID_SLCPARAM_Button8, onButtonClick_Button8,
-    ID_SLCPARAM_Button7, onButtonClick_Button7,
-    ID_SLCPARAM_Button6, onButtonClick_Button6,
-    ID_SLCPARAM_Button5, onButtonClick_Button5,
-    ID_SLCPARAM_Button2, onButtonClick_Button2,
-    ID_SLCPARAM_Button1, onButtonClick_Button1,
-    ID_SLCPARAM_Button4, onButtonClick_Button4,
-    ID_SLCPARAM_Button3, onButtonClick_Button3,
     ID_SLCPARAM_line, onButtonClick_line,
-    ID_SLCPARAM_ADDBUTTONbutton1, onButtonClick_ADDBUTTONbutton1,
-    ID_SLCPARAM_ADDBUTTONbutton2, onButtonClick_ADDBUTTONbutton2,
     ID_SLCPARAM_sys_back, onButtonClick_sys_back,
 };
 /***************/
@@ -158,6 +158,16 @@ const char* slcParamActivity::getAppName() const{
 //TAG:onCreate
 void slcParamActivity::onCreate() {
 	Activity::onCreate();
+    mLiftRateJiaPtr = (ZKButton*)findControlByID(ID_SLCPARAM_LiftRateJia);
+    mLiftDistanceJiaPtr = (ZKButton*)findControlByID(ID_SLCPARAM_LiftDistanceJia);
+    mLiftRateJianPtr = (ZKButton*)findControlByID(ID_SLCPARAM_LiftRateJian);
+    mLiftDistanceJianPtr = (ZKButton*)findControlByID(ID_SLCPARAM_LiftDistanceJian);
+    mBottomTimeJiaPtr = (ZKButton*)findControlByID(ID_SLCPARAM_BottomTimeJia);
+    mBottomTimeJianPtr = (ZKButton*)findControlByID(ID_SLCPARAM_BottomTimeJian);
+    mBottomLayersJiaPtr = (ZKButton*)findControlByID(ID_SLCPARAM_BottomLayersJia);
+    mBottomLayersJianPtr = (ZKButton*)findControlByID(ID_SLCPARAM_BottomLayersJian);
+    mExposureTimeButtonJianPtr = (ZKButton*)findControlByID(ID_SLCPARAM_ExposureTimeButtonJian);
+    mExposureTimeButtonJiaPtr = (ZKButton*)findControlByID(ID_SLCPARAM_ExposureTimeButtonJia);
     mADDBUTTONvalue5Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONvalue5);
     mADDBUTTONtext4Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONtext4);
     mADDBUTTONvalue4Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONvalue4);
@@ -166,20 +176,10 @@ void slcParamActivity::onCreate() {
     mADDBUTTONvalue2Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONvalue2);
     mADDBUTTONvalue1Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONvalue1);
     msavePtr = (ZKButton*)findControlByID(ID_SLCPARAM_save);
-    mButton8Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button8);
     mTextview7Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_Textview7);
-    mButton7Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button7);
-    mButton6Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button6);
-    mButton5Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button5);
-    mButton2Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button2);
-    mButton1Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button1);
-    mButton4Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button4);
-    mButton3Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_Button3);
     mADDBUTTONtext2Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONtext2);
     mslcSettingPtr = (ZKTextView*)findControlByID(ID_SLCPARAM_slcSetting);
     mlinePtr = (ZKButton*)findControlByID(ID_SLCPARAM_line);
-    mADDBUTTONbutton1Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_ADDBUTTONbutton1);
-    mADDBUTTONbutton2Ptr = (ZKButton*)findControlByID(ID_SLCPARAM_ADDBUTTONbutton2);
     mADDBUTTONtext1Ptr = (ZKTextView*)findControlByID(ID_SLCPARAM_ADDBUTTONtext1);
     msys_backPtr = (ZKButton*)findControlByID(ID_SLCPARAM_sys_back);
 	mActivityPtr = this;
