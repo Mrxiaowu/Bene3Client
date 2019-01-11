@@ -145,8 +145,9 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				switch(pData[4]){
 					case 0x0c:
 						LOGD("开机LOGO，认证信息");
-						EASYUICONTEXT->openActivity("logoActivity");
-						BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
+						EASYUICONTEXT->openActivity("mainActivity");
+//						EASYUICONTEXT->openActivity("logoActivity");
+						BYTE mode[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 }; //响应android的返回值
 						sendProtocol(mode , 5);
 						break;
 				}

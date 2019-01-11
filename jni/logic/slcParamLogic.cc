@@ -85,3 +85,62 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	LOGD(" ButtonClick sys_back !!!\n");
 	return false;
 }
+static bool onButtonClick_ADDBUTTONbutton2(ZKButton *pButton) {
+    //LOGD(" ButtonClick ADDBUTTONbutton2 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_ADDBUTTONbutton1(ZKButton *pButton) {
+    //LOGD(" ButtonClick ADDBUTTONbutton1 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_line(ZKButton *pButton) {
+    //LOGD(" ButtonClick line !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button3(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button3 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button4(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button4 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button1(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button1 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button2(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button2 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button5(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button5 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button6(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button6 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button7(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button7 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_Button8(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button8 !!!\n");
+    return false;
+}
+
+static bool onButtonClick_save(ZKButton *pButton) {
+    //LOGD(" ButtonClick save !!!\n");
+    return false;
+}

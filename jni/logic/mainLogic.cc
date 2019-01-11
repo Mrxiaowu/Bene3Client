@@ -86,7 +86,8 @@ const char* IconTab[]={
 		"printSettingActivity",
 		"slcParamActivity", //这差一个错误信息页面
 		"publicWindowActivity",
-		"levelingActivity"
+		"levelingActivity",
+		"logoActivity"
 };
 
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {
@@ -97,3 +98,7 @@ static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index
 	LOGD(" onSlideItemClick_ Slidewindow1 %d !!!\n", index);
 }
 
+static bool onButtonClick_back(ZKButton *pButton) {
+	mSlidewindow1Ptr->setVisible(true);
+    return false;
+}

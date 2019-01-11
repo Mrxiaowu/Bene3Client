@@ -22,7 +22,6 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_LOGO_Button1    20002
 #define ID_LOGO_logo    20001
 /*TAG:Macro宏ID END*/
 

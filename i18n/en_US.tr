@@ -45,5 +45,12 @@
  	<string name="leveling">Leveling</string>
  	<string name="zero">zero</string>
  	<string name="reset">reset</string>
+ 	
+ 	<string name="slcSetting">SLCSetting</string>
+ 	<string name="ExposureTime">ExposureTime</string>
+ 	<string name="BottomLayers">BottomLayers</string>
+ 	<string name="BottomTime">BottomTime</string>
+ 	<string name="LiftDistance">LiftDistance</string>
+ 	<string name="LiftRate">LiftRate</string>
 
 </resources>

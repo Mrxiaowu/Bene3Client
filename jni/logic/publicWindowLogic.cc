@@ -79,16 +79,7 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 }
 
-/**
- * 定时器触发函数
- * 不建议在此函数中写耗时操作，否则将影响UI刷新
- * 参数： id
- *         当前所触发定时器的id，与注册时的id相同
- * 返回值: true
- *             继续运行当前定时器
- *         false
- *             停止运行当前定时器
- */
+
 static bool onUI_Timer(int id){
 	switch (id) {
 
@@ -98,19 +89,12 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
+
 static bool onpublicWindowActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
+
 static bool onButtonClick_Button1(ZKButton *pButton) {
     //LOGD(" ButtonClick Button1 !!!\n");
     return false;

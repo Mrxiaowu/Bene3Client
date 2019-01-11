@@ -53,4 +53,12 @@
  	<string name="zero">归零</string>
  	<string name="reset">重置</string>
  	
+ 	<string name="slcSetting">SLC参数设置</string>
+ 	<string name="ExposureTime">普通层曝光</string>
+ 	<string name="BottomLayers">底层层数</string>
+ 	<string name="BottomTime">底层曝光</string>
+ 	<string name="LiftDistance">上升距离</string>
+ 	<string name="LiftRate">移动速度</string>
+ 	
+ 	
 </resources>

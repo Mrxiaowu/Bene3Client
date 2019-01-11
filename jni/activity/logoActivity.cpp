@@ -1,7 +1,6 @@
 #include "logoActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* mButton1Ptr;
 static ZKButton* mlogoPtr;
 static logoActivity* mActivityPtr;
 
@@ -40,7 +39,6 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_LOGO_Button1, onButtonClick_Button1,
     ID_LOGO_logo, onButtonClick_logo,
 };
 /***************/
@@ -122,7 +120,6 @@ const char* logoActivity::getAppName() const{
 //TAG:onCreate
 void logoActivity::onCreate() {
 	Activity::onCreate();
-    mButton1Ptr = (ZKButton*)findControlByID(ID_LOGO_Button1);
     mlogoPtr = (ZKButton*)findControlByID(ID_LOGO_logo);
 	mActivityPtr = this;
 	onUI_init();
