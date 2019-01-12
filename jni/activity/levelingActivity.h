@@ -23,6 +23,9 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_LEVELING_Textview7    50008
+#define ID_LEVELING_Textview6    50006
+#define ID_LEVELING_Textview5    50005
 #define ID_LEVELING_Textview4    50004
 #define ID_LEVELING_Textview3    50003
 #define ID_LEVELING_Textview2    50002

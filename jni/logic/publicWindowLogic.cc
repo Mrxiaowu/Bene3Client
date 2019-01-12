@@ -8,10 +8,11 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 };
 
 /**
- * 当界面构造时触发
+ * 当界面构造时触发,一般只会初始化一次
  */
 static void onUI_init(){
     //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
+	LOGD("publicWindow onUI_init");
 
 }
 
@@ -28,7 +29,10 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
-
+	//还是不能每次打印页面都这样
+//	LOGD("publicWindow onUI_show");
+//	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x36, 0x01};
+//	sendProtocol( mode , 5);
 }
 
 /*
@@ -95,10 +99,21 @@ static bool onpublicWindowActivityTouchEvent(const MotionEvent &ev) {
 	return false;
 }
 
+static void initPublicPageStatus() {
+	mButton1Ptr->setSelected(false);
+	mButton2Ptr->setSelected(false);
+	mButton3Ptr->setSelected(false);
+	mButton4Ptr->setSelected(false);
+	mButton5Ptr->setSelected(false);
+	mButton6Ptr->setSelected(false);
+}
+
 static bool onButtonClick_Button1(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 00 E9
 	LOGD(" onButtonClick_Button1 !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x00 };
 	sendProtocol( mode , 6);
+	initPublicPageStatus();
+	mButton1Ptr->setSelected(true);
 	return false;
 }
 
@@ -106,6 +121,8 @@ static bool onButtonClick_Button6(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 
 	LOGD(" onButtonClick_Button6 !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x05 };
 	sendProtocol( mode , 6);
+	initPublicPageStatus();
+	mButton6Ptr->setSelected(true);
 	return false;
 }
 
@@ -113,6 +130,8 @@ static bool onButtonClick_Button5(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 
 	LOGD(" onButtonClick_Button5 !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x04 };
 	sendProtocol( mode , 6);
+	initPublicPageStatus();
+	mButton5Ptr->setSelected(true);
 	return false;
 }
 
@@ -120,6 +139,8 @@ static bool onButtonClick_Button4(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 
 	LOGD(" onButtonClick_Button4 !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x03 };
 	sendProtocol( mode , 6);
+	initPublicPageStatus();
+	mButton4Ptr->setSelected(true);
 	return false;
 }
 
@@ -127,6 +148,8 @@ static bool onButtonClick_Button2(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 
 	LOGD(" onButtonClick_Button2 !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x01 };
 	sendProtocol( mode , 6);
+	initPublicPageStatus();
+	mButton2Ptr->setSelected(true);
 	return false;
 }
 
@@ -134,6 +157,8 @@ static bool onButtonClick_Button3(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 
 	LOGD(" onButtonClick_Button3 !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x10, 0x00, 0x01 ,0x02 };
 	sendProtocol( mode , 6);
+	initPublicPageStatus();
+	mButton3Ptr->setSelected(true);
 	return false;
 }
 

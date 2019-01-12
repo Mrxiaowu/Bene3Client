@@ -123,8 +123,7 @@ static bool onButtonClick_fileList1(ZKButton *pButton) {
 	mfileList1Ptr->setSelected(true);
 	mfileList2Ptr->setSelected(false);
 	mfileList3Ptr->setSelected(false);
-	LOGD(" ??? %d", mfileList1Ptr->isSelected());
-	LOGD(" ButtonClick fileList1 !!!\n");//02FF10010100ED 第一行
+	LOGD(" ButtonClick fileList1 !!!\n");//02 FF 10 01 01 00 ED 第一行
 	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x00};
 	sendProtocol(mode , 6);
 	return true;

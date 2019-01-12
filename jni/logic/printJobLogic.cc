@@ -90,14 +90,19 @@ static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 
 static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回调接口
 
-	if(data.page != 9){
-		LOGD("当前读取的串口信息中的PageID不为9");
+	if(data.page != 9 || data.page != 8){
+		LOGD("当前读取的串口信息中的PageID不为9或者是8");
 		return;
 	} else {
 		LOGD("进入打印任务页面");
 	}
 
 	LOGD("当前读取的串口信息 %x %x %x , %x",data.region ,data.type , data.label ,data.cancellParam);
+
+	if(data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
+		LOGD("弹出弹出框");
+		mprintJobDialogPtr->setVisible(true);
+	}
 
 	if(data.region == 16){
 		if(data.type == 1){
@@ -182,5 +187,20 @@ static bool onButtonClick_line(ZKButton *pButton) {
 static bool onButtonClick_resume(ZKButton *pButton) {//09FF012B01CB
     LOGD(" onButtonClick_resume!!!\n");
 	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2B, 0x01);//
+    return false;
+}
+static bool onButtonClick_PrintJobconfirm(ZKButton *pButton) {
+    LOGD(" ButtonClick PrintJobconfirm !!!\n");
+	BYTE mode[] = { 0x08, 0xFF, 0x01, 0x28, 0x01 };
+	sendProtocol( mode , 5);
+	mprintJobDialogPtr->setVisible(false);
+    return false;
+}
+
+static bool onButtonClick_PrintJobcancell(ZKButton *pButton) {
+    LOGD(" ButtonClick PrintJobcancell !!!\n");
+	BYTE mode[] = { 0x08, 0xFF, 0x01, 0x29, 0x01 };
+	sendProtocol( mode , 5);
+	mprintJobDialogPtr->setVisible(false);
     return false;
 }

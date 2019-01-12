@@ -50,6 +50,15 @@ static void onUI_quit() {
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(data.page != 8){
+		LOGD("当前读取的串口信息中的PageID不为8，不是弹出框页面数据");
+		return;
+	}
+
+	if(data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
+		LOGD("弹出弹出框");
+		mdialogPtr->setVisible(true);
+	}
 }
 
 static bool onUI_Timer(int id){
@@ -129,4 +138,20 @@ static bool onButtonClick_homing(ZKButton *pButton) {//AA 55 05 03 FF 01 12 01 E
 	LOGD(" onButtonClick_down5000 !!!\n");
 	sendSampleProtocol(0x03, 0xFF, 0x01, 0x12, 0x01);
     return true;
+}
+
+static bool onButtonClick_confirm(ZKButton *pButton) {//AA 55 05 08 FF 01 28 01 CF
+    LOGD(" ButtonClick confirm !!!\n");
+	BYTE mode[] = { 0x08, 0xFF, 0x01, 0x28, 0x01 };
+	sendProtocol( mode , 5);
+	mdialogPtr->setVisible(false);
+    return false;
+}
+
+static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 08 FF 01 29 01 CE
+    LOGD(" ButtonClick cancell !!!\n");
+	BYTE mode[] = { 0x08, 0xFF, 0x01, 0x29, 0x01 };
+	sendProtocol( mode , 5);
+	mdialogPtr->setVisible(false);
+    return false;
 }

@@ -4,6 +4,10 @@
 #include "printSettingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mcancellPtr;
+static ZKButton* mconfirmPtr;
+static ZKTextView* mdialogTextPtr;
+static ZKWindow* mdialogPtr;
 static ZKButton* mhomingPtr;
 static ZKTextView* mmotorControlPtr;
 static ZKButton* mlinePtr;
@@ -53,6 +57,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTSETTING_cancell, onButtonClick_cancell,
+    ID_PRINTSETTING_confirm, onButtonClick_confirm,
     ID_PRINTSETTING_homing, onButtonClick_homing,
     ID_PRINTSETTING_line, onButtonClick_line,
     ID_PRINTSETTING_sys_back, onButtonClick_sys_back,
@@ -144,6 +150,10 @@ const char* printSettingActivity::getAppName() const{
 //TAG:onCreate
 void printSettingActivity::onCreate() {
 	Activity::onCreate();
+    mcancellPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_cancell);
+    mconfirmPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_confirm);
+    mdialogTextPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_dialogText);
+    mdialogPtr = (ZKWindow*)findControlByID(ID_PRINTSETTING_dialog);
     mhomingPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_homing);
     mmotorControlPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_motorControl);
     mlinePtr = (ZKButton*)findControlByID(ID_PRINTSETTING_line);

@@ -1,6 +1,9 @@
 #include "levelingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mTextview7Ptr;
+static ZKTextView* mTextview6Ptr;
+static ZKTextView* mTextview5Ptr;
 static ZKTextView* mTextview4Ptr;
 static ZKTextView* mTextview3Ptr;
 static ZKTextView* mTextview2Ptr;
@@ -141,6 +144,9 @@ const char* levelingActivity::getAppName() const{
 //TAG:onCreate
 void levelingActivity::onCreate() {
 	Activity::onCreate();
+    mTextview7Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview7);
+    mTextview6Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview6);
+    mTextview5Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview5);
     mTextview4Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview4);
     mTextview3Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview3);
     mTextview2Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview2);

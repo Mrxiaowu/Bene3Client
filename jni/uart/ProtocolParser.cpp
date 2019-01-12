@@ -137,49 +137,67 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 	} else {
 		switch(pData[3]){
 			case SWITCH_PAGE:
-				LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
-				if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
-					switch(pData[4]){
+				{
+					LOGD("当前命令为3，为切换页面命令SWITCH_PAGE,pData[4] %x" , pData[4]);
+					if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){ //判断是否是页面
+						switch(pData[4]){
 
-						case Logo_PageID:
-						{
-							LOGD("开机LOGO，认证信息");
-							EASYUICONTEXT->openActivity("mainActivity");
-							BYTE mode1[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
-							sendProtocol(mode1 , 5);
-							break;
-						}
+							case Logo_PageID:
+								{
+									LOGD("开机LOGO，认证信息");
+									EASYUICONTEXT->openActivity("mainActivity");
+									BYTE mode1[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
+									sendProtocol(mode1 , 5);
+								}
+								break;
 
-						case Print_PageID:
-						{
-							LOGD("222");
-							LOGD("跳转到打印页面");
-							EASYUICONTEXT->openActivity("printJobActivity");
+							case Print_PageID:
+								{
+									LOGD("跳转到打印页面");
+									EASYUICONTEXT->openActivity("printJobActivity");
+								}
 							break;
-						}
 
-						case PublicFile_PageID:
-						{
-							LOGD("跳转到公共页面");
-							EASYUICONTEXT->openActivity("publicWindowActivity");
-							break;
-						}
+							case PublicFile_PageID:
+								{
+									LOGD("跳转到公共页面");
+									EASYUICONTEXT->openActivity("publicWindowActivity");
+								}
+								break;
 
-						case FileManage_PageID:
-						{
-							LOGD("跳转到文件管理页面");
-							EASYUICONTEXT->openActivity("printablesActivity");
-							break;
+							case FileManage_PageID:
+								{
+									LOGD("跳转到文件管理页面");
+									EASYUICONTEXT->openActivity("printablesActivity");
+								}
+								break;
+
+							case MachineInfo_PageID://上位机返回机器信息页面，但这里可能要直接返回主页面
+								{
+									LOGD("可能要跳转到主页面");
+									EASYUICONTEXT->openActivity("mainActivity");
+								}
+								break;
+
+							case Dialog_PageID://AA 55 05 03 08 FF FF FF F8
+								{
+									LOGD("跳出弹出框");
+									BYTEToString(pData,len);
+								}
+								break;
+
+							default:
+								break;
 						}
+					} else {
+						LOGD("不是切换页面的命令，怎么费事？");
 					}
-				} else {
-					LOGD("不是切换页面的命令，怎么费事？");
+					//切换页面时也要将数据赋值
+					sProtocolData.page = pData[4];
+					sProtocolData.region = pData[5];
+					sProtocolData.type = pData[6];
+					sProtocolData.label = pData[7];
 				}
-				//切换页面时也要将数据赋值
-				sProtocolData.page = pData[4];
-				sProtocolData.region = pData[5];
-				sProtocolData.type = pData[6];
-				sProtocolData.label = pData[7];
 				break;
 
 			case SET_LABEL_VALUE:

@@ -26,6 +26,10 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTJOB_PrintJobcancell    20012
+#define ID_PRINTJOB_PrintJobconfirm    20011
+#define ID_PRINTJOB_PrintJobdialogText    50015
+#define ID_PRINTJOB_printJobDialog    110001
 #define ID_PRINTJOB_resume    20003
 #define ID_PRINTJOB_printstatusText    50014
 #define ID_PRINTJOB_layerspeedText    50013
@@ -38,14 +42,14 @@
 #define ID_PRINTJOB_printstatus    50005
 #define ID_PRINTJOB_layerspeed    50004
 #define ID_PRINTJOB_layer    50003
-#define ID_PRINTJOB_yzhou    50002
-#define ID_PRINTJOB_printImage    50001
 #define ID_PRINTJOB_printjob    50010
+#define ID_PRINTJOB_yzhou    50002
 #define ID_PRINTJOB_line    20005
+#define ID_PRINTJOB_printImage    50001
 #define ID_PRINTJOB_Circlebar1    130001
+#define ID_PRINTJOB_sys_back   100
 #define ID_PRINTJOB_stop    20002
 #define ID_PRINTJOB_cancell    20001
-#define ID_PRINTJOB_sys_back   100
 /*TAG:Macro宏ID END*/
 
 class printJobActivity : public Activity, 

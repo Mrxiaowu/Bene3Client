@@ -56,24 +56,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-//	if (mProtocolData.pdata != data.pdata) {
-//		mProtocolData.pdata = data.pdata;
-//	}
-//	if(mProtocolData.page != data.page){
-//		mProtocolData.page = data.page;
-//	}
-//	if(mProtocolData.type != data.type){
-//		mProtocolData.type = data.type;
-//	}
-//	if (mProtocolData.region != data.region) {
-//		mProtocolData.region = data.region;
-//	}
-//	if(mProtocolData.buttonIndex != data.buttonIndex){
-//		mProtocolData.buttonIndex = data.buttonIndex;
-//	}
-//	if (mProtocolData.label != data.label) {
-//		mProtocolData.label = data.label;
-//	} //后面需要全部更换成data的数据
 
 	if(data.region == 9){
 		if(data.type == 4){
@@ -149,7 +131,7 @@ static bool onButtonClick_language(ZKButton *pButton) {
     return false;
 }
 static bool onButtonClick_checkInfo(ZKButton *pButton) {//AA 55 05 06 FF 01 36 01 C3
-	LOGD(" onButtonClick_english !!!\n"); //02FF010701F6
+	LOGD(" onButtonClick_checkInfo !!!\n");
 	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x36, 0x01 };
 	sendProtocol( mode , 5);
     return false;

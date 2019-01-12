@@ -1,5 +1,13 @@
+/***********************************************
+/gen auto by zuitools
+***********************************************/
 #include "printJobActivity.h"
 
+/*TAG:GlobalVariable全局变量*/
+static ZKButton* mPrintJobcancellPtr;
+static ZKButton* mPrintJobconfirmPtr;
+static ZKTextView* mPrintJobdialogTextPtr;
+static ZKWindow* mprintJobDialogPtr;
 static ZKButton* mresumePtr;
 static ZKTextView* mprintstatusTextPtr;
 static ZKTextView* mlayerspeedTextPtr;
@@ -12,14 +20,14 @@ static ZKTextView* mprintTimePtr;
 static ZKTextView* mprintstatusPtr;
 static ZKTextView* mlayerspeedPtr;
 static ZKTextView* mlayerPtr;
-static ZKTextView* myzhouPtr;
-static ZKTextView* mprintImagePtr;
 static ZKTextView* mprintjobPtr;
+static ZKTextView* myzhouPtr;
 static ZKButton* mlinePtr;
+static ZKTextView* mprintImagePtr;
 static ZKCircleBar* mCirclebar1Ptr;
+static ZKButton* msys_backPtr;
 static ZKButton* mstopPtr;
 static ZKButton* mcancellPtr;
-static ZKButton* msys_backPtr;
 static printJobActivity* mActivityPtr;
 
 /*register activity*/
@@ -57,11 +65,13 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTJOB_PrintJobcancell, onButtonClick_PrintJobcancell,
+    ID_PRINTJOB_PrintJobconfirm, onButtonClick_PrintJobconfirm,
     ID_PRINTJOB_resume, onButtonClick_resume,
     ID_PRINTJOB_line, onButtonClick_line,
+    ID_PRINTJOB_sys_back, onButtonClick_sys_back,
     ID_PRINTJOB_stop, onButtonClick_stop,
     ID_PRINTJOB_cancell, onButtonClick_cancell,
-    ID_PRINTJOB_sys_back, onButtonClick_sys_back,
 };
 /***************/
 
@@ -142,6 +152,10 @@ const char* printJobActivity::getAppName() const{
 //TAG:onCreate
 void printJobActivity::onCreate() {
 	Activity::onCreate();
+    mPrintJobcancellPtr = (ZKButton*)findControlByID(ID_PRINTJOB_PrintJobcancell);
+    mPrintJobconfirmPtr = (ZKButton*)findControlByID(ID_PRINTJOB_PrintJobconfirm);
+    mPrintJobdialogTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_PrintJobdialogText);
+    mprintJobDialogPtr = (ZKWindow*)findControlByID(ID_PRINTJOB_printJobDialog);
     mresumePtr = (ZKButton*)findControlByID(ID_PRINTJOB_resume);
     mprintstatusTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printstatusText);
     mlayerspeedTextPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerspeedText);
@@ -154,14 +168,14 @@ void printJobActivity::onCreate() {
     mprintstatusPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printstatus);
     mlayerspeedPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layerspeed);
     mlayerPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_layer);
-    myzhouPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_yzhou);
-    mprintImagePtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printImage);
     mprintjobPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printjob);
+    myzhouPtr = (ZKTextView*)findControlByID(ID_PRINTJOB_yzhou);
     mlinePtr = (ZKButton*)findControlByID(ID_PRINTJOB_line);
+    mprintImagePtr = (ZKTextView*)findControlByID(ID_PRINTJOB_printImage);
     mCirclebar1Ptr = (ZKCircleBar*)findControlByID(ID_PRINTJOB_Circlebar1);
+    msys_backPtr = (ZKButton*)findControlByID(ID_PRINTJOB_sys_back);
     mstopPtr = (ZKButton*)findControlByID(ID_PRINTJOB_stop);
     mcancellPtr = (ZKButton*)findControlByID(ID_PRINTJOB_cancell);
-    msys_backPtr = (ZKButton*)findControlByID(ID_PRINTJOB_sys_back);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 
@@ -427,5 +441,5 @@ void printJobActivity::unregisterUserTimer(int id) {
 }
 
 void printJobActivity::resetUserTimer(int id, int time) {
-	resetUserTimer(id, time);
+	resetTimer(id, time);
 }
