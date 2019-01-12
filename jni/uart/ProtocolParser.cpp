@@ -140,31 +140,46 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				LOGD("当前命令为3，为切换页面命令SWITCH_PAGE");
 				if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
 					switch(pData[4]){
+
 						case Logo_PageID:
+						{
 							LOGD("开机LOGO，认证信息");
 							EASYUICONTEXT->openActivity("mainActivity");
 							BYTE mode1[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
 							sendProtocol(mode1 , 5);
 							break;
+						}
 
 						case Print_PageID:
+						{
+							LOGD("222");
 							LOGD("跳转到打印页面");
 							EASYUICONTEXT->openActivity("printJobActivity");
 							break;
+						}
 
 						case PublicFile_PageID:
+						{
 							LOGD("跳转到公共页面");
 							EASYUICONTEXT->openActivity("publicWindowActivity");
 							break;
+						}
+
+						case FileManage_PageID:
+						{
+							LOGD("跳转到文件管理页面");
+							EASYUICONTEXT->openActivity("printablesActivity");
+							break;
+						}
 					}
-					//切换页面时也要将数据赋值
-					sProtocolData.page = pData[4];
-					sProtocolData.region = pData[5];
-					sProtocolData.type = pData[6];
-					sProtocolData.label = pData[7];
 				} else {
 					LOGD("不是切换页面的命令，怎么费事？");
 				}
+				//切换页面时也要将数据赋值
+				sProtocolData.page = pData[4];
+				sProtocolData.region = pData[5];
+				sProtocolData.type = pData[6];
+				sProtocolData.label = pData[7];
 				break;
 
 			case SET_LABEL_VALUE:

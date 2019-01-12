@@ -119,17 +119,13 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 		} else if(data.type == 12 && data.label == 0){
 			mCirclebar1Ptr->setProgress(16);
 		} else if(data.type == 1 && data.label == 0x2A && data.cancellParam == 0x2B){ //AA55 09 04 09 11 01 2A 09 11 01 2B 71
-			LOGD("更换为暂停");
-//			mresumePtr->setInvalid(false);
-//			mcancellPtr->setInvalid(true);
-			mresumePtr->setVisible(false);
-			mcancellPtr->setVisible(true);
-		} else if(data.type == 1 && data.label == 0x2B && data.cancellParam == 0x2A){//AA55 09 04 09 11 01 2B 09 11 01 2A 71
 			LOGD("更换为继续 ");
-//			mresumePtr->setInvalid(true);
-//			mcancellPtr->setInvalid(false);
 			mresumePtr->setVisible(true);
 			mcancellPtr->setVisible(false);
+		} else if(data.type == 1 && data.label == 0x2B && data.cancellParam == 0x2A){//AA55 09 04 09 11 01 2B 09 11 01 2A 71
+			LOGD("更换为暂停");
+			mresumePtr->setVisible(false);
+			mcancellPtr->setVisible(true);
 		}
 	}
 

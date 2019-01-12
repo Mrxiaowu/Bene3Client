@@ -110,9 +110,20 @@ static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 05 FF 01 1C 01 DE
     return true;
 }
 
+
+static bool onButtonClick_line(ZKButton *pButton) {
+    //LOGD(" ButtonClick line !!!\n");
+    return false;
+}
+
+static bool onButtonClick_networkSetting(ZKButton *pButton) {
+    //LOGD(" ButtonClick networkSetting !!!\n");
+    return false;
+}
+
 //仿照这个格式，这里在app后台也要进行定义好
 //AA 55 17 47 58 48 32 30 31 52 54 33 35 49 43 34 38 33 32 5F 31 2E 30 2E 31 31 3F
-static void onEditTextChanged_passwordText(const std::string &text) {
+static void onEditTextChanged_passwordButton(const std::string &text) {
 	LOGD(" 正在输入键盘值 %s 密码长度 %d", text.c_str(),strlen(text.c_str()));
 
 	UINT passWordLength = strlen(text.c_str()) + 1;
@@ -130,16 +141,7 @@ static void onEditTextChanged_passwordText(const std::string &text) {
 	sendProtocol(passwordData , passWordLength);
 }
 
-static bool onButtonClick_line(ZKButton *pButton) {
-    //LOGD(" ButtonClick line !!!\n");
-    return false;
-}
-
-static bool onButtonClick_networkSetting(ZKButton *pButton) {
-    //LOGD(" ButtonClick networkSetting !!!\n");
-    return false;
-}
-static bool onButtonClick_pointText(ZKButton *pButton) {
-    //LOGD(" ButtonClick pointText !!!\n");
+static bool onButtonClick_pointButton(ZKButton *pButton) {
+    //LOGD(" ButtonClick pointButton !!!\n");
     return false;
 }
