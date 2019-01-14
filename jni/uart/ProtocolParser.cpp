@@ -70,6 +70,11 @@ void BYTEToString(const BYTE *pData, UINT len){
 		sProtocolData.cancellParam = pData[11];
 	}
 
+	if(pData[4] == 9 && pData[5] == 0x11 && pData[6] == 0x0C && pData[7] == 0x00 ){
+		LOGD("给打印进度赋值");
+		sProtocolData.progress = pData[8];
+	}
+
 	std::string tempStr;
 	for(UINT i = pDataStartIndex; i < len-1; i++){
 		tempStr.append(1, pData[i]);
@@ -183,6 +188,13 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 								{
 									LOGD("跳出弹出框");
 									BYTEToString(pData,len);
+								}
+								break;
+
+							case NetworkControl_PageID://AA 55 05 03 08 FF FF FF F8
+								{
+									LOGD("跳出弹出框");
+									EASYUICONTEXT->openActivity("networkControlActivity");
 								}
 								break;
 

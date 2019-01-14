@@ -250,6 +250,7 @@ typedef struct {
 	BYTE label;
 
 	BYTE cancellParam;
+	BYTE progress;
 
 	BYTE *imageData;
 	int imageLength;

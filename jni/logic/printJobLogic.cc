@@ -19,9 +19,6 @@ using namespace std;
 #include "activity/imageWrite.h"
 
 
-
-
-
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -62,50 +59,37 @@ static void onUI_quit() {//当界面完全退出时触发
 
 }
 
+static int code_convert(const char *from_charset,const char *to_charset, char *inptr, char *outptr)
+{
+    size_t inleft = strlen(inptr);
+    size_t outleft = inleft;
+//    iconv_t cd;
+    LOGD("1111");
 
-static int code_convert() {
+	iconv_t cd = iconv_open("GBK", "UTF-8");
+	if (cd == (iconv_t)-1) {
+		LOGD("获取字符转换描述符失败！\n");
+		return -1;
+	}
 
-//	  char *encTo = "UNICODE//IGNORE";
-	  char *encTo ="UTF-8" ;
+    LOGD("2222");
 
-	  char *encFrom = "gb2312";
+    int rc = iconv(cd, &inptr, &inleft, &outptr, &outleft);
+    if (rc == -1)
+    {
+            fprintf(stderr, "Error in converting characters\n");
 
-	  iconv_t cd = iconv_open (encTo, encFrom);
-	  if (cd == (iconv_t)-1)
-	  {
-	      LOGD("iconv_open");
-	  }
+            if(errno == E2BIG)
+            	LOGD("errno == E2BIG\n");
+            if(errno == EILSEQ)
+            	LOGD("errno == EILSEQ\n");
+            if(errno == EINVAL)
+            	LOGD("errno == EINVAL\n");
 
-	  char inbuf[1024] = "abcdef哈哈哈哈行";
-	  size_t srclen = strlen (inbuf);
-
-	  LOGD("srclen=%d\n", srclen);
-
-
-	  size_t outlen = 1024;
-	  char outbuf[outlen];
-	  memset (outbuf, 0, outlen);
-
-	  /* 由于iconv()函数会修改指针，所以要保存源指针 */
-	  char *srcstart = inbuf;
-	  char *tempoutbuf = outbuf;
-
-	  LOGD("111");
-	  size_t ret = iconv (cd, &srcstart, &srclen, &tempoutbuf, &outlen);
-	  if (ret == -1)
-	  {
-		  LOGD("iconv");
-	  }
-	  LOGD("inbuf=%s, srclen=%d, outbuf=%s, outlen=%d\n", inbuf, srclen, outbuf, outlen);
-	  int i = 0;
-	  for (i=0; i<strlen(outbuf); i++)
-	  {
-		  LOGD("%x\n", outbuf[i]);
-	  }
-
-	  iconv_close (cd);
-
-	  return 0;
+            iconv_close(cd);
+            return 1;
+    }
+    iconv_close(cd);
 }
 
 //static int code_convert(char *from_charset, char *to_charset, char *inbuf, size_t inlen, char *outbuf, size_t outlen) {
@@ -213,6 +197,14 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 
 //	code_convert();
 
+//	char some_string = "123";
+//
+//
+//	int len = 1000;
+//	char *result = new char[len];
+//	code_convert("GBK", "UTF-8", &some_string, result);
+//	free(result);
+
 
 	LOGD("当前读取的串口信息 %x %x %x , %x",data.region ,data.type , data.label ,data.cancellParam);
 
@@ -244,7 +236,7 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 		if(data.type == 4 && data.label == 23){
 			mprinttimeTextPtr->setText(data.pdata);
 		} else if(data.type == 12 && data.label == 0){
-			mCirclebar1Ptr->setProgress(16);
+			mCirclebar1Ptr->setProgress(data.progress);
 		} else if(data.type == 1 && data.label == 0x2A && data.cancellParam == 0x2B){ //AA55 09 04 09 11 01 2A 09 11 01 2B 71
 			LOGD("更换为继续 ");
 			mresumePtr->setVisible(true);
