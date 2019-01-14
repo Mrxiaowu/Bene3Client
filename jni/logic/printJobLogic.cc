@@ -3,10 +3,22 @@
 #include <string>
 #include <cstdlib>
 #include <iostream>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <iconv.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+#include <sys/stat.h>
+
 using namespace std;
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION		// 要在导入头文件前，定义该宏
 #include "activity/imageWrite.h"
+
+
 
 
 
@@ -51,6 +63,108 @@ static void onUI_quit() {//当界面完全退出时触发
 }
 
 
+static int code_convert() {
+
+//	  char *encTo = "UNICODE//IGNORE";
+	  char *encTo ="UTF-8" ;
+
+	  char *encFrom = "gb2312";
+
+	  iconv_t cd = iconv_open (encTo, encFrom);
+	  if (cd == (iconv_t)-1)
+	  {
+	      LOGD("iconv_open");
+	  }
+
+	  char inbuf[1024] = "abcdef哈哈哈哈行";
+	  size_t srclen = strlen (inbuf);
+
+	  LOGD("srclen=%d\n", srclen);
+
+
+	  size_t outlen = 1024;
+	  char outbuf[outlen];
+	  memset (outbuf, 0, outlen);
+
+	  /* 由于iconv()函数会修改指针，所以要保存源指针 */
+	  char *srcstart = inbuf;
+	  char *tempoutbuf = outbuf;
+
+	  LOGD("111");
+	  size_t ret = iconv (cd, &srcstart, &srclen, &tempoutbuf, &outlen);
+	  if (ret == -1)
+	  {
+		  LOGD("iconv");
+	  }
+	  LOGD("inbuf=%s, srclen=%d, outbuf=%s, outlen=%d\n", inbuf, srclen, outbuf, outlen);
+	  int i = 0;
+	  for (i=0; i<strlen(outbuf); i++)
+	  {
+		  LOGD("%x\n", outbuf[i]);
+	  }
+
+	  iconv_close (cd);
+
+	  return 0;
+}
+
+//static int code_convert(char *from_charset, char *to_charset, char *inbuf, size_t inlen, char *outbuf, size_t outlen) {
+//	LOGD("9999");
+//	iconv_t cd;
+//	char **pin = &inbuf;
+//	char **pout = &outbuf;
+//
+//	LOGD("2222");
+//	cd = iconv_open(to_charset, from_charset);
+//	if (cd == 0)
+//		return -1;
+//	LOGD("3333");
+//	memset(outbuf, 0, outlen);
+//	LOGD("4444");
+//
+//	if (iconv(cd, pin, &inlen, pout, &outlen) == -1)
+//		return -1;
+//	LOGD("5555");
+//	iconv_close(cd);
+//	LOGD("6666");
+//	*pout = '\0';
+//
+//	LOGD("7777");
+//
+//	return 0;
+//}
+
+
+////GB2312到UTF-8的转换
+//int code_convert(char *from_charset,char *to_charset,char *inbuf,unsigned int inlen,char *outbuf,unsigned int outlen)
+//{
+//	iconv_t cd;
+//	int rc;
+//	char **pin = &inbuf;
+//	char **pout = &outbuf;
+//
+//	cd = iconv_open(to_charset,from_charset);
+//	if (cd==0)
+//		return -1;
+//	memset(outbuf,0,outlen);
+//
+//	if (iconv(cd,pin,&inlen,pout,&outlen) == -1)
+//		return -1;
+//	iconv_close(cd);
+//	return 0;
+//}
+
+
+
+
+//static int g2u(char *inbuf, size_t inlen, char *outbuf, size_t outlen) {
+//	LOGD("8888");
+//	return code_convert("gb2312", "utf-8", inbuf, inlen, outbuf, outlen);
+//}
+
+
+
+
 //static void MySaveJPG(string hexString1) {
 static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 
@@ -90,18 +204,26 @@ static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 
 static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回调接口
 
-	if(data.page != 9 || data.page != 8){
+	if(data.page != 9 && data.page != 8){
 		LOGD("当前读取的串口信息中的PageID不为9或者是8");
 		return;
 	} else {
 		LOGD("进入打印任务页面");
 	}
 
+//	code_convert();
+
+
 	LOGD("当前读取的串口信息 %x %x %x , %x",data.region ,data.type , data.label ,data.cancellParam);
 
-	if(data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
+	if(data.page == 8 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
 		LOGD("弹出弹出框");
 		mprintJobDialogPtr->setVisible(true);
+	}
+
+	if(data.page == 8 && data.region == 0x0F && data.type == 0x04 && data.label == 0x15){
+		LOGD("给弹出框赋值");
+		mPrintJobdialogTextPtr->setText(data.pdata);
 	}
 
 	if(data.region == 16){
@@ -133,7 +255,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 			mcancellPtr->setVisible(true);
 		}
 	}
-
 
 
 	//这里避免其他命令也会进入这里
@@ -180,15 +301,18 @@ static bool onButtonClick_stop(ZKButton *pButton) {//AA 55 05 09 FF 01 2C 01 CA
     sendSampleProtocol(0x09, 0xFF, 0x01, 0x2C, 0x01);
     return false;
 }
+
 static bool onButtonClick_line(ZKButton *pButton) {
     //LOGD(" ButtonClick line !!!\n");
     return false;
 }
+
 static bool onButtonClick_resume(ZKButton *pButton) {//09FF012B01CB
     LOGD(" onButtonClick_resume!!!\n");
-	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2B, 0x01);//
+	sendSampleProtocol(0x09, 0xFF, 0x01, 0x2B, 0x01);
     return false;
 }
+
 static bool onButtonClick_PrintJobconfirm(ZKButton *pButton) {
     LOGD(" ButtonClick PrintJobconfirm !!!\n");
 	BYTE mode[] = { 0x08, 0xFF, 0x01, 0x28, 0x01 };

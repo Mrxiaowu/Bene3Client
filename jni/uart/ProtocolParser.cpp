@@ -156,7 +156,7 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 									LOGD("跳转到打印页面");
 									EASYUICONTEXT->openActivity("printJobActivity");
 								}
-							break;
+								break;
 
 							case PublicFile_PageID:
 								{

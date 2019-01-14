@@ -55,7 +55,7 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-	if(data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
+	if(data.page == 8 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
 		LOGD("弹出弹出框");
 		mdialogPtr->setVisible(true);
 	}
