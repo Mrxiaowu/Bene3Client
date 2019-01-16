@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iconv.h>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -59,97 +58,6 @@ static void onUI_quit() {//当界面完全退出时触发
 
 }
 
-static int code_convert(const char *from_charset,const char *to_charset, char *inptr, char *outptr)
-{
-    size_t inleft = strlen(inptr);
-    size_t outleft = inleft;
-//    iconv_t cd;
-    LOGD("1111");
-
-	iconv_t cd = iconv_open("GBK", "UTF-8");
-	if (cd == (iconv_t)-1) {
-		LOGD("获取字符转换描述符失败！\n");
-		return -1;
-	}
-
-    LOGD("2222");
-
-    int rc = iconv(cd, &inptr, &inleft, &outptr, &outleft);
-    if (rc == -1)
-    {
-            fprintf(stderr, "Error in converting characters\n");
-
-            if(errno == E2BIG)
-            	LOGD("errno == E2BIG\n");
-            if(errno == EILSEQ)
-            	LOGD("errno == EILSEQ\n");
-            if(errno == EINVAL)
-            	LOGD("errno == EINVAL\n");
-
-            iconv_close(cd);
-            return 1;
-    }
-    iconv_close(cd);
-}
-
-//static int code_convert(char *from_charset, char *to_charset, char *inbuf, size_t inlen, char *outbuf, size_t outlen) {
-//	LOGD("9999");
-//	iconv_t cd;
-//	char **pin = &inbuf;
-//	char **pout = &outbuf;
-//
-//	LOGD("2222");
-//	cd = iconv_open(to_charset, from_charset);
-//	if (cd == 0)
-//		return -1;
-//	LOGD("3333");
-//	memset(outbuf, 0, outlen);
-//	LOGD("4444");
-//
-//	if (iconv(cd, pin, &inlen, pout, &outlen) == -1)
-//		return -1;
-//	LOGD("5555");
-//	iconv_close(cd);
-//	LOGD("6666");
-//	*pout = '\0';
-//
-//	LOGD("7777");
-//
-//	return 0;
-//}
-
-
-////GB2312到UTF-8的转换
-//int code_convert(char *from_charset,char *to_charset,char *inbuf,unsigned int inlen,char *outbuf,unsigned int outlen)
-//{
-//	iconv_t cd;
-//	int rc;
-//	char **pin = &inbuf;
-//	char **pout = &outbuf;
-//
-//	cd = iconv_open(to_charset,from_charset);
-//	if (cd==0)
-//		return -1;
-//	memset(outbuf,0,outlen);
-//
-//	if (iconv(cd,pin,&inlen,pout,&outlen) == -1)
-//		return -1;
-//	iconv_close(cd);
-//	return 0;
-//}
-
-
-
-
-//static int g2u(char *inbuf, size_t inlen, char *outbuf, size_t outlen) {
-//	LOGD("8888");
-//	return code_convert("gb2312", "utf-8", inbuf, inlen, outbuf, outlen);
-//}
-
-
-
-
-//static void MySaveJPG(string hexString1) {
 static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 
 	const int dw = 200, dh = 112;
@@ -194,17 +102,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 	} else {
 		LOGD("进入打印任务页面");
 	}
-
-//	code_convert();
-
-//	char some_string = "123";
-//
-//
-//	int len = 1000;
-//	char *result = new char[len];
-//	code_convert("GBK", "UTF-8", &some_string, result);
-//	free(result);
-
 
 	LOGD("当前读取的串口信息 %x %x %x , %x",data.region ,data.type , data.label ,data.cancellParam);
 

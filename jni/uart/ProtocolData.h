@@ -84,6 +84,7 @@
 #define Keyboard_PageID  10
 #define PowerOff_PageID 11
 #define Logo_PageID 12
+#define Logo_PageID_4_3  0xFF
 
 
 /***Region ID******/

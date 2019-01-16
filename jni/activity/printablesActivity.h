@@ -24,6 +24,17 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTABLES_usbWindow    110002
+#define ID_PRINTABLES_cancell    20019
+#define ID_PRINTABLES_pgdown    20018
+#define ID_PRINTABLES_pgup    20017
+#define ID_PRINTABLES_sure    20016
+#define ID_PRINTABLES_Button6    20015
+#define ID_PRINTABLES_Button5    20014
+#define ID_PRINTABLES_Button4    20013
+#define ID_PRINTABLES_Button3    20005
+#define ID_PRINTABLES_Button2    20006
+#define ID_PRINTABLES_Button1    20004
 #define ID_PRINTABLES_fileList3    20012
 #define ID_PRINTABLES_fileList2    20011
 #define ID_PRINTABLES_fileList1    20010

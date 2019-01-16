@@ -147,16 +147,12 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 					if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){ //判断是否是页面
 						switch(pData[4]){
 
-							case Logo_PageID:
+							case Logo_PageID_4_3:
 								{
-									if(pData[8] == 0xFF){
-										LOGD("pData[8]也是 FF，那就是4.3寸的开机LOGO，认证信息");
-										EASYUICONTEXT->openActivity("mainActivity");
-										BYTE mode1[] = { 0x0C, 0xFF, 0xFF , 0x0D, 0xFF, 0x02 };
-										sendProtocol(mode1 , 6);
-									} else {
-										LOGD("虽然前面3个值都是FF，但第四个不是FF，所以还不是4.3寸的屏幕哦");
-									}
+									LOGD("是4.3寸的开机LOGO，认证信息");
+									EASYUICONTEXT->openActivity("mainActivity");//AA5505 FF FF 0D FF 02 F4
+									BYTE mode1[] = { 0xFF, 0xFF, 0x0D, 0xFF, 0x02 };
+									sendProtocol(mode1 , 5);
 								}
 								break;
 
@@ -164,13 +160,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 								{
 									LOGD("跳转到打印页面");
 									EASYUICONTEXT->openActivity("printJobActivity");
-								}
-								break;
-
-							case PublicFile_PageID:
-								{
-									LOGD("跳转到公共页面");
-									EASYUICONTEXT->openActivity("publicWindowActivity");
 								}
 								break;
 

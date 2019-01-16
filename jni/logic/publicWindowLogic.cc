@@ -29,10 +29,9 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
-	//还是不能每次打印页面都这样
-//	LOGD("publicWindow onUI_show");
-//	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x36, 0x01};
-//	sendProtocol( mode , 5);
+	LOGD("publicWindow onUI_show");
+	BYTE mode[] = { 0x06, 0xFF, 0x01, 0x36, 0x01};
+	sendProtocol( mode , 5);
 }
 
 /*
@@ -166,6 +165,7 @@ static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 07 FF 01 26 01 D2
 	LOGD(" onButtonClick_sure !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x26, 0x01 };
 	sendProtocol( mode , 5);
+	EASYUICONTEXT->openActivity("mainActivity");
 	return false;
 }
 
@@ -187,6 +187,7 @@ static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 07 FF 01 27 01 
 	LOGD(" onButtonClick_cancell !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x27, 0x01 };
 	sendProtocol( mode , 5);
+	EASYUICONTEXT->openActivity("mainActivity");
 	return false;
 }
 

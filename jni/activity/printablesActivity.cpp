@@ -1,6 +1,17 @@
 #include "printablesActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKWindow* musbWindowPtr;
+static ZKButton* mcancellPtr;
+static ZKButton* mpgdownPtr;
+static ZKButton* mpgupPtr;
+static ZKButton* msurePtr;
+static ZKButton* mButton6Ptr;
+static ZKButton* mButton5Ptr;
+static ZKButton* mButton4Ptr;
+static ZKButton* mButton3Ptr;
+static ZKButton* mButton2Ptr;
+static ZKButton* mButton1Ptr;
 static ZKWindow* mWindow1Ptr;
 static ZKTextView* mprintablePagePtr;
 static ZKButton* mlinePtr;
@@ -51,6 +62,16 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_PRINTABLES_cancell, onButtonClick_cancell,
+    ID_PRINTABLES_pgdown, onButtonClick_pgdown,
+    ID_PRINTABLES_pgup, onButtonClick_pgup,
+    ID_PRINTABLES_sure, onButtonClick_sure,
+    ID_PRINTABLES_Button6, onButtonClick_Button6,
+    ID_PRINTABLES_Button5, onButtonClick_Button5,
+    ID_PRINTABLES_Button4, onButtonClick_Button4,
+    ID_PRINTABLES_Button3, onButtonClick_Button3,
+    ID_PRINTABLES_Button2, onButtonClick_Button2,
+    ID_PRINTABLES_Button1, onButtonClick_Button1,
     ID_PRINTABLES_line, onButtonClick_line,
     ID_PRINTABLES_pageDown, onButtonClick_pageDown,
     ID_PRINTABLES_pageUp, onButtonClick_pageUp,
@@ -141,6 +162,17 @@ const char* printablesActivity::getAppName() const{
 //TAG:onCreate
 void printablesActivity::onCreate() {
 	Activity::onCreate();
+    musbWindowPtr = (ZKWindow*)findControlByID(ID_PRINTABLES_usbWindow);
+    mcancellPtr = (ZKButton*)findControlByID(ID_PRINTABLES_cancell);
+    mpgdownPtr = (ZKButton*)findControlByID(ID_PRINTABLES_pgdown);
+    mpgupPtr = (ZKButton*)findControlByID(ID_PRINTABLES_pgup);
+    msurePtr = (ZKButton*)findControlByID(ID_PRINTABLES_sure);
+    mButton6Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_Button6);
+    mButton5Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_Button5);
+    mButton4Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_Button4);
+    mButton3Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_Button3);
+    mButton2Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_Button2);
+    mButton1Ptr = (ZKButton*)findControlByID(ID_PRINTABLES_Button1);
     mWindow1Ptr = (ZKWindow*)findControlByID(ID_PRINTABLES_Window1);
     mprintablePagePtr = (ZKTextView*)findControlByID(ID_PRINTABLES_printablePage);
     mlinePtr = (ZKButton*)findControlByID(ID_PRINTABLES_line);
