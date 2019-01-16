@@ -59,6 +59,11 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		LOGD("弹出弹出框");
 		mdialogPtr->setVisible(true);
 	}
+
+	if(data.page == 8 && data.region == 0x0F && data.type == 0x04 && data.label == 0x15){
+		LOGD("给弹出框赋值");
+		mprintsettingDialogTextPtr->setText(data.pdata);
+	}
 }
 
 static bool onUI_Timer(int id){

@@ -149,10 +149,14 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 
 							case Logo_PageID:
 								{
-									LOGD("开机LOGO，认证信息");
-									EASYUICONTEXT->openActivity("mainActivity");
-									BYTE mode1[] = { 0x0C, 0xFF, 0x0D, 0xFF, 0x02 };
-									sendProtocol(mode1 , 5);
+									if(pData[8] == 0xFF){
+										LOGD("pData[8]也是 FF，那就是4.3寸的开机LOGO，认证信息");
+										EASYUICONTEXT->openActivity("mainActivity");
+										BYTE mode1[] = { 0x0C, 0xFF, 0xFF , 0x0D, 0xFF, 0x02 };
+										sendProtocol(mode1 , 6);
+									} else {
+										LOGD("虽然前面3个值都是FF，但第四个不是FF，所以还不是4.3寸的屏幕哦");
+									}
 								}
 								break;
 

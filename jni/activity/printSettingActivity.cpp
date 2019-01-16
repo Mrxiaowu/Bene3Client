@@ -1,12 +1,10 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
+
 #include "printSettingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mprintsettingDialogTextPtr;
 static ZKButton* mcancellPtr;
 static ZKButton* mconfirmPtr;
-static ZKTextView* mdialogTextPtr;
 static ZKWindow* mdialogPtr;
 static ZKButton* mhomingPtr;
 static ZKTextView* mmotorControlPtr;
@@ -150,9 +148,9 @@ const char* printSettingActivity::getAppName() const{
 //TAG:onCreate
 void printSettingActivity::onCreate() {
 	Activity::onCreate();
+    mprintsettingDialogTextPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_printsettingDialogText);
     mcancellPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_cancell);
     mconfirmPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_confirm);
-    mdialogTextPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_dialogText);
     mdialogPtr = (ZKWindow*)findControlByID(ID_PRINTSETTING_dialog);
     mhomingPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_homing);
     mmotorControlPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_motorControl);
