@@ -26,6 +26,11 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_SLCPARAM_ADDBUTTONlistRate    50009
+#define ID_SLCPARAM_ADDBUTTONLiftDistance    50007
+#define ID_SLCPARAM_ADDBUTTONBottomTimeValue    50005
+#define ID_SLCPARAM_ADDBUTTONbottomValue    50003
+#define ID_SLCPARAM_ADDBUTTONexposureValue    50001
 #define ID_SLCPARAM_LiftRateJia    20011
 #define ID_SLCPARAM_LiftDistanceJia    20009
 #define ID_SLCPARAM_LiftRateJian    20010
@@ -36,15 +41,10 @@
 #define ID_SLCPARAM_BottomLayersJian    20003
 #define ID_SLCPARAM_ExposureTimeButtonJian    20002
 #define ID_SLCPARAM_ExposureTimeButtonJia    20001
-#define ID_SLCPARAM_ADDBUTTONvalue5    50009
 #define ID_SLCPARAM_ADDBUTTONtext4    50008
-#define ID_SLCPARAM_ADDBUTTONvalue4    50007
 #define ID_SLCPARAM_ADDBUTTONtext3    50006
-#define ID_SLCPARAM_ADDBUTTONvalue3    50005
 #define ID_SLCPARAM_ADDBUTTONtext2    50004
-#define ID_SLCPARAM_ADDBUTTONvalue2    50003
 #define ID_SLCPARAM_ADDBUTTONtext1    50002
-#define ID_SLCPARAM_ADDBUTTONvalue1    50001
 #define ID_SLCPARAM_save    20012
 #define ID_SLCPARAM_Textview7    50011
 #define ID_SLCPARAM_slcSetting    50010

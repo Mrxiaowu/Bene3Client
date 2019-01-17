@@ -100,27 +100,27 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 	return true;
 }
 
-static bool onButtonClick_zero(ZKButton *pButton) {
+static bool onButtonClick_zero(ZKButton *pButton) {//AA 55 05 0E FF 01 37 01 BA
     //LOGD(" ButtonClick zero !!!\n");
     return false;
 }
 
-static bool onButtonClick_up5(ZKButton *pButton) {
+static bool onButtonClick_up5(ZKButton *pButton) {//AA 55 05 0E FF 01 38 01 B9
     //LOGD(" ButtonClick up5 !!!\n");
     return false;
 }
 
-static bool onButtonClick_save(ZKButton *pButton) {
+static bool onButtonClick_save(ZKButton *pButton) {//AA 55 05 0E FF 01 39 01 B8
     //LOGD(" ButtonClick save !!!\n");
     return false;
 }
 
-static bool onButtonClick_Button4(ZKButton *pButton) {
+static bool onButtonClick_Button4(ZKButton *pButton) {//AA 55 05 0E FF 01 3A 01 B7
     //LOGD(" ButtonClick Button4 !!!\n");
     return false;
 }
 
-static bool onButtonClick_reset(ZKButton *pButton) {
+static bool onButtonClick_reset(ZKButton *pButton) {//AA 55 05 0E FF 01 3B 01 B6
     //LOGD(" ButtonClick reset !!!\n");
     return false;
 }
@@ -130,12 +130,16 @@ static bool onButtonClick_line(ZKButton *pButton) {
     return false;
 }
 
-static bool onButtonClick_PageUp(ZKButton *pButton) {
+static bool onButtonClick_PageUp(ZKButton *pButton) {//AA 55 05 0E FF 01 3D 01 B4
     //LOGD(" ButtonClick PageUp !!!\n");
     return false;
 }
 
-static bool onButtonClick_pageDown(ZKButton *pButton) {
+static bool onButtonClick_pageDown(ZKButton *pButton) {//AA 55 05 0E FF 01 3E 01 B3
     //LOGD(" ButtonClick pageDown !!!\n");
+    return false;
+}
+static bool onButtonClick_down5(ZKButton *pButton) {
+    //LOGD(" ButtonClick down5 !!!\n");
     return false;
 }

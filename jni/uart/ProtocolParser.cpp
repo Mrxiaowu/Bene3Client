@@ -179,7 +179,8 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 							case MachineInfo_PageID://上位机返回机器信息页面，但这里可能要直接返回主页面
 								{
 									LOGD("可能要跳转到主页面");
-									EASYUICONTEXT->openActivity("mainActivity");
+//									EASYUICONTEXT->openActivity("mainActivity");
+									EASYUICONTEXT->openActivity("machineInfoActivity");
 								}
 								break;
 

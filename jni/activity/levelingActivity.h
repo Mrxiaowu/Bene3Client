@@ -23,6 +23,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_LEVELING_down5    20004
 #define ID_LEVELING_Textview7    50008
 #define ID_LEVELING_Textview6    50006
 #define ID_LEVELING_Textview5    50005
@@ -35,7 +36,6 @@
 #define ID_LEVELING_levelPageText    50007
 #define ID_LEVELING_line    20006
 #define ID_LEVELING_reset    20005
-#define ID_LEVELING_Button4    20004
 #define ID_LEVELING_save    20003
 #define ID_LEVELING_up5    20002
 #define ID_LEVELING_zero    20001

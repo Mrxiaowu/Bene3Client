@@ -57,7 +57,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
-
 	if(data.region == 9){
 		if(data.type == 4){
 			if(data.label == 16){
@@ -111,6 +110,7 @@ static bool onButtonClick_english(ZKButton *pButton) {//AA 55 05 06 FF 01 24 01 
 	EASYUICONTEXT->updateLocalesCode("en_US"); //设置为英文
     return false;
 }
+
 static bool onButtonClick_line(ZKButton *pButton) {
     //LOGD(" ButtonClick line !!!\n");
     return false;
@@ -120,7 +120,6 @@ static bool onButtonClick_hardware(ZKButton *pButton) {
     //LOGD(" ButtonClick hardware !!!\n");
     return false;
 }
-
 
 static bool onButtonClick_version(ZKButton *pButton) {
     //LOGD(" ButtonClick version !!!\n");

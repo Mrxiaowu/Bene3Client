@@ -1,6 +1,7 @@
 #include "levelingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mdown5Ptr;
 static ZKTextView* mTextview7Ptr;
 static ZKTextView* mTextview6Ptr;
 static ZKTextView* mTextview5Ptr;
@@ -13,7 +14,6 @@ static ZKButton* mPageUpPtr;
 static ZKTextView* mlevelPageTextPtr;
 static ZKButton* mlinePtr;
 static ZKButton* mresetPtr;
-static ZKButton* mButton4Ptr;
 static ZKButton* msavePtr;
 static ZKButton* mup5Ptr;
 static ZKButton* mzeroPtr;
@@ -55,11 +55,11 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_LEVELING_down5, onButtonClick_down5,
     ID_LEVELING_pageDown, onButtonClick_pageDown,
     ID_LEVELING_PageUp, onButtonClick_PageUp,
     ID_LEVELING_line, onButtonClick_line,
     ID_LEVELING_reset, onButtonClick_reset,
-    ID_LEVELING_Button4, onButtonClick_Button4,
     ID_LEVELING_save, onButtonClick_save,
     ID_LEVELING_up5, onButtonClick_up5,
     ID_LEVELING_zero, onButtonClick_zero,
@@ -144,6 +144,7 @@ const char* levelingActivity::getAppName() const{
 //TAG:onCreate
 void levelingActivity::onCreate() {
 	Activity::onCreate();
+    mdown5Ptr = (ZKButton*)findControlByID(ID_LEVELING_down5);
     mTextview7Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview7);
     mTextview6Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview6);
     mTextview5Ptr = (ZKTextView*)findControlByID(ID_LEVELING_Textview5);
@@ -156,7 +157,6 @@ void levelingActivity::onCreate() {
     mlevelPageTextPtr = (ZKTextView*)findControlByID(ID_LEVELING_levelPageText);
     mlinePtr = (ZKButton*)findControlByID(ID_LEVELING_line);
     mresetPtr = (ZKButton*)findControlByID(ID_LEVELING_reset);
-    mButton4Ptr = (ZKButton*)findControlByID(ID_LEVELING_Button4);
     msavePtr = (ZKButton*)findControlByID(ID_LEVELING_save);
     mup5Ptr = (ZKButton*)findControlByID(ID_LEVELING_up5);
     mzeroPtr = (ZKButton*)findControlByID(ID_LEVELING_zero);
