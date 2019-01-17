@@ -169,13 +169,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 								}
 								break;
 
-							case FileManage_PageID:
-								{
-									LOGD("跳转到文件管理页面");
-									EASYUICONTEXT->openActivity("printablesActivity");
-								}
-								break;
-
 							case MachineInfo_PageID://上位机返回机器信息页面，但这里可能要直接返回主页面
 								{
 									LOGD("可能要跳转到主页面");
@@ -187,13 +180,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 								{
 									LOGD("跳出弹出框");
 									BYTEToString(pData,len);
-								}
-								break;
-
-							case NetworkControl_PageID://AA 55 05 03 08 FF FF FF F8
-								{
-									LOGD("跳出弹出框");
-									EASYUICONTEXT->openActivity("networkControlActivity");
 								}
 								break;
 

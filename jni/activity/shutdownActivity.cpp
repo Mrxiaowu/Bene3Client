@@ -1,9 +1,11 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
+
 #include "shutdownActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mTextview3Ptr;
+static ZKWindow* mshutdownWindowPtr;
+static ZKTextView* mTextview2Ptr;
+static ZKTextView* mTextview1Ptr;
 static ZKButton* mButton2Ptr;
 static ZKButton* mButton1Ptr;
 static shutdownActivity* mActivityPtr;
@@ -125,6 +127,10 @@ const char* shutdownActivity::getAppName() const{
 //TAG:onCreate
 void shutdownActivity::onCreate() {
 	Activity::onCreate();
+    mTextview3Ptr = (ZKTextView*)findControlByID(ID_SHUTDOWN_Textview3);
+    mshutdownWindowPtr = (ZKWindow*)findControlByID(ID_SHUTDOWN_shutdownWindow);
+    mTextview2Ptr = (ZKTextView*)findControlByID(ID_SHUTDOWN_Textview2);
+    mTextview1Ptr = (ZKTextView*)findControlByID(ID_SHUTDOWN_Textview1);
     mButton2Ptr = (ZKButton*)findControlByID(ID_SHUTDOWN_Button2);
     mButton1Ptr = (ZKButton*)findControlByID(ID_SHUTDOWN_Button1);
 	mActivityPtr = this;

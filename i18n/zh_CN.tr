@@ -61,5 +61,7 @@
  	<string name="LiftDistance">上升距离</string>
  	<string name="LiftRate">移动速度</string>
  	
- 	
+ 	<string name="shutdown">关机</string>
+ 	<string name="shutdowning">关机中...</string>
+
 </resources>

@@ -53,5 +53,7 @@
  	<string name="BottomTime">BottomTime</string>
  	<string name="LiftDistance">LiftDistance</string>
  	<string name="LiftRate">LiftRate</string>
-
+ 	
+ 	<string name="shutdown">shutdown</string>
+	<string name="shutdowning">Shutdowning...</string>
 </resources>

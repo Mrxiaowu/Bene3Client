@@ -169,8 +169,8 @@ static void onEditTextChanged_passwordButton(const std::string &text) {
 }
 
 static bool onButtonClick_pointButton(ZKButton *pButton) {
-	LOGD(" onButtonClick_USB !!!\n"); //02FF010701F6
-	BYTE mode[] = { 0x02, 0xFF, 0x01, 0x07, 0x01 };
+	LOGD(" onButtonClick_USB !!!\n"); //05FF011E01DC
+	BYTE mode[] = { 0x05, 0xFF, 0x01, 0x1E, 0x01 };
 	sendProtocol( mode , 5);
 	return false;
 }

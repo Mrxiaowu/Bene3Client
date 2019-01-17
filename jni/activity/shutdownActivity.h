@@ -26,6 +26,10 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_SHUTDOWN_Textview3    50003
+#define ID_SHUTDOWN_shutdownWindow    110001
+#define ID_SHUTDOWN_Textview2    50002
+#define ID_SHUTDOWN_Textview1    50001
 #define ID_SHUTDOWN_Button2    20002
 #define ID_SHUTDOWN_Button1    20001
 /*TAG:Macro宏ID END*/
