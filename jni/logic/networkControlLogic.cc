@@ -14,7 +14,6 @@ static SProtocolData mProtocolData;
 static void onUI_init(){
 	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
 	LOGD("machineInfo onUI_init !!!\n"); //00FF010101FE
-	sendSampleProtocol(0x00, 0xFF, 0x01, 0x01, 0x01);
 }
 
 /**
@@ -30,7 +29,8 @@ static void onUI_intent(const Intent *intentPtr) {
 //当界面显示时触发
 
 static void onUI_show() {
-
+	LOGD("machineInfo onUI_show !!!\n"); //00FF010101FE
+	sendSampleProtocol(0x00, 0xFF, 0x01, 0x01, 0x01);
 }
 
 /*
@@ -57,10 +57,10 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 
 	if(data.region == 6){
-		if(data.type == 4){
-			if(data.label == 10){
-				mcurrentWIFITextPtr->setText(data.pdata);
-			}
+		if(data.type == 4 && data.label == 10){
+			mcurrentWIFITextPtr->setText(data.pdata);
+		} else if(data.type == 0x01 && data.label == 0x1E){
+			mpointButtonPtr->setText(data.pdata);
 		}
 	} else if(data.region == 7){
 		if(data.type == 4){
@@ -70,10 +70,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 				mdynamicIPTextPtr->setText(data.pdata);
 			}
 		}
-	}
-
-	if(data.page == 7 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
-		mnetworkWindowPtr->setVisible(true);
 	}
 
 	if(data.region == 12){
@@ -98,6 +94,13 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 			}
 		}
 	}
+
+	//先不使用了
+//	if(data.page == 7 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
+//		mnetworkWindowPtr->setVisible(true);
+//	}
+
+
 }
 
 
@@ -172,6 +175,7 @@ static bool onButtonClick_pointButton(ZKButton *pButton) {
 	LOGD(" onButtonClick_USB !!!\n"); //05FF011E01DC
 	BYTE mode[] = { 0x05, 0xFF, 0x01, 0x1E, 0x01 };
 	sendProtocol( mode , 5);
+	mnetworkWindowPtr->setVisible(true);
 	return false;
 }
 

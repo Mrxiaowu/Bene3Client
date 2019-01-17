@@ -45,7 +45,8 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
-
+	LOGD("printjob onUI_show !!!\n"); //06FF011F01DA
+	sendSampleProtocol(0x06, 0xFF, 0x01, 0x1F, 0x01);
 }
 
 
@@ -89,6 +90,7 @@ static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 
 	//TODO,这里编译时需要换目录？
 	int ret = stbi_write_jpg("/mnt/extsd/printImage.jpg", dw, dh, n, buffer, 100);
+
 	LOGD("ret %d\n", ret);
 	free(buffer);
 }

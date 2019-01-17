@@ -31,7 +31,8 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
-
+	LOGD("machineInfo onUI_show !!!\n"); //05FF011901E1
+	sendSampleProtocol(0x05, 0xFF, 0x01, 0x19, 0x01);
 }
 
 /*

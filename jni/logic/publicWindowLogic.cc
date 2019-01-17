@@ -183,7 +183,7 @@ static bool onButtonClick_pgdown(ZKButton *pButton) {//AA 55 05 07 FF 01 32 01 C
 	return false;
 }
 
-static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 07 FF 01 27 01 D1
+static bool onButtonClick_cancell(ZKButton *pButton) {//07FF012701D1
 	LOGD(" onButtonClick_cancell !!!\n");
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x27, 0x01 };
 	sendProtocol( mode , 5);

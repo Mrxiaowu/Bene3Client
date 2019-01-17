@@ -28,6 +28,8 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
+	LOGD("printsetting onUI_show !!!\n"); //00FF010301FC
+	sendSampleProtocol(0x00, 0xFF, 0x01, 0x03, 0x01);
 
 }
 

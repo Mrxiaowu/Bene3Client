@@ -24,6 +24,8 @@ static void onUI_intent(const Intent *intentPtr) {
 
 
 static void onUI_show() {
+	LOGD("slcParam onUI_show !!!\n"); //00FF010301FC
+	sendSampleProtocol(0x03, 0xFF, 0x01, 0x14, 0x01);//03FF011401E8
 
 }
 

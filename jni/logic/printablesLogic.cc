@@ -29,14 +29,14 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
-
+	LOGD("printables onUI_show !!!\n"); //00FF010201FD
+	sendSampleProtocol(0x00, 0xFF, 0x01, 0x02, 0x01);
 }
 
 /*
  * 当界面隐藏时触发
  */
 static void onUI_hide() {
-
 }
 
 /*
@@ -72,9 +72,9 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 
 	//	AA 55 05 03 07 FF FF FF F9
-	if(data.page == 7 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
-		musbWindowPtr->setVisible(true);
-	}
+//	if(data.page == 7 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
+//		musbWindowPtr->setVisible(true);
+//	}
 
 	if(data.region == 12){
 		if(data.type == 16){
@@ -135,6 +135,7 @@ static bool onButtonClick_USB(ZKButton *pButton) {
 	LOGD(" onButtonClick_USB !!!\n"); //02FF010701F6
 	BYTE mode[] = { 0x02, 0xFF, 0x01, 0x07, 0x01 };
 	sendProtocol( mode , 5);
+	musbWindowPtr->setVisible(true);
 	return true;
 }
 

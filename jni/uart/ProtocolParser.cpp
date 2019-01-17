@@ -153,6 +153,13 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 								}
 								break;
 
+							case Menu_PageID://AA55050300FFFFFF00
+								{
+									LOGD("调到主页面");
+									EASYUICONTEXT->openActivity("mainActivity");//AA5505 FF FF 0D FF 02 F4
+								}
+								break;
+
 							case Logo_PageID_4_3:
 								{
 									LOGD("是4.3寸的开机LOGO，认证信息");
