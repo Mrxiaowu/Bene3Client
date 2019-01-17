@@ -1,5 +1,8 @@
-#ifndef __NETWORKCONTROLACTIVITY_H__
-#define __NETWORKCONTROLACTIVITY_H__
+/***********************************************
+/gen auto by zuitools
+***********************************************/
+#ifndef __SHUTDOWNACTIVITY_H__
+#define __SHUTDOWNACTIVITY_H__
 
 
 #include "app/Activity.h"
@@ -23,37 +26,11 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_NETWORKCONTROL_publicSure    20016
-#define ID_NETWORKCONTROL_cancell    20019
-#define ID_NETWORKCONTROL_pgdown    20018
-#define ID_NETWORKCONTROL_pgup    20017
-#define ID_NETWORKCONTROL_Button6    20015
-#define ID_NETWORKCONTROL_Button5    20014
-#define ID_NETWORKCONTROL_Button4    20013
-#define ID_NETWORKCONTROL_Button3    20007
-#define ID_NETWORKCONTROL_Button2    20006
-#define ID_NETWORKCONTROL_Button1    20005
-#define ID_NETWORKCONTROL_networkWindow    110002
-#define ID_NETWORKCONTROL_pointButton    20004
-#define ID_NETWORKCONTROL_passwordButton    51001
-#define ID_NETWORKCONTROL_pointText2    50002
-#define ID_NETWORKCONTROL_sure    20001
-#define ID_NETWORKCONTROL_dynamicIPText    50009
-#define ID_NETWORKCONTROL_dynamicIP    50008
-#define ID_NETWORKCONTROL_staticipText    50006
-#define ID_NETWORKCONTROL_staticIP    50005
-#define ID_NETWORKCONTROL_password    50003
-#define ID_NETWORKCONTROL_point    50001
-#define ID_NETWORKCONTROL_networkSetting    20003
-#define ID_NETWORKCONTROL_currentWIFIText    50011
-#define ID_NETWORKCONTROL_CurrentWifi    50010
-#define ID_NETWORKCONTROL_Window1    110001
-#define ID_NETWORKCONTROL_networkText    50007
-#define ID_NETWORKCONTROL_line    20002
-#define ID_NETWORKCONTROL_sys_back   100
+#define ID_SHUTDOWN_Button2    20002
+#define ID_SHUTDOWN_Button1    20001
 /*TAG:Macro宏ID END*/
 
-class networkControlActivity : public Activity, 
+class shutdownActivity : public Activity, 
                      public ZKSeekBar::ISeekBarChangeListener, 
                      public ZKListView::IItemClickListener,
                      public ZKListView::AbsListAdapter,
@@ -63,8 +40,8 @@ class networkControlActivity : public Activity,
                      public ZKVideoView::IVideoPlayerMessageListener
 {
 public:
-    networkControlActivity();
-    virtual ~networkControlActivity();
+    shutdownActivity();
+    virtual ~shutdownActivity();
 
     /**
      * 注册定时器

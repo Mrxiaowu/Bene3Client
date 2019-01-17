@@ -146,6 +146,12 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 					LOGD("当前命令为3，为切换页面命令SWITCH_PAGE,pData[4] %x" , pData[4]);
 					if(pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){ //判断是否是页面
 						switch(pData[4]){
+							case PowerOff_PageID:
+								{
+									LOGD("关机界面");//AA5505030BFFFFFFF5
+									EASYUICONTEXT->openActivity("shutdownActivity");
+								}
+								break;
 
 							case Logo_PageID_4_3:
 								{

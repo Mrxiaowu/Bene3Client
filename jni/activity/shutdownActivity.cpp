@@ -1,46 +1,22 @@
-
-#include "networkControlActivity.h"
+/***********************************************
+/gen auto by zuitools
+***********************************************/
+#include "shutdownActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* mpublicSurePtr;
-static ZKButton* mcancellPtr;
-static ZKButton* mpgdownPtr;
-static ZKButton* mpgupPtr;
-static ZKButton* mButton6Ptr;
-static ZKButton* mButton5Ptr;
-static ZKButton* mButton4Ptr;
-static ZKButton* mButton3Ptr;
 static ZKButton* mButton2Ptr;
 static ZKButton* mButton1Ptr;
-static ZKWindow* mnetworkWindowPtr;
-static ZKButton* mpointButtonPtr;
-static ZKEditText* mpasswordButtonPtr;
-static ZKTextView* mpointText2Ptr;
-static ZKButton* msurePtr;
-static ZKTextView* mdynamicIPTextPtr;
-static ZKTextView* mdynamicIPPtr;
-static ZKTextView* mstaticipTextPtr;
-static ZKTextView* mstaticIPPtr;
-static ZKTextView* mpasswordPtr;
-static ZKTextView* mpointPtr;
-static ZKButton* mnetworkSettingPtr;
-static ZKTextView* mcurrentWIFITextPtr;
-static ZKTextView* mCurrentWifiPtr;
-static ZKWindow* mWindow1Ptr;
-static ZKTextView* mnetworkTextPtr;
-static ZKButton* mlinePtr;
-static ZKButton* msys_backPtr;
-static networkControlActivity* mActivityPtr;
+static shutdownActivity* mActivityPtr;
 
 /*register activity*/
-REGISTER_ACTIVITY(networkControlActivity);
+REGISTER_ACTIVITY(shutdownActivity);
 
 typedef struct {
 	int id; // 定时器ID ， 不能重复
 	int time; // 定时器  时间间隔  单位 毫秒
 }S_ACTIVITY_TIMEER;
 
-#include "logic/networkControlLogic.cc"
+#include "logic/shutdownLogic.cc"
 
 /***********/
 typedef struct {
@@ -67,21 +43,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_NETWORKCONTROL_publicSure, onButtonClick_publicSure,
-    ID_NETWORKCONTROL_cancell, onButtonClick_cancell,
-    ID_NETWORKCONTROL_pgdown, onButtonClick_pgdown,
-    ID_NETWORKCONTROL_pgup, onButtonClick_pgup,
-    ID_NETWORKCONTROL_Button6, onButtonClick_Button6,
-    ID_NETWORKCONTROL_Button5, onButtonClick_Button5,
-    ID_NETWORKCONTROL_Button4, onButtonClick_Button4,
-    ID_NETWORKCONTROL_Button3, onButtonClick_Button3,
-    ID_NETWORKCONTROL_Button2, onButtonClick_Button2,
-    ID_NETWORKCONTROL_Button1, onButtonClick_Button1,
-    ID_NETWORKCONTROL_pointButton, onButtonClick_pointButton,
-    ID_NETWORKCONTROL_sure, onButtonClick_sure,
-    ID_NETWORKCONTROL_networkSetting, onButtonClick_networkSetting,
-    ID_NETWORKCONTROL_line, onButtonClick_line,
-    ID_NETWORKCONTROL_sys_back, onButtonClick_sys_back,
+    ID_SHUTDOWN_Button2, onButtonClick_Button2,
+    ID_SHUTDOWN_Button1, onButtonClick_Button1,
 };
 /***************/
 
@@ -127,7 +90,6 @@ typedef struct {
 }S_EditTextInputCallback;
 /*TAG:EditTextInputCallback*/
 static S_EditTextInputCallback SEditTextInputCallbackTab[] = {
-    ID_NETWORKCONTROL_passwordButton, onEditTextChanged_passwordButton,
 };
 
 typedef void (*VideoViewCallback)(ZKVideoView *pVideoView, int msg);
@@ -142,13 +104,13 @@ static S_VideoViewCallback SVideoViewCallbackTab[] = {
 };
 
 
-networkControlActivity::networkControlActivity() {
+shutdownActivity::shutdownActivity() {
 	//todo add init code here
 	mVideoLoopIndex = 0;
 	mVideoLoopErrorCount = 0;
 }
 
-networkControlActivity::~networkControlActivity() {
+shutdownActivity::~shutdownActivity() {
 	//todo add init file here
     // 退出应用时需要反注册
     EASYUICONTEXT->unregisterGlobalTouchListener(this);
@@ -156,48 +118,22 @@ networkControlActivity::~networkControlActivity() {
     unregisterProtocolDataUpdateListener(onProtocolDataUpdate);
 }
 
-const char* networkControlActivity::getAppName() const{
-	return "networkControl.ftu";
+const char* shutdownActivity::getAppName() const{
+	return "shutdown.ftu";
 }
 
 //TAG:onCreate
-void networkControlActivity::onCreate() {
+void shutdownActivity::onCreate() {
 	Activity::onCreate();
-    mpublicSurePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_publicSure);
-    mcancellPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_cancell);
-    mpgdownPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_pgdown);
-    mpgupPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_pgup);
-    mButton6Ptr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_Button6);
-    mButton5Ptr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_Button5);
-    mButton4Ptr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_Button4);
-    mButton3Ptr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_Button3);
-    mButton2Ptr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_Button2);
-    mButton1Ptr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_Button1);
-    mnetworkWindowPtr = (ZKWindow*)findControlByID(ID_NETWORKCONTROL_networkWindow);
-    mpointButtonPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_pointButton);
-    mpasswordButtonPtr = (ZKEditText*)findControlByID(ID_NETWORKCONTROL_passwordButton);if(mpasswordButtonPtr!= NULL){mpasswordButtonPtr->setTextChangeListener(this);}
-    mpointText2Ptr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_pointText2);
-    msurePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sure);
-    mdynamicIPTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIPText);
-    mdynamicIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_dynamicIP);
-    mstaticipTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_staticipText);
-    mstaticIPPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_staticIP);
-    mpasswordPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_password);
-    mpointPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_point);
-    mnetworkSettingPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_networkSetting);
-    mcurrentWIFITextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_currentWIFIText);
-    mCurrentWifiPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_CurrentWifi);
-    mWindow1Ptr = (ZKWindow*)findControlByID(ID_NETWORKCONTROL_Window1);
-    mnetworkTextPtr = (ZKTextView*)findControlByID(ID_NETWORKCONTROL_networkText);
-    mlinePtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_line);
-    msys_backPtr = (ZKButton*)findControlByID(ID_NETWORKCONTROL_sys_back);
+    mButton2Ptr = (ZKButton*)findControlByID(ID_SHUTDOWN_Button2);
+    mButton1Ptr = (ZKButton*)findControlByID(ID_SHUTDOWN_Button1);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 
     rigesterActivityTimer();
 }
 
-void networkControlActivity::onClick(ZKBase *pBase) {
+void shutdownActivity::onClick(ZKBase *pBase) {
 	//TODO: add widget onClik code 
     int buttonTablen = sizeof(sButtonCallbackTab) / sizeof(S_ButtonCallback);
     for (int i = 0; i < buttonTablen; ++i) {
@@ -221,30 +157,30 @@ void networkControlActivity::onClick(ZKBase *pBase) {
 	Activity::onClick(pBase);
 }
 
-void networkControlActivity::onResume() {
+void shutdownActivity::onResume() {
 	Activity::onResume();
 	EASYUICONTEXT->registerGlobalTouchListener(this);
 	startVideoLoopPlayback();
 	onUI_show();
 }
 
-void networkControlActivity::onPause() {
+void shutdownActivity::onPause() {
 	Activity::onPause();
 	EASYUICONTEXT->unregisterGlobalTouchListener(this);
 	stopVideoLoopPlayback();
 	onUI_hide();
 }
 
-void networkControlActivity::onIntent(const Intent *intentPtr) {
+void shutdownActivity::onIntent(const Intent *intentPtr) {
 	Activity::onIntent(intentPtr);
 	onUI_intent(intentPtr);
 }
 
-bool networkControlActivity::onTimer(int id) {
+bool shutdownActivity::onTimer(int id) {
 	return onUI_Timer(id);
 }
 
-void networkControlActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
+void shutdownActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
 
     int seekBarTablen = sizeof(SZKSeekBarCallbackTab) / sizeof(S_ZKSeekBarCallback);
     for (int i = 0; i < seekBarTablen; ++i) {
@@ -255,7 +191,7 @@ void networkControlActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress
     }
 }
 
-int networkControlActivity::getListItemCount(const ZKListView *pListView) const{
+int shutdownActivity::getListItemCount(const ZKListView *pListView) const{
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -266,7 +202,7 @@ int networkControlActivity::getListItemCount(const ZKListView *pListView) const{
     return 0;
 }
 
-void networkControlActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index){
+void shutdownActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index){
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -276,7 +212,7 @@ void networkControlActivity::obtainListItemData(ZKListView *pListView,ZKListView
     }
 }
 
-void networkControlActivity::onItemClick(ZKListView *pListView, int index, int id){
+void shutdownActivity::onItemClick(ZKListView *pListView, int index, int id){
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -286,7 +222,7 @@ void networkControlActivity::onItemClick(ZKListView *pListView, int index, int i
     }
 }
 
-void networkControlActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) {
+void shutdownActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) {
     int tablen = sizeof(SSlideWindowItemClickCallbackTab) / sizeof(S_SlideWindowItemClickCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SSlideWindowItemClickCallbackTab[i].id == pSlideWindow->getID()) {
@@ -296,11 +232,11 @@ void networkControlActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int i
     }
 }
 
-bool networkControlActivity::onTouchEvent(const MotionEvent &ev) {
-    return onnetworkControlActivityTouchEvent(ev);
+bool shutdownActivity::onTouchEvent(const MotionEvent &ev) {
+    return onshutdownActivityTouchEvent(ev);
 }
 
-void networkControlActivity::onTextChanged(ZKTextView *pTextView, const std::string &text) {
+void shutdownActivity::onTextChanged(ZKTextView *pTextView, const std::string &text) {
     int tablen = sizeof(SEditTextInputCallbackTab) / sizeof(S_EditTextInputCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SEditTextInputCallbackTab[i].id == pTextView->getID()) {
@@ -310,7 +246,7 @@ void networkControlActivity::onTextChanged(ZKTextView *pTextView, const std::str
     }
 }
 
-void networkControlActivity::rigesterActivityTimer() {
+void shutdownActivity::rigesterActivityTimer() {
     int tablen = sizeof(REGISTER_ACTIVITY_TIMER_TAB) / sizeof(S_ACTIVITY_TIMEER);
     for (int i = 0; i < tablen; ++i) {
         S_ACTIVITY_TIMEER temp = REGISTER_ACTIVITY_TIMER_TAB[i];
@@ -319,7 +255,7 @@ void networkControlActivity::rigesterActivityTimer() {
 }
 
 
-void networkControlActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
+void shutdownActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SVideoViewCallbackTab[i].id == pVideoView->getID()) {
@@ -334,7 +270,7 @@ void networkControlActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int m
     }
 }
 
-void networkControlActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int callbackTabIndex) {
+void shutdownActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int callbackTabIndex) {
 
 	switch (msg) {
 	case ZKVideoView::E_MSGTYPE_VIDEO_PLAY_STARTED:
@@ -371,7 +307,7 @@ void networkControlActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg,
 	}
 }
 
-void networkControlActivity::startVideoLoopPlayback() {
+void shutdownActivity::startVideoLoopPlayback() {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
     	if (SVideoViewCallbackTab[i].loop) {
@@ -386,7 +322,7 @@ void networkControlActivity::startVideoLoopPlayback() {
     }
 }
 
-void networkControlActivity::stopVideoLoopPlayback() {
+void shutdownActivity::stopVideoLoopPlayback() {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
     	if (SVideoViewCallbackTab[i].loop) {
@@ -402,7 +338,7 @@ void networkControlActivity::stopVideoLoopPlayback() {
     }
 }
 
-bool networkControlActivity::parseVideoFileList(const char *pFileListPath, std::vector<string>& mediaFileList) {
+bool shutdownActivity::parseVideoFileList(const char *pFileListPath, std::vector<string>& mediaFileList) {
 	mediaFileList.clear();
 	if (NULL == pFileListPath || 0 == strlen(pFileListPath)) {
         LOGD("video file list is null!");
@@ -434,7 +370,7 @@ bool networkControlActivity::parseVideoFileList(const char *pFileListPath, std::
 	return true;
 }
 
-int networkControlActivity::removeCharFromString(string& nString, char c) {
+int shutdownActivity::removeCharFromString(string& nString, char c) {
     string::size_type   pos;
     while(1) {
         pos = nString.find(c);
@@ -447,14 +383,14 @@ int networkControlActivity::removeCharFromString(string& nString, char c) {
     return (int)nString.size();
 }
 
-void networkControlActivity::registerUserTimer(int id, int time) {
+void shutdownActivity::registerUserTimer(int id, int time) {
 	registerTimer(id, time);
 }
 
-void networkControlActivity::unregisterUserTimer(int id) {
+void shutdownActivity::unregisterUserTimer(int id) {
 	unregisterTimer(id);
 }
 
-void networkControlActivity::resetUserTimer(int id, int time) {
-	resetUserTimer(id, time);
+void shutdownActivity::resetUserTimer(int id, int time) {
+	resetTimer(id, time);
 }
