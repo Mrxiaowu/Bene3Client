@@ -1,5 +1,6 @@
 #pragma once
 #include "uart/ProtocolSender.h"
+#include <vector>
 
 
 //SLC参数设置
@@ -21,28 +22,16 @@ const static int maxListRate = 500;//电机上升下降的速度最大500mm/min
 const static int mixListRate = 0;
 
 
-void reversestr(char*source,char target[],unsigned int length)
+vector<unsigned char> intToBytes(int paramInt)
 {
-	unsigned int i;
-	for(i=0;i<length;i++)
-		target[i]=source[length-1-i];
-	target[i]=0;
+     vector<unsigned char> arrayOfByte(2);
+     for (int i = 0; i < 2; i++){
+         arrayOfByte[ i] = (paramInt >> (i * 8));
+         LOGD(" %x !",arrayOfByte[i]);
+     }
+     return arrayOfByte;
 }
-void tohex(unsigned long num,char*hexStr)
-{
-	unsigned long n=num;
-	char hextable[]="0123456789ABCDEF";
-	char temphex[16],hex[16];
-	unsigned long int i=0;
-	while(n)
-	{
-		temphex[i++]=hextable[n%16];
-		n/=16;
-	}
-	temphex[i]=0;
-	reversestr(temphex,hex,i);
-	strcpy(hexStr,hex);
-}
+
 
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
@@ -89,6 +78,30 @@ static void onUI_quit() {
  */
 static void onProtocolDataUpdate(const SProtocolData &data) {
 
+	if(data.page != 4){
+		LOGD("当前读取的串口信息中的PageID不为4,就不是slc页面");
+		return;
+	}
+
+	if(data.region ==  4 && data.type == 0x0F){
+		if(data.label == 0){
+			LOGD("就是读取exposureTime的值");
+			exposureTime = data.slcParam;
+			mADDBUTTONexposureValuePtr->setText(data.slcParam);///04 04 0F 00 401F 82
+		} else if(data.label == 1){
+			listDistance = data.slcParam;
+			mADDBUTTONLiftDistancePtr->setText(data.slcParam);//04 04 0F 01 04DC
+		} else if(data.label == 2){
+			bottomLayers = data.slcParam;
+			mADDBUTTONbottomValuePtr->setText(data.slcParam);//04 04 0F 02 03
+		} else if(data.label == 3){
+			listRate = data.slcParam;
+			mADDBUTTONlistRatePtr->setText(data.slcParam);//04 04 0F 03 647A
+		} else if(data.label == 4){
+			bottomTime = data.slcParam;
+			mADDBUTTONBottomTimeValuePtr->setText(data.slcParam);//04 04 0F 04 60EA93
+		}
+	}
 }
 
 
@@ -124,31 +137,19 @@ void CharToByte(char* chars, BYTE* bytes, unsigned int count){
     }
 }
 
+
+
 static bool onButtonClick_ExposureTimeButtonJia(ZKButton *pButton) {//AA 55 07 04 FF 0F 00 01 28 23 A2
 	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
 	if((exposureTime + 500) < maxExposureTime){
 		exposureTime += 500;
 	}
 	LOGD("??? %d ??? %x",exposureTime , exposureTime);
+	mADDBUTTONexposureValuePtr->setText(exposureTime);
 
-//	char hexStr[4];
-//	tohex(exposureTime,hexStr);
-//
-//	int  num = 32424;
-//	char hex[4];
-//	sprintf(hex, "%x", num);
-//	puts(hex);
-//	LOGD(" ?? %s",hex);
-//
-//	BYTE *hexbyte = new BYTE[2];
-//	unsigned int i = 1;
-//	CharToByte(hex,hexbyte,i);
-//	LOGD(" ??? %x %x",hexbyte[0],hexbyte[1]);
-
-
-//	mADDBUTTONexposureValuePtr->setText(exposureTime);
-//	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01, hexbyte[0]};
-//	sendProtocol( mode , 7);
+    vector<unsigned char> arrayOfByte = intToBytes(exposureTime);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01, arrayOfByte[0],arrayOfByte[1]};
+	sendProtocol( mode , 7);
     return false;
 }
 
@@ -158,7 +159,9 @@ static bool onButtonClick_ExposureTimeButtonJian(ZKButton *pButton) { //AA 55 07
 		exposureTime -= 500;
 	}
 	mADDBUTTONexposureValuePtr->setText(exposureTime);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+    vector<unsigned char> arrayOfByte = intToBytes(exposureTime);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -169,7 +172,9 @@ static bool onButtonClick_BottomLayersJian(ZKButton *pButton) {// AA 55 07 04 FF
 		bottomLayers -= 1;
 	}
 	mADDBUTTONbottomValuePtr->setText(bottomLayers);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x02, 0x01,0x02, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(bottomLayers);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x02, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -180,7 +185,9 @@ static bool onButtonClick_BottomLayersJia(ZKButton *pButton) {// AA 55 07 04 FF 
 		bottomLayers += 1;
 	}
 	mADDBUTTONbottomValuePtr->setText(bottomLayers);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(bottomLayers);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x02, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -191,7 +198,9 @@ static bool onButtonClick_BottomTimeJian(ZKButton *pButton) { // AA 55 07 04 FF 
 		bottomTime -= 1000;
 	}
 	mADDBUTTONBottomTimeValuePtr->setText(bottomTime);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(bottomTime);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x04, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -202,7 +211,9 @@ static bool onButtonClick_BottomTimeJia(ZKButton *pButton) {// AA 55 07 04 FF 0F
 		bottomTime += 1000;
 	}
 	mADDBUTTONBottomTimeValuePtr->setText(bottomTime);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(bottomTime);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x04, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -213,7 +224,9 @@ static bool onButtonClick_LiftDistanceJian(ZKButton *pButton) { //AA 55 07 04 FF
 		listDistance -= 1;
 	}
 	mADDBUTTONLiftDistancePtr->setText(listDistance);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(listDistance);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x01, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -223,7 +236,9 @@ static bool onButtonClick_LiftDistanceJia(ZKButton *pButton) { //AA 55 07 04 FF 
 		listDistance += 1;
 	}
 	mADDBUTTONLiftDistancePtr->setText(listDistance);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(listDistance);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x01, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -234,7 +249,9 @@ static bool onButtonClick_LiftRateJia(ZKButton *pButton) { //AA 55 07 04 FF 0F 0
 		listRate += 20;
 	}
 	mADDBUTTONlistRatePtr->setText(listRate);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(listRate);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x03, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
@@ -245,14 +262,16 @@ static bool onButtonClick_LiftRateJian(ZKButton *pButton) { //AA 55 07 04 FF 0F 
 		listRate -= 20;
 	}
 	mADDBUTTONlistRatePtr->setText(listRate);
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
+
+	vector<unsigned char> arrayOfByte = intToBytes(listRate);
+	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x03, 0x01, arrayOfByte[0],arrayOfByte[1]};
 	sendProtocol( mode , 7);
     return false;
 }
 
 static bool onButtonClick_save(ZKButton *pButton) { //AA 55 05 04 FF 01 15 01 E6
 	LOGD(" onButtonClick_ExposureTimeButtonJian !!!\n");
-	BYTE mode[] = { 0x04, 0xFF, 0x0F, 0x00, 0x01,0x58, 0x1B };
-	sendProtocol( mode , 7);
+	BYTE mode[] = { 0x04, 0xFF, 0x01, 0x15, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }

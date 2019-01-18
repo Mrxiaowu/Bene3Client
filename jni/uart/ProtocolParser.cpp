@@ -65,14 +65,28 @@ void BYTEToString(const BYTE *pData, UINT len){
 	sProtocolData.label = pData[7];
 	sProtocolData.buttonIndex = pData[8];
 
+	//下面是协议中的几种特例
+	//暂停和继续的特例
 	if(pData[4] == 9 && pData[5] == 0x11 && pData[6] == 0x01){
 		LOGD("确实是更换状态");
 		sProtocolData.cancellParam = pData[11];
 	}
 
+	//打印进度的特例
 	if(pData[4] == 9 && pData[5] == 0x11 && pData[6] == 0x0C && pData[7] == 0x00 ){
 		LOGD("给打印进度赋值");
 		sProtocolData.progress = pData[8];
+	}
+
+	//slc参数
+	if(pData[4] == 0x04 && pData[5] == 0x04 && pData[6] == 0x0F ){
+		LOGD("slc文件赋值");
+		if(pData[2] == 6){
+			sProtocolData.slcParam = pData[8];
+		} else if(pData[2] == 7){
+			sProtocolData.slcParam = MAKEWORD(pData[8],pData[9]);
+		}
+		LOGD("%x slcParam的值", sProtocolData.slcParam);
 	}
 
 	std::string tempStr;
@@ -87,6 +101,7 @@ void BYTEToString(const BYTE *pData, UINT len){
 	LOGD("%x type", pData[6]);//Page_ID
 	LOGD("%x label", pData[7]);//Region ID
 	LOGD("%x buttonIndex", pData[8]);//Type ID
+
 
 	LOGD("信息为 %s", sProtocolData.pdata.c_str());
 }

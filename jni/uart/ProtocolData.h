@@ -243,15 +243,16 @@ typedef struct {
 	std::string pdata;
 	int len;
 
-	BYTE buttonIndex;
+	BYTE page; //数据中的页面id
+	BYTE region;//数据中的区域id
+	BYTE type;//数据中的类型
+	BYTE label;//数据汇总的具体编号id
 
-	BYTE page;
-	BYTE region;
-	BYTE type;
-	BYTE label;
+	BYTE buttonIndex;//数据中的某种特例的区分id
 
-	BYTE cancellParam;
-	BYTE progress;
+	BYTE cancellParam;//暂停和继续标志
+	BYTE progress;//打印进度标志
+	int slcParam;
 
 	BYTE *imageData;
 	int imageLength;

@@ -1,6 +1,4 @@
-/***********************************************
-/gen auto by zuitools
-***********************************************/
+
 #include "slcParamActivity.h"
 
 /*TAG:GlobalVariable全局变量*/

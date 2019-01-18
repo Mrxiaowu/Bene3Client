@@ -27,8 +27,9 @@ static void onUI_intent(const Intent *intentPtr) {
 /*
  * 当界面显示时触发
  */
-static void onUI_show() {
-
+static void onUI_show() {//AA 55 05 03 FF 01 35 01 C7
+	BYTE mode[] = { 0x03, 0xFF, 0x01, 0x35, 0x01};
+	sendProtocol( mode , 5);
 }
 
 /*
@@ -71,15 +72,6 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
 static bool onlevelingActivityTouchEvent(const MotionEvent &ev) {
     switch (ev.mActionStatus) {
 		case MotionEvent::E_ACTION_DOWN://触摸按下
@@ -94,34 +86,44 @@ static bool onlevelingActivityTouchEvent(const MotionEvent &ev) {
 	}
 	return false;
 }
-static bool onButtonClick_sys_back(ZKButton *pButton) {
+static bool onButtonClick_sys_back(ZKButton *pButton) {//AA 55 05 0E FF 01 3C 01 B5
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3C, 0x01};
+	sendProtocol( mode , 5);
 	EASYUICONTEXT->openActivity("mainActivity");
 	LOGD(" ButtonClick sys_back !!!\n");
 	return true;
 }
 
 static bool onButtonClick_zero(ZKButton *pButton) {//AA 55 05 0E FF 01 37 01 BA
-    //LOGD(" ButtonClick zero !!!\n");
+    LOGD(" ButtonClick zero !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x37, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
 
 static bool onButtonClick_up5(ZKButton *pButton) {//AA 55 05 0E FF 01 38 01 B9
     //LOGD(" ButtonClick up5 !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x38, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
 
 static bool onButtonClick_save(ZKButton *pButton) {//AA 55 05 0E FF 01 39 01 B8
     //LOGD(" ButtonClick save !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x39, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
-
-static bool onButtonClick_Button4(ZKButton *pButton) {//AA 55 05 0E FF 01 3A 01 B7
-    //LOGD(" ButtonClick Button4 !!!\n");
+static bool onButtonClick_down5(ZKButton *pButton) {//AA 55 05 0E FF 01 3A 01 B7
+    //LOGD(" ButtonClick down5 !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3A, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
-
 static bool onButtonClick_reset(ZKButton *pButton) {//AA 55 05 0E FF 01 3B 01 B6
     //LOGD(" ButtonClick reset !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3B, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
 
@@ -132,14 +134,15 @@ static bool onButtonClick_line(ZKButton *pButton) {
 
 static bool onButtonClick_PageUp(ZKButton *pButton) {//AA 55 05 0E FF 01 3D 01 B4
     //LOGD(" ButtonClick PageUp !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3D, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
 
 static bool onButtonClick_pageDown(ZKButton *pButton) {//AA 55 05 0E FF 01 3E 01 B3
     //LOGD(" ButtonClick pageDown !!!\n");
+	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3E, 0x01};
+	sendProtocol( mode , 5);
     return false;
 }
-static bool onButtonClick_down5(ZKButton *pButton) {
-    //LOGD(" ButtonClick down5 !!!\n");
-    return false;
-}
+
