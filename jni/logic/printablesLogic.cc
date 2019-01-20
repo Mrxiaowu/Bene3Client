@@ -46,6 +46,22 @@ static void onUI_quit() {
 
 }
 
+void initPrintableStatus(){
+	mfileList1Ptr->setSelected(false);
+	mfileList2Ptr->setSelected(false);
+	mfileList3Ptr->setSelected(false);
+}
+
+
+void initPublicPageStatus() {
+	mButton1Ptr->setSelected(false);
+	mButton2Ptr->setSelected(false);
+	mButton3Ptr->setSelected(false);
+	mButton4Ptr->setSelected(false);
+	mButton5Ptr->setSelected(false);
+	mButton6Ptr->setSelected(false);
+}
+
 /**
  * 串口数据回调接口
  */
@@ -148,9 +164,8 @@ static bool onButtonClick_delete(ZKButton *pButton) {
 
 static bool onButtonClick_fileList1(ZKButton *pButton) {
 	LOGD(" ??? %d", mfileList1Ptr->isSelected());
+	initPrintableStatus();
 	mfileList1Ptr->setSelected(true);
-	mfileList2Ptr->setSelected(false);
-	mfileList3Ptr->setSelected(false);
 	LOGD(" ButtonClick fileList1 !!!\n");//02 FF 10 01 01 00 ED 第一行
 	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x00};
 	sendProtocol(mode , 6);
@@ -158,9 +173,8 @@ static bool onButtonClick_fileList1(ZKButton *pButton) {
 }
 
 static bool onButtonClick_fileList2(ZKButton *pButton) {
-	mfileList1Ptr->setSelected(false);
+	initPrintableStatus();
 	mfileList2Ptr->setSelected(true);
-	mfileList3Ptr->setSelected(false);
     LOGD(" ButtonClick fileList2 !!!\n");//02FF10010101EC
 	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x01};
 	sendProtocol(mode , 6);
@@ -168,8 +182,7 @@ static bool onButtonClick_fileList2(ZKButton *pButton) {
 }
 
 static bool onButtonClick_fileList3(ZKButton *pButton) {
-	mfileList1Ptr->setSelected(false);
-	mfileList2Ptr->setSelected(false);
+	initPrintableStatus();
 	mfileList3Ptr->setSelected(true);
     LOGD(" ButtonClick fileList3 !!!\n");//AA 55 06 02 FF 10 01 01 02 EB
 	BYTE mode[] = { 0x02, 0xFF, 0x10, 0x01, 0x01, 0x02};
@@ -178,11 +191,13 @@ static bool onButtonClick_fileList3(ZKButton *pButton) {
 }
 
 static bool onButtonClick_pageUp(ZKButton *pButton) {//AA 55 05 02 FF 01 08 01 F5
+	initPrintableStatus();
 	sendSampleProtocol(0x02, 0xFF, 0x01, 0x08, 0x01);
 	return true;
 }
 
 static bool onButtonClick_pageDown(ZKButton *pButton) {
+	initPrintableStatus();
 	sendSampleProtocol(0x02, 0xFF, 0x01, 0x09, 0x01);//下页 AA 55 05 02 FF 01 09 01 F4
 	return true;
 }
@@ -192,14 +207,6 @@ static bool onButtonClick_line(ZKButton *pButton) {
 }
 
 
-static void initPublicPageStatus() {
-	mButton1Ptr->setSelected(false);
-	mButton2Ptr->setSelected(false);
-	mButton3Ptr->setSelected(false);
-	mButton4Ptr->setSelected(false);
-	mButton5Ptr->setSelected(false);
-	mButton6Ptr->setSelected(false);
-}
 
 static bool onButtonClick_Button1(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 00 E9
 	LOGD(" onButtonClick_Button1 !!!\n");
@@ -265,6 +272,7 @@ static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 07 FF 01 26 01 D2
 
 static bool onButtonClick_pgup(ZKButton *pButton) {//AA 55 05 07 FF 01 31 01 C7
 	LOGD(" onButtonClick_pgup !!!\n");
+	initPublicPageStatus();
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x31, 0x01 };
 	sendProtocol( mode , 5);
 	return false;
@@ -272,6 +280,7 @@ static bool onButtonClick_pgup(ZKButton *pButton) {//AA 55 05 07 FF 01 31 01 C7
 
 static bool onButtonClick_pgdown(ZKButton *pButton) {//AA 55 05 07 FF 01 32 01 C6
 	LOGD(" onButtonClick_pgup !!!\n");
+	initPublicPageStatus();
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x32, 0x01 };
 	sendProtocol( mode , 5);
 	return false;

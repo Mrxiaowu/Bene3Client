@@ -247,6 +247,7 @@ static bool onButtonClick_Button3(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 
 
 static bool onButtonClick_pgup(ZKButton *pButton) {//AA 55 05 07 FF 01 31 01 C7
 	LOGD(" onButtonClick_pgup !!!\n");
+	initPublicPageStatus();
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x31, 0x01 };
 	sendProtocol( mode , 5);
 	return false;
@@ -254,6 +255,7 @@ static bool onButtonClick_pgup(ZKButton *pButton) {//AA 55 05 07 FF 01 31 01 C7
 
 static bool onButtonClick_pgdown(ZKButton *pButton) {//AA 55 05 07 FF 01 32 01 C6
 	LOGD(" onButtonClick_pgup !!!\n");
+	initPublicPageStatus();
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x32, 0x01 };
 	sendProtocol( mode , 5);
 	return false;

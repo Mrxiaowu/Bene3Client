@@ -147,7 +147,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 		}
 	}
 
-
 	//这里避免其他命令也会进入这里
 	if(data.region == 16 && data.type == 10 && data.label == 2){
 		LOGD("这是在传输图片");

@@ -144,6 +144,8 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				temp[tempLength-(i-pDataStartIndex)] = pData[i];
 			}
 
+//			LOGD("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
+
 			sProtocolData.imageData = temp;
 			sProtocolData.imageLength = tempLength; //一般是AF5
 			sProtocolData.page = pData[6]; //9
@@ -276,7 +278,7 @@ int parseProtocol(const BYTE *pData, UINT len) {
 
 		for (int i = 0; i < dataLen; i++) {
 			mRealData[i] = pData[i + realDataIndex];
-			LOGD("%d 定位于 %d 此时的数值为 %x", i ,i + realDataIndex,pData[i + realDataIndex]);
+//			LOGD("%d 定位于 %d 此时的数值为 %x", i ,i + realDataIndex,pData[i + realDataIndex]);
 		}
 
 		LOGD("%x CheckSum1", getCheckSum(mRealData, dataLen));//这里调用了两遍gerchecksum，所以日志中会出现两遍日志
