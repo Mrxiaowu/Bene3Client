@@ -13,8 +13,6 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 static SProtocolData mProtocolData;
 static void onUI_init(){
 	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
-	LOGD("machineInfo onUI_init !!!\n"); //05FF011901E1
-	sendSampleProtocol(0x05, 0xFF, 0x01, 0x19, 0x01);
 }
 
 /**

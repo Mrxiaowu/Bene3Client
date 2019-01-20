@@ -55,11 +55,11 @@
  	<string name="reset">重置</string>
  	
  	<string name="slcSetting">SLC参数设置</string>
- 	<string name="ExposureTime">普通层曝光</string>
- 	<string name="BottomLayers">底层层数</string>
- 	<string name="BottomTime">底层曝光</string>
- 	<string name="LiftDistance">上升距离</string>
- 	<string name="LiftRate">移动速度</string>
+ 	<string name="ExposureTime">普通层曝光(ms)</string>
+ 	<string name="BottomLayers">底层层数(层)</string>
+ 	<string name="BottomTime">底层曝光(ms)</string>
+ 	<string name="LiftDistance">上升距离(mm)</string>
+ 	<string name="LiftRate">移动速度(mm/min)</string>
  	
  	<string name="shutdown">关机</string>
  	<string name="shutdowning">关机中...</string>

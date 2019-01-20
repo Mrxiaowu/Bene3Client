@@ -48,11 +48,11 @@
  	<string name="reset">reset</string>
  	
  	<string name="slcSetting">SLCSetting</string>
- 	<string name="ExposureTime">ExposureTime</string>
- 	<string name="BottomLayers">BottomLayers</string>
- 	<string name="BottomTime">BottomTime</string>
- 	<string name="LiftDistance">LiftDistance</string>
- 	<string name="LiftRate">LiftRate</string>
+ 	<string name="ExposureTime">ExposureTime(ms)</string>
+ 	<string name="BottomLayers">BottomLayers(layer)</string>
+ 	<string name="BottomTime">BottomTime(ms)</string>
+ 	<string name="LiftDistance">LiftDistance(mm)</string>
+ 	<string name="LiftRate">LiftRate(mm/min)</string>
  	
  	<string name="shutdown">shutdown</string>
 	<string name="shutdowning">Shutdowning...</string>
