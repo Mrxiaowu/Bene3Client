@@ -137,7 +137,7 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
 static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 05 FF 01 1C 01 DE
 	LOGD(" 网络控制的保存 !!!\n");
 	sendSampleProtocol(0x05, 0xFF, 0x01, 0x1C, 0x01);
-    return true;
+    return false;
 }
 
 
@@ -153,20 +153,23 @@ static bool onButtonClick_networkSetting(ZKButton *pButton) {
 
 //仿照这个格式，这里在app后台也要进行定义好
 //AA 55 17 47 58 48 32 30 31 52 54 33 35 49 43 34 38 33 32 5F 31 2E 30 2E 31 31 3F
+//那么例子就是 AA 55 length 48 password checkValue
 static void onEditTextChanged_passwordButton(const std::string &text) {
 	LOGD(" 正在输入键盘值 %s 密码长度 %d", text.c_str(),strlen(text.c_str()));
 
-	UINT passWordLength = strlen(text.c_str()) + 1;
+	UINT passWordLength = strlen(text.c_str()) + 1;//加上cmd和48的长度
 	BYTE passwordData[passWordLength];
 
 	passwordData[0] = 0x48; //增加自己定的协议值为48
-	for (UINT i = 1; i <= (strlen(text.c_str())); i++) {
+
+	int index = 1;//密码在协议中的起始位置
+	for (UINT i = 0; i <= (strlen(text.c_str())); i++) {
 //		LOGD("text %x", text.c_str()[i-1]);
-		passwordData[i] = text.c_str()[i-1];
+		passwordData[i+index] = text.c_str()[i];
 	}
 
 	for (UINT i = 0; i < passWordLength; i++) {
-		LOGD("passwordData %x", passwordData[i]);//第一个应该为48
+		LOGD("passwordData %x", passwordData[i]);//第一个应该为03，第二个为48
 	}
 	sendProtocol(passwordData , passWordLength);
 }
