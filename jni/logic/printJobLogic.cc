@@ -28,8 +28,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
  */
 static SProtocolData mProtocolData;
 static void onUI_init(){
-	LOGD("printjob onUI_init !!!\n"); //06FF011F01DA
-	sendSampleProtocol(0x06, 0xFF, 0x01, 0x1F, 0x01);
+	LOGD("printjob onUI_init !!!\n");
 }
 
 /**
@@ -45,13 +44,14 @@ static void onUI_intent(const Intent *intentPtr) {
  * 当界面显示时触发
  */
 static void onUI_show() {
-	LOGD("printjob onUI_show !!!\n"); //06FF011F01DA
-	sendSampleProtocol(0x06, 0xFF, 0x01, 0x1F, 0x01);
+	LOGD("printjob onUI_show !!!\n"); //00FF010001FF
+	sendSampleProtocol(0x00, 0xFF, 0x01, 0x00, 0x01);
 }
 
 
 static void onUI_hide() { //当界面隐藏时触发
-
+	//主要是关闭websocket的作用，这里其实是以前的返回主页面的功能，可能需要上位机区分一下，不要再send mainPage了
+	sendSampleProtocol(0x09, 0xFF, 0x01, 0x04, 0x01);//09FF010401F2
 }
 
 
@@ -88,7 +88,6 @@ static void MySaveJPG(BYTE *hexArray ,int hexArrayLength) {
 		buffer[i*3] = buffer[i*3+1] = buffer[i*3+2] = hexArray2[i];
 	}
 
-	//TODO,这里编译时需要换目录？
 	int ret = stbi_write_jpg("/mnt/extsd/printImage.jpg", dw, dh, n, buffer, 100);
 
 	LOGD("ret %d\n", ret);
