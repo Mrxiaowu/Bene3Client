@@ -60,10 +60,9 @@ void receiverFile(){
 	int retv,ncount=0;
 	FILE* fp;
 
-	if((fp=fopen("/mnt/extsd/ui/test.png","wb"))==NULL)
-	{
+	///mnt/extsd/screen.bin
+	if((fp=fopen("/mnt/extsd/screen","wb"))==NULL){
 		LOGD("can not open/create file serialdata.");
-		exit(EXIT_FAILURE);
 	}
 	LOGD("ready for receiving data...\n");
 
@@ -71,20 +70,18 @@ void receiverFile(){
 
 //	    while(retv>0)
 	while(true){ //开启个线程
-		LOGD("222");
 		if(retv>0){
-		   LOGD("receive data size=%d\n",retv);
-		   ncount+=retv;
-		   if(retv>1 && hd[retv-1]!='\0')
+		    LOGD("receive data size=%d\n",retv);
+		    ncount+=retv;
+		    if(retv>1 && hd[retv-1]!='\0'){
 				fwrite(hd,retv,1,fp);//write to the file serialdata
-			else if(retv>1 && hd[retv-1]=='\0')
-			{
+		    } else if(retv>1 && hd[retv-1]=='\0'){
 				fwrite(hd,retv-1,1,fp);//data end with stop sending signal
 				break;
-			}
-			//单独收到终止信号
-			else if(retv==1 && hd[retv-1]=='\0')
+			} else if(retv==1 && hd[retv-1]=='\0'){
 				break;
+			}
+		    LOGD("without !!!");
 			retv=read(fd,hd,max_buffer_size);
 		}
 	}
