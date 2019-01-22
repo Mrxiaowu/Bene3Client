@@ -20,7 +20,8 @@ public:
 
 	static UartContext* getInstance();
 
-	int mUartID;
+	void receiverFile();
+
 
 protected:
 	virtual bool readyToRun();
@@ -31,7 +32,7 @@ private:
 
 private:
 	bool mIsOpen;
-//	int mUartID;
+	int mUartID;
 
 	// 用于拼接缓存数据，可能存在上一包数据解析未完全，残留有数据
 	BYTE *mDataBufPtr;

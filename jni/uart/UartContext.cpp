@@ -10,6 +10,9 @@
 #include "utils/Log.h"
 
 #define UART_DATA_BUF_LEN			16384	// 16KB
+#define max_buffer_size   100   /*定义缓冲区最大宽度*/
+
+
 
 extern int parseProtocol(const BYTE *pData, UINT len);
 
@@ -127,4 +130,50 @@ bool UartContext::threadLoop() {
 		return true;
 	}
 	return false;
+}
+
+void UartContext::receiverFile(){
+	int flag_close = 0;
+	char  hd[max_buffer_size]; /*定义接收缓冲区*/
+	int retv,ncount=0;
+	FILE* fp;
+
+	///mnt/extsd/screen.bin
+	if((fp=fopen("/mnt/extsd/screen","wb"))==NULL){
+		LOGD("can not open/create file serialdata.");
+	}
+	LOGD("ready for receiving data...\n");
+
+	LOGD("1秒");
+	Thread::sleep(5000);
+	LOGD("5秒");
+
+	retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
+	LOGD("retv %d",retv);
+
+	while(retv>0) {
+	   printf("receive data size=%d\n",retv);
+	   ncount+=retv;
+	   if(retv>1 && hd[retv-1]!='\0'){
+			fwrite(hd,retv,1,fp);//write to the file serialdata
+	   }else if(retv>1 && hd[retv-1]=='\0'){
+			fwrite(hd,retv-1,1,fp);//data end with stop sending signal
+			break;
+		}
+		//单独收到终止信号
+		else if(retv==1 && hd[retv-1]=='\0'){
+			printf("中止");
+			break;
+		}
+		retv=read(mUartID,hd,max_buffer_size);
+	}
+
+
+	LOGD("The received data size is:%d\n",ncount);  /*print data size*/
+	LOGD("\n");
+	flag_close =close(mUartID);
+	if(flag_close== -1)   /*判断是否成功关闭文件*/
+		LOGD("close the Device failur！\n");
+	if(fclose(fp)<0)
+		LOGD("closing file serialdata fail!");
 }

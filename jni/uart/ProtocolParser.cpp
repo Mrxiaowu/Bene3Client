@@ -7,9 +7,6 @@
 #include <iostream>
 #include "uart/UartContext.h"
 
-#define max_buffer_size   100   /*定义缓冲区最大宽度*/
-int fd = UARTCONTEXT->mUartID;
-
 static Mutex sLock;
 BYTE *mRealData;         //除去AA55和校检码的中间的实际的数据
 static std::vector<OnProtocolDataUpdateFun> sProtocolDataUpdateListenerList;
@@ -54,46 +51,7 @@ SProtocolData& getProtocolData() {
 
 
 
-void receiverFile(){
-	int flag_close = 0;
-	char  hd[max_buffer_size]; /*定义接收缓冲区*/
-	int retv,ncount=0;
-	FILE* fp;
 
-	///mnt/extsd/screen.bin
-	if((fp=fopen("/mnt/extsd/screen","wb"))==NULL){
-		LOGD("can not open/create file serialdata.");
-	}
-	LOGD("ready for receiving data...\n");
-
-	retv=read(fd,hd,max_buffer_size);   /*接收数据*/
-
-//	    while(retv>0)
-	while(true){ //开启个线程
-		if(retv>0){
-		    LOGD("receive data size=%d\n",retv);
-		    ncount+=retv;
-		    if(retv>1 && hd[retv-1]!='\0'){
-				fwrite(hd,retv,1,fp);//write to the file serialdata
-		    } else if(retv>1 && hd[retv-1]=='\0'){
-				fwrite(hd,retv-1,1,fp);//data end with stop sending signal
-				break;
-			} else if(retv==1 && hd[retv-1]=='\0'){
-				break;
-			}
-		    LOGD("without !!!");
-			retv=read(fd,hd,max_buffer_size);
-		}
-	}
-
-	LOGD("The received data size is:%d\n",ncount);  /*print data size*/
-	LOGD("\n");
-	flag_close =close(fd);
-	if(flag_close== -1)   /*判断是否成功关闭文件*/
-		LOGD("close the Device failur！\n");
-	if(fclose(fp)<0)
-		LOGD("closing file serialdata fail!");
-}
 
 
 //BYTE赋值给BYTE
@@ -211,7 +169,7 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			LOGD("退出升级模式");
 		} else if(pData[3] == 0xFF){
 			LOGD("传输文件模式");
-			receiverFile();
+			UARTCONTEXT->receiverFile();
 		}
 
 	} else {
