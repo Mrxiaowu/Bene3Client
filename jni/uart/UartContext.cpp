@@ -124,9 +124,7 @@ bool UartContext::threadLoop() {
 		} else {
 			Thread::sleep(50);
 		}
-
 		return true;
 	}
-
 	return false;
 }

@@ -5,6 +5,10 @@
 #include "utils/Log.h"
 #include <cstddef>
 #include <iostream>
+#include "uart/UartContext.h"
+
+#define max_buffer_size   100   /*定义缓冲区最大宽度*/
+int fd = UARTCONTEXT->mUartID;
 
 static Mutex sLock;
 BYTE *mRealData;         //除去AA55和校检码的中间的实际的数据
@@ -46,6 +50,52 @@ static SProtocolData sProtocolData = {"\0"};
 
 SProtocolData& getProtocolData() {
 	return sProtocolData;
+}
+
+
+
+void receiverFile(){
+	int flag_close = 0;
+	char  hd[max_buffer_size]; /*定义接收缓冲区*/
+	int retv,ncount=0;
+	FILE* fp;
+
+	if((fp=fopen("/mnt/extsd/ui/test.png","wb"))==NULL)
+	{
+		LOGD("can not open/create file serialdata.");
+		exit(EXIT_FAILURE);
+	}
+	LOGD("ready for receiving data...\n");
+
+	retv=read(fd,hd,max_buffer_size);   /*接收数据*/
+
+//	    while(retv>0)
+	while(true){ //开启个线程
+		LOGD("222");
+		if(retv>0){
+		   LOGD("receive data size=%d\n",retv);
+		   ncount+=retv;
+		   if(retv>1 && hd[retv-1]!='\0')
+				fwrite(hd,retv,1,fp);//write to the file serialdata
+			else if(retv>1 && hd[retv-1]=='\0')
+			{
+				fwrite(hd,retv-1,1,fp);//data end with stop sending signal
+				break;
+			}
+			//单独收到终止信号
+			else if(retv==1 && hd[retv-1]=='\0')
+				break;
+			retv=read(fd,hd,max_buffer_size);
+		}
+	}
+
+	LOGD("The received data size is:%d\n",ncount);  /*print data size*/
+	LOGD("\n");
+	flag_close =close(fd);
+	if(flag_close== -1)   /*判断是否成功关闭文件*/
+		LOGD("close the Device failur！\n");
+	if(fclose(fp)<0)
+		LOGD("closing file serialdata fail!");
 }
 
 
@@ -143,7 +193,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			{
 				temp[tempLength-(i-pDataStartIndex)] = pData[i];
 			}
-
 //			LOGD("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
 
 			sProtocolData.imageData = temp;
@@ -156,6 +205,18 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 		}
 		notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 		delete[] temp;
+
+	} else if(pData[2] == 1){//等于1可能是升级模式
+
+		if(pData[3] == 0x40){
+			LOGD("进入升级模式");
+		} else if (pData[3] == 0x44){
+			LOGD("退出升级模式");
+		} else if(pData[3] == 0xFF){
+			LOGD("传输文件模式");
+			receiverFile();
+		}
+
 	} else {
 		switch(pData[3]){
 			case SWITCH_PAGE:

@@ -1,5 +1,21 @@
 #pragma once
 #include "uart/ProtocolSender.h"
+#include "os/UpgradeMonitor.h"
+
+
+
+class DownloadThread : public Thread {
+protected:
+    virtual bool threadLoop(){
+        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
+        return false;
+    };
+
+};
+
+DownloadThread downloadThread;
+
+
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
@@ -61,21 +77,12 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
 static bool onlogoActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
 }
+
 static bool onButtonClick_logo(ZKButton *pButton) {
     //LOGD(" ButtonClick logo !!!\n");
     return false;
 }
-
