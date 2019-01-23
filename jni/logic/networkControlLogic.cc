@@ -94,13 +94,6 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 			}
 		}
 	}
-
-	//先不使用了
-//	if(data.page == 7 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
-//		mnetworkWindowPtr->setVisible(true);
-//	}
-
-
 }
 
 
@@ -113,15 +106,17 @@ static bool onUI_Timer(int id){
     return true;
 }
 
-/**
- * 有新的触摸事件时触发
- * 参数：ev
- *         新的触摸事件
- * 返回值：true
- *            表示该触摸事件在此被拦截，系统不再将此触摸事件传递到控件上
- *         false
- *            触摸事件将继续传递到控件上
- */
+
+static void initPublicPageStatus() {
+	mButton1Ptr->setSelected(false);
+	mButton2Ptr->setSelected(false);
+	mButton3Ptr->setSelected(false);
+	mButton4Ptr->setSelected(false);
+	mButton5Ptr->setSelected(false);
+	mButton6Ptr->setSelected(false);
+}
+
+
 static bool onnetworkControlActivityTouchEvent(const MotionEvent &ev) {
 
 	return false;
@@ -179,17 +174,10 @@ static bool onButtonClick_pointButton(ZKButton *pButton) {
 	BYTE mode[] = { 0x05, 0xFF, 0x01, 0x1E, 0x01 };
 	sendProtocol( mode , 5);
 	mnetworkWindowPtr->setVisible(true);
+	initPublicPageStatus();
 	return false;
 }
 
-static void initPublicPageStatus() {
-	mButton1Ptr->setSelected(false);
-	mButton2Ptr->setSelected(false);
-	mButton3Ptr->setSelected(false);
-	mButton4Ptr->setSelected(false);
-	mButton5Ptr->setSelected(false);
-	mButton6Ptr->setSelected(false);
-}
 
 static bool onButtonClick_Button1(ZKButton *pButton) {//AA 55 06 07 FF 10 00 01 00 E9
 	LOGD(" onButtonClick_Button1 !!!\n");

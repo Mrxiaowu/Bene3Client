@@ -24,15 +24,6 @@
 
 /*TAG:Macro宏ID*/
 #define ID_LEVELING_down5    20004
-#define ID_LEVELING_Textview7    50008
-#define ID_LEVELING_Textview6    50006
-#define ID_LEVELING_Textview5    50005
-#define ID_LEVELING_Textview4    50004
-#define ID_LEVELING_Textview3    50003
-#define ID_LEVELING_Textview2    50002
-#define ID_LEVELING_Textview1    50001
-#define ID_LEVELING_pageDown    20008
-#define ID_LEVELING_PageUp    20007
 #define ID_LEVELING_levelPageText    50007
 #define ID_LEVELING_line    20006
 #define ID_LEVELING_reset    20005
