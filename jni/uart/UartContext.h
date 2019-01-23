@@ -22,6 +22,8 @@ public:
 
 	void receiverFile();
 
+	int upgradeSize;
+
 
 protected:
 	virtual bool readyToRun();

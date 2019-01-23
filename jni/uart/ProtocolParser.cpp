@@ -83,6 +83,15 @@ void BYTEToString(const BYTE *pData, UINT len){
 		sProtocolData.progress = pData[8];
 	}
 
+	//升级包的长度
+	if(pData[4] == 0xFF && pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+		for(UINT i = pDataStartIndex; i < len-1; i++){
+			LOGD("每个字节的长度%x %x",pData[i],UARTCONTEXT->upgradeSize);
+			UARTCONTEXT->upgradeSize = UARTCONTEXT->upgradeSize << 8 | pData[i];
+		}
+		LOGD("升级包长度多少 %d",UARTCONTEXT->upgradeSize);
+	}
+
 	//slc参数
 	if(pData[4] == 0x04 && pData[5] == 0x04 && pData[6] == 0x0F ){
 		LOGD("slc文件赋值");
@@ -248,6 +257,11 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				BYTEToString(pData,len);
 				break;
 
+			case UPGRADE_MODE:
+				LOGD("升级包确认长度");
+				BYTEToString(pData,len);
+				break;
+
 			default :
 				LOGD("未知的命令");
 				break;
@@ -290,7 +304,6 @@ int parseProtocol(const BYTE *pData, UINT len) {
 		if (lastLength < frameLen) { //比较长度，如果第一次进来的时候的剩余数据长度和总长度不一致，说明包内筒不全
 			break;
 		}
-
 
 		for (int i = 0; i < dataLen; i++) {
 			mRealData[i] = pData[i + realDataIndex];

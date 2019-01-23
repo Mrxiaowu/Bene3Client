@@ -1,19 +1,16 @@
 #pragma once
 #include "uart/ProtocolSender.h"
-#include "os/UpgradeMonitor.h"
+//#include "os/UpgradeMonitor.h"
 
-
-
-class DownloadThread : public Thread {
-protected:
-    virtual bool threadLoop(){
-        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
-        return false;
-    };
-
-};
-
-DownloadThread downloadThread;
+//class DownloadThread : public Thread {
+//protected:
+//    virtual bool threadLoop(){
+//        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
+//        return false;
+//    };
+//
+//};
+//DownloadThread downloadThread;
 
 
 
