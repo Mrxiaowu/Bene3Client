@@ -64,4 +64,6 @@
  	<string name="shutdown">关机</string>
  	<string name="shutdowning">关机中...</string>
 
+	<string name="screen">屏幕设置</string>
+	<string name="screenInfo">屏幕亮度</string>
 </resources>
