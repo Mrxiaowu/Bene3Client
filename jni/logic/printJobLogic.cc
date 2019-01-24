@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <iostream>
-
+#include<assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -102,6 +102,12 @@ static void onProtocolDataUpdate(const SProtocolData &data) { //串口数据回�
 		return;
 	} else {
 		LOGD("进入打印任务页面");
+	}
+
+	LOGD(" 当前栈顶界面是 %s",EASYUICONTEXT->currentAppName());
+	if(strcmp(EASYUICONTEXT->currentAppName(),"printJobActivity")){
+		LOGD("不是栈顶界面，返回");
+		return;
 	}
 
 	LOGD("当前读取的串口信息 %x %x %x , %x",data.region ,data.type , data.label ,data.cancellParam);

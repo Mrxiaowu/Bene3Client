@@ -132,17 +132,5 @@ static bool onButtonClick_line(ZKButton *pButton) {
     return false;
 }
 
-static bool onButtonClick_PageUp(ZKButton *pButton) {//AA 55 05 0E FF 01 3D 01 B4
-    //LOGD(" ButtonClick PageUp !!!\n");
-	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3D, 0x01};
-	sendProtocol( mode , 5);
-    return false;
-}
 
-static bool onButtonClick_pageDown(ZKButton *pButton) {//AA 55 05 0E FF 01 3E 01 B3
-    //LOGD(" ButtonClick pageDown !!!\n");
-	BYTE mode[] = { 0x0E, 0xFF, 0x01, 0x3E, 0x01};
-	sendProtocol( mode , 5);
-    return false;
-}
 
