@@ -37,7 +37,8 @@ static void onUI_show() {
  * 当界面隐藏时触发
  */
 static void onUI_hide() {
-
+	mpointButtonPtr->setText("");
+	mpasswordButtonPtr->setText("");
 }
 
 /*

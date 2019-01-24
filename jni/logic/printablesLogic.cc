@@ -3,6 +3,22 @@
 
 //文件管理
 
+void initPrintableStatus(){
+	mfileList1Ptr->setSelected(false);
+	mfileList2Ptr->setSelected(false);
+	mfileList3Ptr->setSelected(false);
+}
+
+
+void initPublicPageStatus() {
+	mButton1Ptr->setSelected(false);
+	mButton2Ptr->setSelected(false);
+	mButton3Ptr->setSelected(false);
+	mButton4Ptr->setSelected(false);
+	mButton5Ptr->setSelected(false);
+	mButton6Ptr->setSelected(false);
+}
+
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -29,6 +45,8 @@ static void onUI_intent(const Intent *intentPtr) {
 static void onUI_show() {
 	LOGD("printables onUI_show !!!\n"); //00FF010201FD
 	sendSampleProtocol(0x00, 0xFF, 0x01, 0x02, 0x01);
+	initPrintableStatus();
+	initPublicPageStatus();
 }
 
 /*
@@ -44,21 +62,7 @@ static void onUI_quit() {
 
 }
 
-void initPrintableStatus(){
-	mfileList1Ptr->setSelected(false);
-	mfileList2Ptr->setSelected(false);
-	mfileList3Ptr->setSelected(false);
-}
 
-
-void initPublicPageStatus() {
-	mButton1Ptr->setSelected(false);
-	mButton2Ptr->setSelected(false);
-	mButton3Ptr->setSelected(false);
-	mButton4Ptr->setSelected(false);
-	mButton5Ptr->setSelected(false);
-	mButton6Ptr->setSelected(false);
-}
 
 /**
  * 串口数据回调接口
@@ -265,6 +269,8 @@ static bool onButtonClick_sure(ZKButton *pButton) {//AA 55 05 07 FF 01 26 01 D2
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x26, 0x01 };
 	sendProtocol( mode , 5);
 	musbWindowPtr->setVisible(false);
+	initPrintableStatus();
+	initPublicPageStatus();
 	return false;
 }
 
@@ -289,5 +295,7 @@ static bool onButtonClick_cancell(ZKButton *pButton) {//AA 55 05 07 FF 01 27 01 
 	BYTE mode[] = { 0x07, 0xFF, 0x01, 0x27, 0x01 };
 	sendProtocol( mode , 5);
 	musbWindowPtr->setVisible(false);
+	initPrintableStatus();
+	initPublicPageStatus();
 	return false;
 }
