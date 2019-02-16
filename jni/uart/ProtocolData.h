@@ -13,6 +13,7 @@
 #define SWITCH_REGION    4
 #define SET_LABEL_VALUE  8
 #define SET_ICON_VALUE  0A
+#define UPGRADE_MODE  0xFF
 #define TurnOff_PageID 13
 
 //AA 55 05 03 00 FF FF FF 00 主页面

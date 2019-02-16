@@ -5,6 +5,7 @@
 #include "utils/Log.h"
 #include <cstddef>
 #include <iostream>
+#include "uart/UartContext.h"
 
 static Mutex sLock;
 BYTE *mRealData;         //除去AA55和校检码的中间的实际的数据
@@ -49,6 +50,10 @@ SProtocolData& getProtocolData() {
 }
 
 
+
+
+
+
 //BYTE赋值给BYTE
 void BYTEToString(const BYTE *pData, UINT len){
 	LOGD("串口长度=%d",len);
@@ -76,6 +81,15 @@ void BYTEToString(const BYTE *pData, UINT len){
 	if(pData[4] == 9 && pData[5] == 0x11 && pData[6] == 0x0C && pData[7] == 0x00 ){
 		LOGD("给打印进度赋值");
 		sProtocolData.progress = pData[8];
+	}
+
+	//升级包的长度
+	if(pData[4] == 0xFF && pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
+		for(UINT i = pDataStartIndex; i < len-1; i++){
+			LOGD("每个字节的长度%x %x",pData[i],UARTCONTEXT->upgradeSize);
+			UARTCONTEXT->upgradeSize = UARTCONTEXT->upgradeSize << 8 | pData[i];
+		}
+		LOGD("升级包长度多少 %d",UARTCONTEXT->upgradeSize);
 	}
 
 	//slc参数
@@ -153,7 +167,6 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 					LOGD("??? %x  %x  %d",temp[tempLength] ,pData[i+pDataStartIndex],i);
 				}
 			}
-
 			LOGD("temp2 %x %x",pData[0],pData[tempLength+pDataStartIndex]);
 			LOGD("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
 
@@ -167,6 +180,18 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 		}
 		notifyProtocolDataUpdate(sProtocolData); // 通知协议数据更新
 		delete[] temp;
+
+	} else if(pData[2] == 1){//等于1可能是升级模式
+
+		if(pData[3] == 0x40){
+			LOGD("进入升级模式");
+		} else if (pData[3] == 0x44){
+			LOGD("退出升级模式");
+		} else if(pData[3] == 0xFF){
+			LOGD("传输文件模式");
+			UARTCONTEXT->receiverFile();
+		}
+
 	} else {
 		switch(pData[3]){
 			case SWITCH_PAGE:
@@ -243,6 +268,11 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 				BYTEToString(pData,len);
 				break;
 
+			case UPGRADE_MODE:
+				LOGD("升级包确认长度");
+				BYTEToString(pData,len);
+				break;
+
 			default :
 				LOGD("未知的命令");
 				break;
@@ -285,7 +315,6 @@ int parseProtocol(const BYTE *pData, UINT len) {
 		if (lastLength < frameLen) { //比较长度，如果第一次进来的时候的剩余数据长度和总长度不一致，说明包内筒不全
 			break;
 		}
-
 
 		for (int i = 0; i < dataLen; i++) {
 			mRealData[i] = pData[i + realDataIndex];

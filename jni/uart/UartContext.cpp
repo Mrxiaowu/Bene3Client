@@ -1,15 +1,37 @@
-//Bene3
+
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <memory.h>
 #include <termio.h>
 #include <sys/ioctl.h>
+#include "os/UpgradeMonitor.h"
 
 #include "uart/UartContext.h"
 #include "utils/Log.h"
 
+#include <iostream>
+#include <fstream>
+#include<sys/stat.h>
+#include<sys/types.h>
+
+
+
 #define UART_DATA_BUF_LEN			16384	// 16KB
+#define max_buffer_size   1024   /*定义缓冲区最大宽度*/  //为什么这里设置成1024不行？？
+
+
+
+class DownloadThread : public Thread {
+protected:
+    virtual bool threadLoop(){
+        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
+        return false;
+    };
+};
+
+DownloadThread downloadThread;
+
 
 extern int parseProtocol(const BYTE *pData, UINT len);
 
@@ -17,7 +39,9 @@ UartContext::UartContext() :
 	mIsOpen(false),
 	mUartID(0),
 	mDataBufPtr(NULL),
-	mDataBufLen(0) {
+	mDataBufLen(0) ,
+	upgradeSize(0)
+{
 
 }
 
@@ -124,9 +148,61 @@ bool UartContext::threadLoop() {
 		} else {
 			Thread::sleep(50);
 		}
-
 		return true;
 	}
-
 	return false;
+}
+
+void UartContext::receiverFile(){
+	char *hd[max_buffer_size]; /*定义接收缓冲区*/
+	int retv,ncount=0;
+	FILE* fp;
+
+	system("mkdir /mnt/extsd/temp");
+
+	if((fp=fopen("/mnt/extsd/temp/update.img","wb"))==NULL){
+		LOGD("can not open/create file serialdata.");
+	}
+	LOGD("ready for receiving data...\n");
+
+	Thread::sleep(10000);
+
+	int i = 0;
+	retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
+	while(retv>0) {
+	    LOGD("最开始的 receive data size=%d\n",retv);
+	    ncount+=retv;
+	    i++;
+
+	    //缓冲区的操作
+//	    if(retv>1 && hd[retv-1]!='\0'){
+//			fwrite(hd,retv,1,fp);//write to the file serialdata
+//	    }else if(retv>1 && hd[retv-1]=='\0'){
+//	    	LOGD("中止1");
+//		    fwrite(hd,retv-1,1,fp);//data end with stop sending signal
+//			break;
+//        }else if(retv==1 && hd[retv-1]=='\0'){//单独收到终止信号
+//			LOGD("中止2");
+//			break;
+//		}
+
+		fwrite(hd,retv,1,fp);
+		Thread::sleep(50);
+		retv=read(mUartID,hd,max_buffer_size);
+
+		if(retv <= 0){
+			LOGD("检测到串口读不到信息，再等一会儿");
+			Thread::sleep(2000);
+			retv=read(mUartID,hd,max_buffer_size);
+		}
+	}
+	LOGD("The received data size is:%d  +  %d",ncount,i);
+
+	if(upgradeSize == ncount){
+		system("touch /mnt/extsd/zkautoupgrade");
+		downloadThread.run("download-update");
+	} else {
+		LOGD("发来的包的长度和预计的包长度不等 %x %x ",upgradeSize,ncount);
+		system("reboot");
+	}
 }

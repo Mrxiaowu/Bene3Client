@@ -20,6 +20,11 @@ public:
 
 	static UartContext* getInstance();
 
+	void receiverFile();
+
+	int upgradeSize;
+
+
 protected:
 	virtual bool readyToRun();
 	virtual bool threadLoop();
