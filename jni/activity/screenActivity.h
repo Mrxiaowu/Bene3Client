@@ -1,5 +1,8 @@
-#ifndef __LEVELINGACTIVITY_H__
-#define __LEVELINGACTIVITY_H__
+/***********************************************
+/gen auto by zuitools
+***********************************************/
+#ifndef __SCREENACTIVITY_H__
+#define __SCREENACTIVITY_H__
 
 
 #include "app/Activity.h"
@@ -23,17 +26,15 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_LEVELING_down5    20004
-#define ID_LEVELING_levelPageText    50007
-#define ID_LEVELING_line    20006
-#define ID_LEVELING_reset    20005
-#define ID_LEVELING_save    20003
-#define ID_LEVELING_up5    20002
-#define ID_LEVELING_zero    20001
-#define ID_LEVELING_sys_back   100
+#define ID_SCREEN_screenInfo    50001
+#define ID_SCREEN_TextValue    50000
+#define ID_SCREEN_SeekBar1    90000
+#define ID_SCREEN_screen    50010
+#define ID_SCREEN_sys_back   100
+#define ID_SCREEN_line    20005
 /*TAG:Macro宏ID END*/
 
-class levelingActivity : public Activity, 
+class screenActivity : public Activity, 
                      public ZKSeekBar::ISeekBarChangeListener, 
                      public ZKListView::IItemClickListener,
                      public ZKListView::AbsListAdapter,
@@ -43,8 +44,8 @@ class levelingActivity : public Activity,
                      public ZKVideoView::IVideoPlayerMessageListener
 {
 public:
-    levelingActivity();
-    virtual ~levelingActivity();
+    screenActivity();
+    virtual ~screenActivity();
 
     /**
      * 注册定时器

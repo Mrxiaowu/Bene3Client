@@ -57,6 +57,12 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		return;
 	}
 
+	LOGD(" 当前栈顶界面是 %s",EASYUICONTEXT->currentAppName());
+	if(strcmp(EASYUICONTEXT->currentAppName(),"printSettingActivity")){
+		LOGD("不是栈顶界面，返回");
+		return;
+	}
+
 	if(data.page == 8 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
 		LOGD("弹出弹出框");
 		mdialogPtr->setVisible(true);

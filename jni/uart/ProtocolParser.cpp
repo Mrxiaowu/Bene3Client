@@ -151,13 +151,24 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 		LOGD("%x tempLength数据长度", tempLength);//长度应该是datalan的长度减5
 
 		if(pData[5] == 10 && pData[6] == 9 && pData[7] == 16 && pData[8] == 10 && pData[9] == 2){
-			LOGD("条件全部满足，是在传输图片");
+			LOGD("条件全部满足，是在传输图片 其中起始位置是%d 总共的长度是%d",pDataStartIndex,len);
 
-			for(UINT i = pDataStartIndex; i < len-1; i++)
+
+//			for(UINT i = pDataStartIndex; i < len-1; i++)
+//			{
+//				temp[tempLength-(i-pDataStartIndex)] = pData[i];
+//			}
+
+			//上面计算错误
+			for(int i = 0; i < tempLength; i++)
 			{
-				temp[tempLength-(i-pDataStartIndex)] = pData[i];
+				temp[tempLength - i - 1] = pData[i+pDataStartIndex];
+				if(i == tempLength){
+					LOGD("??? %x  %x  %d",temp[tempLength] ,pData[i+pDataStartIndex],i);
+				}
 			}
-//			LOGD("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
+			LOGD("temp2 %x %x",pData[0],pData[tempLength+pDataStartIndex]);
+			LOGD("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
 
 			sProtocolData.imageData = temp;
 			sProtocolData.imageLength = tempLength; //一般是AF5

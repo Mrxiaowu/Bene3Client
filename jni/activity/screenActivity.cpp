@@ -1,25 +1,23 @@
-#include "levelingActivity.h"
+#include "screenActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* mdown5Ptr;
-static ZKTextView* mlevelPageTextPtr;
-static ZKButton* mlinePtr;
-static ZKButton* mresetPtr;
-static ZKButton* msavePtr;
-static ZKButton* mup5Ptr;
-static ZKButton* mzeroPtr;
+static ZKTextView* mscreenInfoPtr;
+static ZKTextView* mTextValuePtr;
+static ZKSeekBar* mSeekBar1Ptr;
+static ZKTextView* mscreenPtr;
 static ZKButton* msys_backPtr;
-static levelingActivity* mActivityPtr;
+static ZKButton* mlinePtr;
+static screenActivity* mActivityPtr;
 
 /*register activity*/
-REGISTER_ACTIVITY(levelingActivity);
+REGISTER_ACTIVITY(screenActivity);
 
 typedef struct {
 	int id; // 定时器ID ， 不能重复
 	int time; // 定时器  时间间隔  单位 毫秒
 }S_ACTIVITY_TIMEER;
 
-#include "logic/levelingLogic.cc"
+#include "logic/screenLogic.cc"
 
 /***********/
 typedef struct {
@@ -46,13 +44,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_LEVELING_down5, onButtonClick_down5,
-    ID_LEVELING_line, onButtonClick_line,
-    ID_LEVELING_reset, onButtonClick_reset,
-    ID_LEVELING_save, onButtonClick_save,
-    ID_LEVELING_up5, onButtonClick_up5,
-    ID_LEVELING_zero, onButtonClick_zero,
-    ID_LEVELING_sys_back, onButtonClick_sys_back,
+    ID_SCREEN_sys_back, onButtonClick_sys_back,
+    ID_SCREEN_line, onButtonClick_line,
 };
 /***************/
 
@@ -64,6 +57,7 @@ typedef struct {
 }S_ZKSeekBarCallback;
 /*TAG:SeekBarCallbackTab*/
 static S_ZKSeekBarCallback SZKSeekBarCallbackTab[] = {
+    ID_SCREEN_SeekBar1, onProgressChanged_SeekBar1,
 };
 
 
@@ -112,13 +106,13 @@ static S_VideoViewCallback SVideoViewCallbackTab[] = {
 };
 
 
-levelingActivity::levelingActivity() {
+screenActivity::screenActivity() {
 	//todo add init code here
 	mVideoLoopIndex = 0;
 	mVideoLoopErrorCount = 0;
 }
 
-levelingActivity::~levelingActivity() {
+screenActivity::~screenActivity() {
 	//todo add init file here
     // 退出应用时需要反注册
     EASYUICONTEXT->unregisterGlobalTouchListener(this);
@@ -126,28 +120,26 @@ levelingActivity::~levelingActivity() {
     unregisterProtocolDataUpdateListener(onProtocolDataUpdate);
 }
 
-const char* levelingActivity::getAppName() const{
-	return "leveling.ftu";
+const char* screenActivity::getAppName() const{
+	return "screen.ftu";
 }
 
 //TAG:onCreate
-void levelingActivity::onCreate() {
+void screenActivity::onCreate() {
 	Activity::onCreate();
-    mdown5Ptr = (ZKButton*)findControlByID(ID_LEVELING_down5);
-    mlevelPageTextPtr = (ZKTextView*)findControlByID(ID_LEVELING_levelPageText);
-    mlinePtr = (ZKButton*)findControlByID(ID_LEVELING_line);
-    mresetPtr = (ZKButton*)findControlByID(ID_LEVELING_reset);
-    msavePtr = (ZKButton*)findControlByID(ID_LEVELING_save);
-    mup5Ptr = (ZKButton*)findControlByID(ID_LEVELING_up5);
-    mzeroPtr = (ZKButton*)findControlByID(ID_LEVELING_zero);
-    msys_backPtr = (ZKButton*)findControlByID(ID_LEVELING_sys_back);
+    mscreenInfoPtr = (ZKTextView*)findControlByID(ID_SCREEN_screenInfo);
+    mTextValuePtr = (ZKTextView*)findControlByID(ID_SCREEN_TextValue);
+    mSeekBar1Ptr = (ZKSeekBar*)findControlByID(ID_SCREEN_SeekBar1);if(mSeekBar1Ptr!= NULL){mSeekBar1Ptr->setSeekBarChangeListener(this);}
+    mscreenPtr = (ZKTextView*)findControlByID(ID_SCREEN_screen);
+    msys_backPtr = (ZKButton*)findControlByID(ID_SCREEN_sys_back);
+    mlinePtr = (ZKButton*)findControlByID(ID_SCREEN_line);
 	mActivityPtr = this;
 	onUI_init();
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 
     rigesterActivityTimer();
 }
 
-void levelingActivity::onClick(ZKBase *pBase) {
+void screenActivity::onClick(ZKBase *pBase) {
 	//TODO: add widget onClik code 
     int buttonTablen = sizeof(sButtonCallbackTab) / sizeof(S_ButtonCallback);
     for (int i = 0; i < buttonTablen; ++i) {
@@ -171,30 +163,30 @@ void levelingActivity::onClick(ZKBase *pBase) {
 	Activity::onClick(pBase);
 }
 
-void levelingActivity::onResume() {
+void screenActivity::onResume() {
 	Activity::onResume();
 	EASYUICONTEXT->registerGlobalTouchListener(this);
 	startVideoLoopPlayback();
 	onUI_show();
 }
 
-void levelingActivity::onPause() {
+void screenActivity::onPause() {
 	Activity::onPause();
 	EASYUICONTEXT->unregisterGlobalTouchListener(this);
 	stopVideoLoopPlayback();
 	onUI_hide();
 }
 
-void levelingActivity::onIntent(const Intent *intentPtr) {
+void screenActivity::onIntent(const Intent *intentPtr) {
 	Activity::onIntent(intentPtr);
 	onUI_intent(intentPtr);
 }
 
-bool levelingActivity::onTimer(int id) {
+bool screenActivity::onTimer(int id) {
 	return onUI_Timer(id);
 }
 
-void levelingActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
+void screenActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
 
     int seekBarTablen = sizeof(SZKSeekBarCallbackTab) / sizeof(S_ZKSeekBarCallback);
     for (int i = 0; i < seekBarTablen; ++i) {
@@ -205,7 +197,7 @@ void levelingActivity::onProgressChanged(ZKSeekBar *pSeekBar, int progress){
     }
 }
 
-int levelingActivity::getListItemCount(const ZKListView *pListView) const{
+int screenActivity::getListItemCount(const ZKListView *pListView) const{
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -216,7 +208,7 @@ int levelingActivity::getListItemCount(const ZKListView *pListView) const{
     return 0;
 }
 
-void levelingActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index){
+void screenActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index){
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -226,7 +218,7 @@ void levelingActivity::obtainListItemData(ZKListView *pListView,ZKListView::ZKLi
     }
 }
 
-void levelingActivity::onItemClick(ZKListView *pListView, int index, int id){
+void screenActivity::onItemClick(ZKListView *pListView, int index, int id){
     int tablen = sizeof(SListViewFunctionsCallbackTab) / sizeof(S_ListViewFunctionsCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SListViewFunctionsCallbackTab[i].id == pListView->getID()) {
@@ -236,7 +228,7 @@ void levelingActivity::onItemClick(ZKListView *pListView, int index, int id){
     }
 }
 
-void levelingActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) {
+void screenActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) {
     int tablen = sizeof(SSlideWindowItemClickCallbackTab) / sizeof(S_SlideWindowItemClickCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SSlideWindowItemClickCallbackTab[i].id == pSlideWindow->getID()) {
@@ -246,11 +238,11 @@ void levelingActivity::onSlideItemClick(ZKSlideWindow *pSlideWindow, int index) 
     }
 }
 
-bool levelingActivity::onTouchEvent(const MotionEvent &ev) {
-    return onlevelingActivityTouchEvent(ev);
+bool screenActivity::onTouchEvent(const MotionEvent &ev) {
+    return onscreenActivityTouchEvent(ev);
 }
 
-void levelingActivity::onTextChanged(ZKTextView *pTextView, const std::string &text) {
+void screenActivity::onTextChanged(ZKTextView *pTextView, const std::string &text) {
     int tablen = sizeof(SEditTextInputCallbackTab) / sizeof(S_EditTextInputCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SEditTextInputCallbackTab[i].id == pTextView->getID()) {
@@ -260,7 +252,7 @@ void levelingActivity::onTextChanged(ZKTextView *pTextView, const std::string &t
     }
 }
 
-void levelingActivity::rigesterActivityTimer() {
+void screenActivity::rigesterActivityTimer() {
     int tablen = sizeof(REGISTER_ACTIVITY_TIMER_TAB) / sizeof(S_ACTIVITY_TIMEER);
     for (int i = 0; i < tablen; ++i) {
         S_ACTIVITY_TIMEER temp = REGISTER_ACTIVITY_TIMER_TAB[i];
@@ -269,7 +261,7 @@ void levelingActivity::rigesterActivityTimer() {
 }
 
 
-void levelingActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
+void screenActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
         if (SVideoViewCallbackTab[i].id == pVideoView->getID()) {
@@ -284,7 +276,7 @@ void levelingActivity::onVideoPlayerMessage(ZKVideoView *pVideoView, int msg) {
     }
 }
 
-void levelingActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int callbackTabIndex) {
+void screenActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int callbackTabIndex) {
 
 	switch (msg) {
 	case ZKVideoView::E_MSGTYPE_VIDEO_PLAY_STARTED:
@@ -321,7 +313,7 @@ void levelingActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int c
 	}
 }
 
-void levelingActivity::startVideoLoopPlayback() {
+void screenActivity::startVideoLoopPlayback() {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
     	if (SVideoViewCallbackTab[i].loop) {
@@ -336,7 +328,7 @@ void levelingActivity::startVideoLoopPlayback() {
     }
 }
 
-void levelingActivity::stopVideoLoopPlayback() {
+void screenActivity::stopVideoLoopPlayback() {
     int tablen = sizeof(SVideoViewCallbackTab) / sizeof(S_VideoViewCallback);
     for (int i = 0; i < tablen; ++i) {
     	if (SVideoViewCallbackTab[i].loop) {
@@ -352,7 +344,7 @@ void levelingActivity::stopVideoLoopPlayback() {
     }
 }
 
-bool levelingActivity::parseVideoFileList(const char *pFileListPath, std::vector<string>& mediaFileList) {
+bool screenActivity::parseVideoFileList(const char *pFileListPath, std::vector<string>& mediaFileList) {
 	mediaFileList.clear();
 	if (NULL == pFileListPath || 0 == strlen(pFileListPath)) {
         LOGD("video file list is null!");
@@ -384,7 +376,7 @@ bool levelingActivity::parseVideoFileList(const char *pFileListPath, std::vector
 	return true;
 }
 
-int levelingActivity::removeCharFromString(string& nString, char c) {
+int screenActivity::removeCharFromString(string& nString, char c) {
     string::size_type   pos;
     while(1) {
         pos = nString.find(c);
@@ -397,14 +389,14 @@ int levelingActivity::removeCharFromString(string& nString, char c) {
     return (int)nString.size();
 }
 
-void levelingActivity::registerUserTimer(int id, int time) {
+void screenActivity::registerUserTimer(int id, int time) {
 	registerTimer(id, time);
 }
 
-void levelingActivity::unregisterUserTimer(int id) {
+void screenActivity::unregisterUserTimer(int id) {
 	unregisterTimer(id);
 }
 
-void levelingActivity::resetUserTimer(int id, int time) {
+void screenActivity::resetUserTimer(int id, int time) {
 	resetTimer(id, time);
 }

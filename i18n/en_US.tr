@@ -39,6 +39,7 @@
     <string name="dynamicIP">DynamicIP</string>
     <string name="save">Save</string>
     <string name="CurrentWifi">CurrentIP</string>
+    <string name="connect">connect</string>
   
  	<string name="cancell">cancell</string>
  	<string name="sure">confirm</string>
@@ -56,4 +57,8 @@
  	
  	<string name="shutdown">shutdown</string>
 	<string name="shutdowning">Shutdowning...</string>
+	
+	<string name="screen">Screen</string>screenInfo
+	<string name="screenInfo">Screen Brightness</string>
+	
 </resources>
