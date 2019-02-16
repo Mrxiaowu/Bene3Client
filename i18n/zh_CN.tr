@@ -13,7 +13,7 @@
     <string name="File">文件管理</string>
     <string name="Network">网络控制</string>
     <string name="MachineInfo">机器信息</string>
-    <string name="PrintSetting">电机移动</string>
+    <string name="PrintSetting">升降平台</string>
     <string name="SLC Param">SLC参数设置</string>
     <string name="CheckInfo">检查</string>
     <string name="PublicPage">公共页面</string>
@@ -46,6 +46,7 @@
     <string name="dynamicIP">动态IP</string>
     <string name="save">保存</string>
     <string name="CurrentWifi">当前IP</string>
+    <string name="connect">连接</string>
     
     <string name="cancell">取消</string>
  	<string name="sure">确认</string>
