@@ -16,15 +16,16 @@
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
-	//{1,  1000},
+   //{1,  1000},
 };
 
 /**
  * 当界面构造时触发
  */
 static void onUI_init(){
-    //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
-
+	LOGD("系统重启，30秒后自动转到主页面");
+    Thread::sleep(30000);
+    EASYUICONTEXT->openActivity("mainActivity");
 }
 
 /**
