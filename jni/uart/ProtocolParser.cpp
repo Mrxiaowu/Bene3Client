@@ -183,6 +183,7 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 
 	} else if(pData[2] == 1){//等于1可能是升级模式
 
+		LOGD("单字节命令");
 		if(pData[3] == 0x40){
 			LOGD("进入升级模式");
 		} else if (pData[3] == 0x44){
@@ -190,6 +191,10 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 		} else if(pData[3] == 0xFF){
 			LOGD("传输文件模式");
 			UARTCONTEXT->receiverFile();
+		} else if(pData[3] == SCREEN_VERSION){
+			LOGD("给上位机发送版本信息");
+			BYTE model[] = {VERSIONINFO1, VERSIONINFO2, VERSIONINFO3};
+			sendProtocol(model , 3);
 		}
 
 	} else {
