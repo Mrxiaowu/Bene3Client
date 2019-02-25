@@ -165,7 +165,7 @@ void UartContext::receiverFile(){
 	}
 	LOGD("ready for receiving data...\n");
 
-	Thread::sleep(10000);
+	Thread::sleep(5000);//
 
 	int i = 0;
 	retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/

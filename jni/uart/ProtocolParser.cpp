@@ -190,11 +190,12 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 			LOGD("退出升级模式");
 		} else if(pData[3] == 0xFF){
 			LOGD("传输文件模式");
+			EASYUICONTEXT->openActivity("upgradePageActivity");
 			UARTCONTEXT->receiverFile();
 		} else if(pData[3] == SCREEN_VERSION){
 			LOGD("给上位机发送版本信息");
-			BYTE model[] = {VERSIONINFO1, VERSIONINFO2, VERSIONINFO3};
-			sendProtocol(model , 3);
+			BYTE model[] = {SCREEN_VERSION ,VERSIONINFO1, VERSIONINFO2, VERSIONINFO3};
+			sendProtocol(model , 4);
 		}
 
 	} else {
