@@ -25,7 +25,8 @@
 class DownloadThread : public Thread {
 protected:
     virtual bool threadLoop(){
-        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
+//        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
+        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd");//永久升级是这个目录
         return false;
     };
 };
@@ -158,9 +159,9 @@ void UartContext::receiverFile(){
 	int retv,ncount=0;
 	FILE* fp;
 
-	system("mkdir /mnt/extsd/temp");
+	system("mkdir /mnt/extsd");
 
-	if((fp=fopen("/mnt/extsd/temp/update.img","wb"))==NULL){
+	if((fp=fopen("/mnt/extsd/update.img","wb"))==NULL){
 		LOGD("can not open/create file serialdata.");
 	}
 	LOGD("ready for receiving data...\n");
@@ -169,6 +170,7 @@ void UartContext::receiverFile(){
 
 	int i = 0;
 	retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
+	system("touch /mnt/extsd/zkautoupgrade");
 	while(retv>0) {
 	    LOGD("最开始的 receive data size=%d\n",retv);
 	    ncount+=retv;
@@ -189,7 +191,6 @@ void UartContext::receiverFile(){
 		fwrite(hd,retv,1,fp);
 		Thread::sleep(50);
 		retv=read(mUartID,hd,max_buffer_size);
-
 		if(retv <= 0){
 			LOGD("检测到串口读不到信息，再等一会儿");
 			Thread::sleep(2000);
@@ -200,7 +201,6 @@ void UartContext::receiverFile(){
 
 	if(upgradeSize == ncount){
 		LOGD("发来的包的正常，升级并重启");
-		system("touch /mnt/extsd/zkautoupgrade");
 		downloadThread.run("download-update");
 	} else {
 		LOGD("发来的包的长度和预计的包长度不等  发过来的包信息%d 实际接受的包%d ",upgradeSize,ncount);
