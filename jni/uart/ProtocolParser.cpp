@@ -86,10 +86,10 @@ void BYTEToString(const BYTE *pData, UINT len){
 	//升级包的长度
 	if(pData[4] == 0xFF && pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
 		for(UINT i = pDataStartIndex; i < len-1; i++){
-			LOGD("每个字节的长度%x %x",pData[i],UARTCONTEXT->upgradeSize);
+			LOGD("第%d字节的长度%x %x",(i-pDataStartIndex),pData[i],UARTCONTEXT->upgradeSize);
 			UARTCONTEXT->upgradeSize = UARTCONTEXT->upgradeSize << 8 | pData[i];
 		}
-		LOGD("升级包长度多少 %d",UARTCONTEXT->upgradeSize);
+		LOGD("升级包长度多少 %d",UARTCONTEXT->upgradeSize);//AA5508FFFFFFFFFF 1BF23C BC
 	}
 
 	//slc参数

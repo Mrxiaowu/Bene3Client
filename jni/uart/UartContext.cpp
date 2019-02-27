@@ -199,10 +199,11 @@ void UartContext::receiverFile(){
 	LOGD("The received data size is:%d  +  %d",ncount,i);
 
 	if(upgradeSize == ncount){
+		LOGD("发来的包的正常，升级并重启");
 		system("touch /mnt/extsd/zkautoupgrade");
 		downloadThread.run("download-update");
 	} else {
-		LOGD("发来的包的长度和预计的包长度不等 %x %x ",upgradeSize,ncount);
+		LOGD("发来的包的长度和预计的包长度不等  发过来的包信息%d 实际接受的包%d ",upgradeSize,ncount);
 		system("reboot");
 	}
 }
