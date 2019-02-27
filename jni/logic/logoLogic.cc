@@ -1,5 +1,6 @@
 #pragma once
 #include "uart/ProtocolSender.h"
+#include "uart/ProtocolData.h"
 //#include "os/UpgradeMonitor.h"
 
 //class DownloadThread : public Thread {
@@ -26,6 +27,7 @@ static void onUI_init(){
 	LOGD("系统重启，30秒后自动转到主页面");
     Thread::sleep(30000);
     EASYUICONTEXT->openActivity("mainActivity");
+    LOGD("当前屏幕版本号 %d.%d.%d",VERSIONINFO1,VERSIONINFO2,VERSIONINFO3);
 }
 
 /**

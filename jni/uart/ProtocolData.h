@@ -10,7 +10,7 @@
 /******************** VERSION ***********************/
 #define VERSIONINFO1  0x01
 #define VERSIONINFO2  0x00
-#define VERSIONINFO3  0x05
+#define VERSIONINFO3  0x06
 
 
 /***UART CMD*************/
