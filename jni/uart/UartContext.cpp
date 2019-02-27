@@ -158,6 +158,7 @@ void UartContext::receiverFile(){
 	char *hd[max_buffer_size]; /*定义接收缓冲区*/
 	int retv,ncount=0;
 	FILE* fp;
+	FILE* fzkauto;
 
 	system("mkdir /mnt/extsd");
 
@@ -170,7 +171,12 @@ void UartContext::receiverFile(){
 
 	int i = 0;
 	retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
-	system("touch /mnt/extsd/zkautoupgrade");
+
+//	system("touch /mnt/extsd/zkautoupgrade");
+	if((fzkauto=fopen("/mnt/extsd/zkautoupgrade","wb"))==NULL){
+		LOGD("can not open/create file zkautoupgrade.");
+	}
+
 	while(retv>0) {
 	    LOGD("最开始的 receive data size=%d\n",retv);
 	    ncount+=retv;
@@ -202,6 +208,7 @@ void UartContext::receiverFile(){
 	if(upgradeSize == ncount){
 		LOGD("发来的包的正常，升级并重启");
 		downloadThread.run("download-update");
+		system("reboot");
 	} else {
 		LOGD("发来的包的长度和预计的包长度不等  发过来的包信息%d 实际接受的包%d ",upgradeSize,ncount);
 		system("reboot");
