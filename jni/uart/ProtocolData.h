@@ -7,12 +7,19 @@
 /******************** CmdID ***********************/
 #define CMDID_POWER							0x0
 
+/******************** VERSION ***********************/
+#define VERSIONINFO1  0x01
+#define VERSIONINFO2  0x00
+#define VERSIONINFO3  0x07
+
+
 /***UART CMD*************/
 #define SEND_IMAGE      0
 #define SWITCH_PAGE      3
 #define SWITCH_REGION    4
 #define SET_LABEL_VALUE  8
 #define SET_ICON_VALUE  0A
+#define SCREEN_VERSION  0x47
 #define UPGRADE_MODE  0xFF
 #define TurnOff_PageID 13
 

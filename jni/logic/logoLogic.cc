@@ -1,5 +1,6 @@
 #pragma once
 #include "uart/ProtocolSender.h"
+#include "uart/ProtocolData.h"
 //#include "os/UpgradeMonitor.h"
 
 class JumpMainPage : public Thread {

@@ -86,10 +86,10 @@ void BYTEToString(const BYTE *pData, UINT len){
 	//升级包的长度
 	if(pData[4] == 0xFF && pData[5] == 0xFF && pData[6] == 0xFF && pData[7] == 0xFF){
 		for(UINT i = pDataStartIndex; i < len-1; i++){
-			LOGD("每个字节的长度%x %x",pData[i],UARTCONTEXT->upgradeSize);
+			LOGD("第%d字节的长度%x %x",(i-pDataStartIndex),pData[i],UARTCONTEXT->upgradeSize);
 			UARTCONTEXT->upgradeSize = UARTCONTEXT->upgradeSize << 8 | pData[i];
 		}
-		LOGD("升级包长度多少 %d",UARTCONTEXT->upgradeSize);
+		LOGD("升级包长度多少 %d",UARTCONTEXT->upgradeSize);//AA5508FFFFFFFFFF 1BF23C BC
 	}
 
 	//slc参数
@@ -183,13 +183,19 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 
 	} else if(pData[2] == 1){//等于1可能是升级模式
 
+		LOGD("单字节命令");
 		if(pData[3] == 0x40){
 			LOGD("进入升级模式");
 		} else if (pData[3] == 0x44){
 			LOGD("退出升级模式");
 		} else if(pData[3] == 0xFF){
 			LOGD("传输文件模式");
+			EASYUICONTEXT->openActivity("upgradePageActivity");
 			UARTCONTEXT->receiverFile();
+		} else if(pData[3] == SCREEN_VERSION){
+			LOGD("给上位机发送版本信息");
+			BYTE model[] = {SCREEN_VERSION ,VERSIONINFO1, VERSIONINFO2, VERSIONINFO3};
+			sendProtocol(model , 4);
 		}
 
 	} else {
