@@ -1,7 +1,8 @@
 #pragma once
 #include "uart/ProtocolSender.h"
 #include "uart/ProtocolData.h"
-//#include "os/UpgradeMonitor.h"
+#include "uart/ProtocolData.h"
+
 
 class JumpMainPage : public Thread {
 protected:
@@ -16,7 +17,6 @@ protected:
 JumpMainPage jumpMainPage;
 
 
-
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
@@ -27,6 +27,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
  */
 static void onUI_init(){
 	jumpMainPage.run("jumpMainPage");
+	LOGD("当前屏幕版本号 %d.%d.%d",VERSIONINFO1,VERSIONINFO2,VERSIONINFO3);
 }
 
 /**

@@ -50,10 +50,6 @@ SProtocolData& getProtocolData() {
 }
 
 
-
-
-
-
 //BYTE赋值给BYTE
 void BYTEToString(const BYTE *pData, UINT len){
 	LOGD("串口长度=%d",len);
@@ -117,7 +113,7 @@ void BYTEToString(const BYTE *pData, UINT len){
 
 	LOGD("信息为 %s", sProtocolData.pdata.c_str());
 	Thread::sleep(50);
-	LOGD("sleep");
+	LOGD("sleep50");
 }
 
 //获取校验码
