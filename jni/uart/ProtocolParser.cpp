@@ -109,19 +109,19 @@ void BYTEToString(const BYTE *pData, UINT len){
 	}
 	sProtocolData.pdata = tempStr;
 
-
 	LOGD("%x page", pData[4]);// 长度
 	LOGD("%x region", pData[5]);//CMD_ID
 	LOGD("%x type", pData[6]);//Page_ID
 	LOGD("%x label", pData[7]);//Region ID
 	LOGD("%x buttonIndex", pData[8]);//Type ID
 
-
 	LOGD("信息为 %s", sProtocolData.pdata.c_str());
+	Thread::sleep(50);
+	LOGD("sleep");
 }
 
 //获取校验码
-BYTE getCheckSum(const BYTE *pData, int len) {
+BYTE getCheckSum(const BYTE *pData, int len){
 
 //#ifdef DEBUG_PRO_DATA
 //	for (int i = 0; i < len; ++i) {

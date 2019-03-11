@@ -3,31 +3,30 @@
 #include "uart/ProtocolData.h"
 //#include "os/UpgradeMonitor.h"
 
-//class DownloadThread : public Thread {
-//protected:
-//    virtual bool threadLoop(){
-//        UpgradeMonitor::getInstance()->checkUpgradeFile("/mnt/extsd/temp");
-//        return false;
-//    };
-//
-//};
-//DownloadThread downloadThread;
+class JumpMainPage : public Thread {
+protected:
+    virtual bool threadLoop(){
+    	LOGD("开始等待30秒");
+    	Thread::sleep(30000);
+    	LOGD("等待结束，打开主页面");
+    	EASYUICONTEXT->openActivity("mainActivity");
+        return false;
+    };
+};
+JumpMainPage jumpMainPage;
 
 
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
-   //{1,  1000},
+	//{1,  1000},
 };
 
 /**
  * 当界面构造时触发
  */
 static void onUI_init(){
-	LOGD("系统重启，30秒后自动转到主页面");
-    Thread::sleep(30000);
-    EASYUICONTEXT->openActivity("mainActivity");
-    LOGD("当前屏幕版本号 %d.%d.%d",VERSIONINFO1,VERSIONINFO2,VERSIONINFO3);
+	jumpMainPage.run("jumpMainPage");
 }
 
 /**
