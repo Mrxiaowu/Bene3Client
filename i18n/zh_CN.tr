@@ -13,10 +13,10 @@
     <string name="File">文件管理</string>
     <string name="Network">网络控制</string>
     <string name="MachineInfo">机器信息</string>
-    <string name="PrintSetting">升降平台</string>
+    <string name="PrintSetting">平台升降</string>
     <string name="SLC Param">SLC参数设置</string>
-    <string name="CheckInfo">检查</string>
-    <string name="PublicPage">公共页面</string>
+    <string name="CheckInfo">检查机器</string>
+    <string name="PublicPage">调平</string>
     
     <string name="machineInfoPage">机器信息</string>
     <string name="hardware">硬件信息</string>
@@ -28,7 +28,8 @@
     <string name="english">English</string>
     <string name="check">检查</string>
     
-    <string name="motorControl">电机控制</string>
+    <string name="motorControl">平台升降</string>
+     <string name="homingText">归位</string>
     
      <string name="printable">文件管理</string>
      <string name="PgUp">上页</string>

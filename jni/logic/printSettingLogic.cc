@@ -13,6 +13,8 @@ static void onUI_init(){
 	mProtocolData = getProtocolData(); // 初始化串口数据的结构体。
 	LOGD("printsetting onUI_init !!!\n"); //00FF010301FC
 	sendSampleProtocol(0x00, 0xFF, 0x01, 0x03, 0x01);
+
+
 }
 
 /**

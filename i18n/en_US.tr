@@ -6,10 +6,10 @@
     <string name="File">File</string>
     <string name="Network">Network</string>
     <string name="MachineInfo">MachineInfo</string>
-    <string name="PrintSetting">PrintSetting</string>
+    <string name="PrintSetting">Platformlift</string>
     <string name="SLC Param">SLC Param</string>
     <string name="CheckInfo">CheckInfo</string>
-    <string name="PublicPage">PublicPage</string>
+    <string name="PublicPage">Leveling</string>
     
     <string name="machineInfoPage">MachineInfo</string>
     <string name="hardware">Hardware</string>
@@ -21,7 +21,8 @@
     <string name="english">English</string>
     <string name="check">Check</string>
     
-    <string name="motorControl">MotorControl</string>
+    <string name="motorControl">Platformlift</string>
+    <string name="homingText">Homing</string>
     
     <string name="printable">Printable</string>
     <string name="PgUp">PgUp</string>

@@ -73,26 +73,20 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		}
 	}
 
-	if(data.region == 12){
-		if(data.type == 16){
-			if(data.type == 16){
-				if(data.label == 0){
-					if(data.buttonIndex == 0){
-						LOGD("buttonIndex!!");
-						mButton1Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 1){
-						mButton2Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 2){
-						mButton3Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 3){
-						mButton4Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 4){
-						mButton5Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 5){
-						mButton6Ptr->setText(data.pdata);
-					}
-				}
-			}
+	if(data.page == 5 && data.region == 12 && data.type == 16 && data.label == 0){
+		if(data.buttonIndex == 0){
+			LOGD("buttonIndex!!");
+			mButton1Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 1){
+			mButton2Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 2){
+			mButton3Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 3){
+			mButton4Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 4){
+			mButton5Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 5){
+			mButton6Ptr->setText(data.pdata);
 		}
 	}
 }

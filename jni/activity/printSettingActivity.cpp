@@ -2,6 +2,7 @@
 #include "printSettingActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mhomingTextPtr;
 static ZKTextView* mprintsettingDialogTextPtr;
 static ZKButton* mcancellPtr;
 static ZKButton* mconfirmPtr;
@@ -148,6 +149,7 @@ const char* printSettingActivity::getAppName() const{
 //TAG:onCreate
 void printSettingActivity::onCreate() {
 	Activity::onCreate();
+    mhomingTextPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_homingText);
     mprintsettingDialogTextPtr = (ZKTextView*)findControlByID(ID_PRINTSETTING_printsettingDialogText);
     mcancellPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_cancell);
     mconfirmPtr = (ZKButton*)findControlByID(ID_PRINTSETTING_confirm);

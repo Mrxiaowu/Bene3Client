@@ -75,7 +75,8 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 	}
 
 	//TODO 判断文件名的长度，如果长了就启动文字滚动
-	if(data.type == 16){
+	//文件管理设置信息
+	if(data.page == 2 && data.region == 2 && data.type == 16 && data.label == 1){
 		LOGD("当前的buttonIndex=%d",data.buttonIndex);
 		if(data.buttonIndex == 0){
 			LOGD("mfileList1Ptr!!");
@@ -89,31 +90,21 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 		mpageNumberPtr->setText(data.pdata);
 	}
 
-	//	AA 55 05 03 07 FF FF FF F9
-//	if(data.page == 7 && data.region == 0xFF && data.type == 0xFF && data.label == 0xFF){
-//		musbWindowPtr->setVisible(true);
-//	}
-
-	if(data.region == 12){
-		if(data.type == 16){
-			if(data.type == 16){
-				if(data.label == 0){
-					if(data.buttonIndex == 0){
-						LOGD("buttonIndex!!");
-						mButton1Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 1){
-						mButton2Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 2){
-						mButton3Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 3){
-						mButton4Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 4){
-						mButton5Ptr->setText(data.pdata);
-					} else if(data.buttonIndex == 5){
-						mButton6Ptr->setText(data.pdata);
-					}
-				}
-			}
+	//USB页面设置信息
+	if(data.page == 2 && data.region == 12 && data.type == 16 && data.label == 0){
+		if(data.buttonIndex == 0){
+			LOGD("buttonIndex!!");
+			mButton1Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 1){
+			mButton2Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 2){
+			mButton3Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 3){
+			mButton4Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 4){
+			mButton5Ptr->setText(data.pdata);
+		} else if(data.buttonIndex == 5){
+			mButton6Ptr->setText(data.pdata);
 		}
 	}
 }

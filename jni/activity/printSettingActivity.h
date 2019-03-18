@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_PRINTSETTING_homingText    50002
 #define ID_PRINTSETTING_printsettingDialogText    50001
 #define ID_PRINTSETTING_cancell    20012
 #define ID_PRINTSETTING_confirm    20011

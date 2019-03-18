@@ -315,6 +315,7 @@ int parseProtocol(const BYTE *pData, UINT len) {
 		mRealData = new BYTE[dataLen];  //除去AA55和校检码的中间的实际的数据
 
 		if (lastLength < frameLen) { //比较长度，如果第一次进来的时候的剩余数据长度和总长度不一致，说明包内筒不全
+			delete mRealData; //break了不delete的话，就会造成内存泄露！！！谨记
 			break;
 		}
 

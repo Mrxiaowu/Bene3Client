@@ -4,17 +4,17 @@
 #include "uart/ProtocolData.h"
 
 
-class JumpMainPage : public Thread {
-protected:
-    virtual bool threadLoop(){
-    	LOGD("开始等待30秒");
-    	Thread::sleep(30000);
-    	LOGD("等待结束，打开主页面");
-    	EASYUICONTEXT->openActivity("mainActivity");
-        return false;
-    };
-};
-JumpMainPage jumpMainPage;
+//class JumpMainPage : public Thread {
+//protected:
+//    virtual bool threadLoop(){
+//    	LOGD("开始等待30秒");
+//    	Thread::sleep(30000);
+//    	LOGD("等待结束，打开主页面");
+//    	EASYUICONTEXT->openActivity("mainActivity");
+//        return false;
+//    };
+//};
+//JumpMainPage jumpMainPage;
 
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
@@ -26,7 +26,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
  * 当界面构造时触发
  */
 static void onUI_init(){
-	jumpMainPage.run("jumpMainPage");
+//	jumpMainPage.run("jumpMainPage");
 	LOGD("当前屏幕版本号 %d.%d.%d",VERSIONINFO1,VERSIONINFO2,VERSIONINFO3);
 }
 
