@@ -35,7 +35,7 @@
     <string name="NetWorkPage">NetWork</string>
     <string name="network">Network</string>
     <string name="point">WIFI</string>
-    <string name="password">EnterPassword</string>
+    <string name="password">Password</string>
     <string name="staticIP">StaticIP</string>
     <string name="dynamicIP">DynamicIP</string>
     <string name="save">Save</string>
