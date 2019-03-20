@@ -156,7 +156,7 @@ bool UartContext::threadLoop() {
 
 void UartContext::receiverFile(){
 	char *hd[max_buffer_size]; /*定义接收缓冲区*/
-	int retv=0;
+	int retv=1;
 	int ncount=0;
 	FILE* fp;
 	FILE* fzkauto;
@@ -174,26 +174,33 @@ void UartContext::receiverFile(){
 		LOGD("can not open/create file zkautoupgrade.");
 	}
 
-	int i = 0;
 	while(true){
-		LOGD("最开始的 receive data size=%d\n",retv);
-		ncount+=retv;
-		i++;
-		retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
-		fwrite(hd,retv,1,fp);
-		Thread::sleep(50);
-		if(retv<=0){
+		if(retv >= 0){
+			retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
+			if(retv >= 0){
+				fwrite(hd,retv,1,fp);
+				ncount += retv;
+			}
+			LOGD(" receive data size=%d\n",retv);
+			Thread::sleep(50);
+		}else{
 			LOGD("检测到串口读不到信息，再等一会儿");
 			Thread::sleep(1000);
-			retv=read(mUartID,hd,max_buffer_size);
-			fwrite(hd,retv,1,fp);
-			if(retv<0){
-				LOGD("停了一秒还是检测不到");
+			retv=read(mUartID,hd,max_buffer_size);   /*接收数据*/
+			if(retv >= 0){
+				fwrite(hd,retv,1,fp);
+				ncount += retv;
+			}
+			LOGD(" 停顿一秒后检查的信息=%d\n",retv);
+			if(retv <= 0){
+				LOGD("停了一秒还是检测不到,退出");
 				break;
 			}
 		}
 	}
-	LOGD("The received data size is:%d  +  %d",ncount,i);
+	Thread::sleep(1000);
+	fclose(fp);
+	LOGD("The received data size is %d ",ncount);
 
 	if(upgradeSize == ncount){
 		LOGD("发来的包的正常，升级并重启");
