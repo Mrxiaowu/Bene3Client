@@ -246,6 +246,13 @@ static void procParse(const BYTE *pData, UINT len) {//在这里pData是一帧的
 								}
 								break;
 
+							case adjust_PageID://AA 55 05 03 08 FF FF FF F8
+								{
+									LOGD("调到调平页面");
+									EASYUICONTEXT->openActivity("levelingActivity");
+								}
+								break;
+
 							default:
 								break;
 						}
