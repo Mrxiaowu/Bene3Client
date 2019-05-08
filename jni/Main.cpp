@@ -15,8 +15,8 @@ void onEasyUIDeinit(EasyUIContext *pContext) {
 }
 
 const char* onStartupApp(EasyUIContext *pContext) {
-//	return "mainActivity";
-	return "logoActivity";
+	return "mainActivity";
+//	return "logoActivity";
 }
 
 

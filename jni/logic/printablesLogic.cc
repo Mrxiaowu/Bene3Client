@@ -17,6 +17,13 @@ void initPublicPageStatus() {
 	mButton4Ptr->setSelected(false);
 	mButton5Ptr->setSelected(false);
 	mButton6Ptr->setSelected(false);
+	mButton1Ptr->setText("");
+	mButton2Ptr->setText("");
+	mButton3Ptr->setText("");
+	mButton4Ptr->setText("");
+	mButton5Ptr->setText("");
+	mButton6Ptr->setText("");
+
 }
 
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {

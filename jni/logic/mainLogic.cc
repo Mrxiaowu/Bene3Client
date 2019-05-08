@@ -74,8 +74,38 @@ static bool onUI_Timer(int id){
 
 
 static bool onmainActivityTouchEvent(const MotionEvent &ev) {
+//     if(ev.mX<=120 && ev.mY<=136){
+//    	 EASYUICONTEXT->openActivity("printJobActivity");
+//     }else if(ev.mX<=240 && ev.mY<=136){
+//    	 EASYUICONTEXT->openActivity("networkControlActivity");
+//     }else if(ev.mX<=360 && ev.mY<=136){
+//    	 EASYUICONTEXT->openActivity("machineInfoActivity");
+//     }else if(ev.mX<=480 && ev.mY<=136){
+//    	 EASYUICONTEXT->openActivity("printablesActivity");
+//     }else if(ev.mX<=120 && 136< ev.mY<=272){
+//    	 EASYUICONTEXT->openActivity("printSettingActivity");
+//     }else if(ev.mX<=240 && 136<= ev.mY<=272){
+//    	 EASYUICONTEXT->openActivity("slcParamActivity");
+//     }else if(ev.mX<=240 && 136<ev.mY<=272){
+//    	 EASYUICONTEXT->openActivity("publicWindowActivity");
+//     }else {
+//    	 EASYUICONTEXT->openActivity("levelingActivity");
+//     }
+     int x = ev.mX;
+     int y = ev.mY;
 
-	return false;
+     int numa = x/120;
+     int numb = y/136;
+     switch (x){
+     if( y==0){
+    	 EASYUICONTEXT->openActivity("printJobActivity");
+     }else {
+    	 EASYUICONTEXT->openActivity("printSettingActivity");
+     }
+
+
+	//return false;
+	return true;
 }
 
 const char* IconTab[]={

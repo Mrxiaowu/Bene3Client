@@ -2,7 +2,7 @@
 #include "uart/ProtocolSender.h"
 #include "uart/ProtocolData.h"
 #include "uart/ProtocolData.h"
-
+#include "utils/BrightnessHelper.h"
 
 //class JumpMainPage : public Thread {
 //protected:
@@ -25,9 +25,11 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 /**
  * 当界面构造时触发
  */
+
 static void onUI_init(){
 //	jumpMainPage.run("jumpMainPage");
 	LOGD("当前屏幕版本号 %d.%d.%d",VERSIONINFO1,VERSIONINFO2,VERSIONINFO3);
+	BRIGHTNESSHELPER->setBrightness(50);
 }
 
 /**
